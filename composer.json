@@ -1,0 +1,27 @@
+{
+    "name": "imatic/user-bundle",
+    "type": "library",
+    "description": "Imatic User Bundle",
+    "keywords": [],
+    "homepage": "http://imatic.cz",
+    "license": "Imatic",
+    "authors": [
+        {
+            "name": "Stepan Koci",
+            "email": "stepan.koci@imatic.cz"
+        }
+    ],
+    "require": {
+        "friendsofsymfony/user-bundle": "dev-master",
+    },
+    "autoload": {
+        "psr-0": { "Imatic\\Bundle\\UserBundle": "" }
+    },
+    "target-dir": "Imatic/Bundle/UserBundle",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
