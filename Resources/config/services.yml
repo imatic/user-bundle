@@ -1,0 +1,25 @@
+services:
+    imatic_user.admin.user:
+        class: 'Imatic\Bundle\UserBundle\Admin\UserAdmin'
+        arguments:
+            - ~
+            - 'Imatic\Bundle\UserBundle\Entity\User'
+            - 'SonataAdminBundle:CRUD'
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: User, label: User }
+
+    imatic_user.admin.group:
+        class: 'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
+        arguments:
+            - ~
+            - 'Imatic\Bundle\UserBundle\Entity\Group'
+            - 'SonataAdminBundle:CRUD'
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: User, label: Group }
+
+    sonata.user.form.type.security_roles:
+        class: 'Imatic\Bundle\UserBundle\Form\Type\SecurityRolesType'
+        arguments:
+            - @sonata.admin.pool
+        tags:
+            - { name: form.type, alias: sonata_security_roles }

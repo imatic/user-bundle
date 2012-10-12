@@ -1,0 +1,30 @@
+{% extends "ImaticUserBundle::layout.html.twig" %}
+
+{% block title %}
+    Profil uzivatele "{{ user }}"
+{% endblock %}
+
+{% block headline %}
+    Profil uzivatele "{{ user }}"
+{% endblock %}
+
+{% block fos_user_content %}
+
+    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
+
+    <table class="table">
+        <tr>
+            <th>{{ 'profile.show.fullname'|trans({}, 'ImaticUserBundle') }}</th>
+            <td>{{ user.fullname }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+
+{% endblock %}

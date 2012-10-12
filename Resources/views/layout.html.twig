@@ -1,0 +1,16 @@
+{% from 'ImaticViewBundle:component:flash.html.twig' import session_flash %}
+{% extends '::base.html.twig' %}
+
+{% block action %}
+
+    <div>
+
+    {% if app.session.flashbag.peekAll|length > 0 %}
+        {{ session_flash(null, null, null, 'FOSUserBundle') }}
+    {% endif %}
+
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+    </div>
+
+{% endblock %}

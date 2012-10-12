@@ -1,0 +1,12 @@
+fos_user:
+    db_driver:      orm # can be orm or odm
+    firewall_name:  main
+    user_class:     Imatic\Bundle\UserBundle\Entity\User
+
+    group:
+        group_class: Imatic\Bundle\UserBundle\Entity\Group
+
+#security:
+#    role_hierarchy:
+#        ROLE_IMATIC_USER_USER_ADMIN: []
+#        ROLE_IMATIC_USER_GROUP_ADMIN: []

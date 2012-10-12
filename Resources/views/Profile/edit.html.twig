@@ -1,0 +1,23 @@
+{% extends "ImaticUserBundle::layout.html.twig" %}
+
+{#{% block title %}#}
+    {#Profil uzivatele "{{ user }}"#}
+{#{% endblock %}#}
+
+{#{% block headline %}#}
+    {#Profil uzivatele "{{ user }}"#}
+{#{% endblock %}#}
+
+{% block fos_user_content %}
+
+    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
+
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST"
+          class="fos_user_profile_edit">
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" class="btn" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
+        </div>
+    </form>
+
+{% endblock %}

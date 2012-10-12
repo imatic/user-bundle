@@ -1,0 +1,47 @@
+{% extends "ImaticUserBundle::layout.html.twig" %}
+
+{% block body_tag %}
+<body onload="document.getElementById('username').focus();">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="span4 offset4">
+                <div class="page-header">
+                    <h1>{{ block('headline') }}</h1>
+                </div>
+
+                {{ block('action') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block action %}
+    {% block fos_user_content %}
+        {% if error %}
+            <div class="alert alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
+
+        <form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off">
+            <input type="text" id="username" name="_username" value="{{ last_username }}"
+                   class="span4"
+                   placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}">
+
+            <input type="password" id="password" name="_password" class="span4"
+                   placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}">
+
+            <input type="submit" id="_submit" name="_submit" class="btn btn-info btn-large btn-block"
+                   value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">
+
+            <br>
+            <label class="checkbox" for="remember_me">
+                <input type="checkbox" id="remember_me" name="_remember_me"
+                       value="on">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+            </label>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        </form>
+    {% endblock fos_user_content %}
+{% endblock action %}
