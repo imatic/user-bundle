@@ -1,0 +1,24 @@
+{% import "ImaticViewBundle:Component:widget.html.twig" as widget %}
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block headline %}
+    {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+{% endblock %}
+
+{% block fos_user_content %}
+    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST"
+          class="fos_user_resetting_reset">
+        {{ widget.start("span4 offset4 widget-simple-form") }}
+        {{ widget.header_start() }}
+        <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+        {{ widget.header_end() }}
+        {{ widget.body_start() }}
+        {{ form_widget(form) }}
+        {{ widget.body_end() }}
+        {{ widget.footer_start() }}
+        <input type="submit" class="btn btn-primary btn-large btn-block"
+               value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+        {{ widget.footer_end() }}
+        {{ widget.end }}
+    </form>
+{% endblock fos_user_content %}

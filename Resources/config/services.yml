@@ -7,6 +7,8 @@ services:
             - 'SonataAdminBundle:CRUD'
         tags:
             - { name: sonata.admin, manager_type: orm, group: User, label: User }
+        calls:
+            - [ setUserManager, [@fos_user.user_manager] ]
 
     imatic_user.admin.group:
         class: 'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
@@ -16,6 +18,12 @@ services:
             - 'SonataAdminBundle:CRUD'
         tags:
             - { name: sonata.admin, manager_type: orm, group: User, label: Group }
+
+    imatic_user.profile.form.type:
+        class: Imatic\Bundle\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: imatic_user_profile }
 
     sonata.user.form.type.security_roles:
         class: 'Imatic\Bundle\UserBundle\Form\Type\SecurityRolesType'

@@ -1,0 +1,18 @@
+{% import "ImaticViewBundle:Component:widget.html.twig" as widget %}
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block headline %}
+    {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+{% endblock %}
+
+{% block fos_user_content %}
+    {{ widget.start("span4 offset4 widget-simple-form") }}
+    {{ widget.header_start() }}
+    <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+    {{ widget.header_end() }}
+
+    {{ widget.body_start() }}
+    <p>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</p>
+    {{ widget.body_end() }}
+    {{ widget.end }}
+{% endblock fos_user_content %}

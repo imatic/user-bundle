@@ -1,12 +1,14 @@
-<ul class="nav nav-tabs">
-    {% set user_navigation = [
-    {'name': 'show', 'route': 'fos_user_profile_show'},
-    {'name': 'editace', 'route': 'fos_user_profile_edit'},
-    {'name': 'password', 'route': 'fos_user_change_password'}
-    ] %}
-    {% for item in user_navigation %}
-        <li class="{{ app.request.get('_route') == item.route ? 'active' : '' }}">
-            <a href="{{ path(item.route) }}">{{ item.name|trans }}</a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="sidebar-nav">
+    <ul class="nav nav-list">
+        {% set user_navigation = [
+        {'name': 'profile.show.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_show'},
+        {'name': 'profile.edit.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_edit'},
+        {'name': 'profile.password.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_change_password'}
+        ] %}
+        {% for item in user_navigation %}
+            <li class="{{ app.request.get('_route') == item.route ? 'active' : '' }}">
+                <a href="{{ path(item.route) }}">{{ item.name|trans }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

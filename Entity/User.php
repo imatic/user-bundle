@@ -32,6 +32,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\MinLength(3)
      * @Assert\MaxLength(255)
      */
     protected $fullname;

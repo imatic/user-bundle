@@ -1,30 +1,31 @@
 {% extends "ImaticUserBundle::layout.html.twig" %}
 
-{% block title %}
-    Profil uzivatele "{{ user }}"
+{% block headline %}
+    {{ 'profile.show.headline'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block headline %}
-    Profil uzivatele "{{ user }}"
+{% block sidebar %}
+    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
 {% endblock %}
 
 {% block fos_user_content %}
-
-    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
-
-    <table class="table">
-        <tr>
-            <th>{{ 'profile.show.fullname'|trans({}, 'ImaticUserBundle') }}</th>
-            <td>{{ user.fullname }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
-            <td>{{ user.email }}</td>
-        </tr>
-    </table>
+    <div class="row-fluid">
+        <div class="span5">
+            <table class="table table-transposed">
+                <tr>
+                    <th class="fifty">{{ 'profile.show.fullname'|trans({}, 'ImaticUserBundle') }}</th>
+                    <td class="fifty">{{ user.fullname }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

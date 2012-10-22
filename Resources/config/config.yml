@@ -6,6 +6,10 @@ fos_user:
     group:
         group_class: Imatic\Bundle\UserBundle\Entity\Group
 
+    profile:
+        form:
+            type: imatic_user_profile
+
 #security:
 #    role_hierarchy:
 #        ROLE_IMATIC_USER_USER_ADMIN: []

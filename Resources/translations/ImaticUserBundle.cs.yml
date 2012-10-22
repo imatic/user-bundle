@@ -1,3 +1,17 @@
 profile:
     show:
         fullname: Jméno
+        headline: Profil uživatele
+
+    edit:
+        headline: Editace profilu
+
+    password:
+        headline: Změna hesla
+
+security:
+    login:
+        forgotten_password: Zapomenuté heslo
+
+form:
+    fullname: Celé jméno
