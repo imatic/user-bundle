@@ -31,3 +31,11 @@ services:
             - @sonata.admin.pool
         tags:
             - { name: form.type, alias: sonata_security_roles }
+
+    imatic_user.listener.user_menu_listener:
+        class: Imatic\Bundle\UserBundle\Listener\UserMenuListener
+        arguments:
+            - @security.context
+            - @translator
+        tags:
+            - { name: kernel.event_listener, event: imatic_view.configure_menu.imatic.main_side, method: onConfigure }

@@ -5,7 +5,7 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {{ parent() }}
     {% else %}
-        <div style="margin-top: 50px;">
+        <div class="row-fluid" style="margin-top: 50px;">
             {{ block('action') }}
         </div>
     {% endif %}
