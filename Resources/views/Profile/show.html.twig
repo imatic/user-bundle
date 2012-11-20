@@ -1,7 +1,7 @@
 {% extends "ImaticUserBundle::layout.html.twig" %}
 
 {% block headline %}
-    {{ 'profile.show.headline'|trans({}, 'ImaticUserBundle') }}
+    {{ 'User Profile'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
 {% block sidebar %}
@@ -13,7 +13,7 @@
         <div class="span5">
             <table class="table table-transposed">
                 <tr>
-                    <th class="fifty">{{ 'profile.show.fullname'|trans({}, 'ImaticUserBundle') }}</th>
+                    <th class="fifty">{{ 'Fullname'|trans({}, 'ImaticUserBundle') }}</th>
                     <td class="fifty">{{ user.fullname }}</td>
                 </tr>
                 <tr>

@@ -1,10 +1,14 @@
+parameters:
+    imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
+    imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
+
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
-    user_class:     Imatic\Bundle\UserBundle\Entity\User
+    user_class:     %imatic_user.entity.user.class%
 
     group:
-        group_class: Imatic\Bundle\UserBundle\Entity\Group
+        group_class: %imatic_user.entity.user.class%
 
     profile:
         form:

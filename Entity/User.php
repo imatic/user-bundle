@@ -7,10 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="imatic_user_user")
+ * @ORM\MappedSuperclass
  */
-class User extends BaseUser
+abstract class User extends BaseUser
 {
     /**
      * @ORM\Id
@@ -20,8 +19,8 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="imatic_user_user_group",
+     * @ORM\ManyToMany(targetEntity="App\Bundle\UserBundle\Entity\Group")
+     * @ORM\JoinTable(name="user_user_group",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")}
      * )

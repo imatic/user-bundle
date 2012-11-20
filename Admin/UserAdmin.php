@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\UserBundle\Admin;
 
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -32,9 +33,19 @@ class UserAdmin extends Admin
         ));
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureShowFields(ShowMapper $filter)
     {
-        $datagridMapper
+        $filter
+            ->add('fullname')
+            ->add('username')
+            ->add('email')
+            ->add('enabled')
+            ->add('roles');
+    }
+
+    protected function configureDatagridFilters(DatagridMapper $dataGridMapper)
+    {
+        $dataGridMapper
             ->add('fullname')
             ->add('username')
             ->add('email')
@@ -43,11 +54,21 @@ class UserAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $actions = array(
+            'view' => array(),
+            'edit' => array(),
+        );
+        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+            $actions['impersonating'] = array('template' => 'ImaticUserBundle:Admin:Field/impersonating.html.twig');
+        }
+
         $listMapper
             ->add('fullname')
             ->addIdentifier('username')
             ->add('email')
-            ->add('enabled');
+            ->add('enabled', null, array('editable' => true))
+            ->add('_action', 'actions', array('actions' => $actions)
+        );
     }
 
     public function preUpdate($user)

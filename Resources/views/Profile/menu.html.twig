@@ -1,9 +1,9 @@
 <div class="sidebar-nav">
     <ul class="nav nav-list">
         {% set user_navigation = [
-        {'name': 'profile.show.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_show'},
-        {'name': 'profile.edit.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_edit'},
-        {'name': 'profile.password.headline'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_change_password'}
+        {'name': 'User Profile'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_show'},
+        {'name': 'User Profile Edit'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_edit'},
+        {'name': 'Change password'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_change_password'}
         ] %}
         {% for item in user_navigation %}
             <li class="{{ app.request.get('_route') == item.route ? 'active' : '' }}">

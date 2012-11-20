@@ -1,6 +1,9 @@
 <div>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <a href="{{ path('homepage', { '_switch_user': '_exit' }) }}">&times;</a>
+        {% endif %} |
         <a href="{{ path('fos_user_security_logout') }}">
             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
         </a>

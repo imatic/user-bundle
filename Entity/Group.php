@@ -10,12 +10,11 @@ use FOS\UserBundle\Entity\Group as BaseGroup;
 /**
  * Imatic\Bundle\UserBundle\Entity\Group
  *
- * @ORM\Entity()
- * @ORM\Table(name="imatic_user_group")
+ * @ORM\MappedSuperclass
  * @DoctrineAssert\UniqueEntity("name")
  * @DoctrineAssert\UniqueEntity("description")
  */
-class Group extends BaseGroup
+abstract class Group extends BaseGroup
 {
     /**
      * @var integer $id

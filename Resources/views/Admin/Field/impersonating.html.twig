@@ -1,0 +1,7 @@
+{% if object.username != app.user.username %}
+    <a href="{{ path('homepage', {'_switch_user': object.username}) }}" title="{{ 'Switch user'|trans({}, 'ImaticUserBundle')}}">
+        <img src="{{ asset('bundles/imaticuser/icon/switch-user.png') }}" alt="{{ 'Switch user'|trans({}, 'ImaticUserBundle')}}" />
+    </a>
+{% else %}
+    -
+{% endif %}

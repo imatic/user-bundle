@@ -5,6 +5,8 @@ use Sonata\AdminBundle\Admin\Admin as BaseAdmin;
 
 class Admin extends BaseAdmin
 {
+    protected $translationDomain = 'ImaticUserBundle';
+
     public function getFormTheme()
     {
         return array_merge(
