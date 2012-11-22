@@ -14,7 +14,6 @@ fos_user:
         form:
             type: imatic_user_profile
 
-#security:
-#    role_hierarchy:
-#        ROLE_IMATIC_USER_USER_ADMIN: []
-#        ROLE_IMATIC_USER_GROUP_ADMIN: []
+security:
+    role_hierarchy:
+        ROLE_SUPER_ADMIN:   [ROLE_ALLOWED_TO_SWITCH]

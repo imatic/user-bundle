@@ -1,17 +1,26 @@
 {% block sonata_security_roles_widget %}
     {% spaceless %}
-        <div class="editable">
-            {{ block('choice_widget') }}
+        {% set user = form.parent.vars.value.username|default(false) ? form.parent.vars.value : false %}
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="unstyled">
+                {% for module_name, module in imatic_user_organize_roles(imatic_user_get_form_roles(form)) %}
+                    <li>
+                        <h4>{{ module_name }}</h4>
+                        <ul class="unstyled">
+                            {% for sub_module_name, sub_module in module %}
+                                <li><h5>{{ sub_module_name }}</h5>
+                                    <ul class="unstyled">
+                                        {% for role in sub_module %}
+                                            {% set disabled = (user and role.vars.value in user.getGroupRoles()) %}
+                                            <li>{{ form_widget(role, {'disabled': disabled}) }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-        {% if read_only_choices|length > 0 %}
-            <div class="readonly">
-                <h4>{{ 'field.label_roles_readonly'|trans({}, "SonataUserBundle") }}</h4>
-                <ul>
-                    {% for choice in read_only_choices %}
-                        <li>{{ choice|trans({}, translation_domain) }} }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
     {% endspaceless %}
 {% endblock sonata_security_roles_widget %}

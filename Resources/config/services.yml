@@ -49,3 +49,16 @@ services:
             - @translator
         tags:
             - { name: kernel.event_listener, event: imatic_view.configure_menu.imatic.main_side, method: onConfigure }
+
+    imatic_user.twig.extension.convert_roles:
+        class: Imatic\Bundle\UserBundle\Twig\Extension\RoleExtension
+        arguments:
+            - @imatic_user.helper.role_helper
+        tags:
+            - { name: twig.extension }
+
+    imatic_user.helper.role_helper:
+        class: Imatic\Bundle\UserBundle\Helper\RoleHelper
+        arguments:
+            - @translator
+            - %security.role_hierarchy.roles%

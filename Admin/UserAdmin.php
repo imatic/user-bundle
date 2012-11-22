@@ -21,16 +21,16 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->with('personal', array('collapsed' => false))
             ->add('fullname')
             ->add('username')
             ->add('email')
+            ->end()
+            ->with('access', array('collapsed' => false))
             ->add('enabled', null, array('required' => false))
-            ->add('roles', 'sonata_security_roles', array(
-            'expanded' => true,
-            'multiple' => true,
-            'required' => false,
-            'translation_domain' => 'roles'
-        ));
+            ->add('groups', null, array('expanded' => true, 'multiple' => true))
+            ->add('roles', 'sonata_security_roles', array('expanded' => true, 'multiple' => true, 'required' => false))
+            ->end();
     }
 
     protected function configureShowFields(ShowMapper $filter)
@@ -40,7 +40,7 @@ class UserAdmin extends Admin
             ->add('username')
             ->add('email')
             ->add('enabled')
-            ->add('roles');
+            ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
     }
 
     protected function configureDatagridFilters(DatagridMapper $dataGridMapper)

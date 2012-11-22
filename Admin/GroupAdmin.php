@@ -14,8 +14,7 @@ class GroupAdmin extends Admin
             ->add('roles', 'sonata_security_roles', array(
             'expanded' => true,
             'multiple' => true,
-            'required' => false,
-            'translation_domain' => 'roles'
+            'required' => false
         ));
     }
 
