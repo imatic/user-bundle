@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\UserBundle\Helper;
 
-use Imatic\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormView;
 
@@ -24,7 +23,7 @@ class RoleHelper
     /**
      * @var array
      */
-    protected $commonRoles;
+    protected $baseRoles;
 
     /**
      * @var string
@@ -41,16 +40,17 @@ class RoleHelper
         $this->translator = $translator;
         $this->roleHierarchy = $roleHierarchy;
         $this->translationDomain = 'roles';
-        $this->commonRoles = array(
+        $this->baseRoles = array(
+            'ROLE_USER',
             'ROLE_SUPER_ADMIN',
             'ROLE_ALLOWED_TO_SWITCH'
         );
     }
 
-    public function getUserRoles(User $user)
+    public function getObjectRoles($object)
     {
         $roles = array();
-        foreach ($user->getRoles() as $roleName) {
+        foreach ($object->getRoles() as $roleName) {
             if (!empty($this->roleHierarchy[$roleName]) && is_array($this->roleHierarchy[$roleName])) {
                 $label = sprintf('%s: %s', $roleName, implode(', ', $this->roleHierarchy[$roleName]));
             } else {
@@ -85,9 +85,9 @@ class RoleHelper
         $modules = array();
 
         foreach ($roles as $roleName => $role) {
-            $moduleInfo = $this->getModuleInfo($roleName);
-            $moduleName = $moduleInfo['module'];
-            $subModuleName = $moduleInfo['submodule'];
+            $roleInfo = $this->parseRole($roleName, $this->baseRoles);
+            $moduleName = sprintf('%s.%s', $roleInfo['vendor'], $roleInfo['bundle']);
+            $subModuleName = sprintf('%s.%s', $roleInfo['object'], $roleInfo['type']);
 
             if (!isset($modules[$moduleName])) {
                 $modules[$moduleName] = array();
@@ -99,6 +99,7 @@ class RoleHelper
             $modules[$moduleName][$subModuleName][$roleName] = $role;
         }
 
+        // @todo: make sure, common group must be first
         ksort($modules);
         foreach ($modules as &$subModule) {
             ksort($subModule);
@@ -111,28 +112,32 @@ class RoleHelper
     }
 
     /**
-     * Role name format
-     * ROLE_$BUNDLENAMESPACE_$BUNDLENAME_($TYPE)?_$OBJECT_$ACTION
-     * => module/$BUNDLENAMESPACE_$BUNDLENAME/$OBJECT
-     *
-     * @param string $roleName
+     * @param string $role
+     * @param array $baseRoles
      * @return array
      */
-    public function getModuleInfo($roleName)
+    public function parseRole($role, array $baseRoles)
     {
-        if (in_array($roleName, $this->commonRoles)) {
-            $module = 'modules.common.name';
-            $subModule = '';
+        $roleArray = explode('_', $role);
+
+        if (in_array($role, $baseRoles)) {
+            $roleInfo['vendor'] = 'imatic';
+            $roleInfo['bundle'] = 'user';
+            $roleInfo['type'] = 'common';
+            $roleInfo['object'] = 'common';
+            $roleInfo['action'] = '';
+            $roleInfo['base'] = true;
         } else {
-            $roleNameArray = explode('_', $roleName);
-            $module = strtolower('modules.' . implode('_', array($roleNameArray[1], $roleNameArray[2])) . '.name');
-            $subModule = strtolower('modules.' . implode('_', array($roleNameArray[1], $roleNameArray[2])) . '.submodules.' . $roleNameArray[count($roleNameArray) - 2]);
+            $roleInfo['vendor'] = strtolower($roleArray[1]);
+            $roleInfo['bundle'] = strtolower($roleArray[2]);
+            $roleInfo['type'] = strtolower($roleArray[3]);
+            $roleInfo['object'] = strtolower($roleArray[4]);
+            $roleInfo['action'] = strtolower($roleArray[5]);
+            $roleInfo['base'] = false;
         }
+        $roleInfo['role'] = $role;
 
-        $module = $this->translator->trans($module, array(), $this->translationDomain);
-        $subModule = $this->translator->trans($subModule, array(), $this->translationDomain);
-
-        return array('module' => $module, 'submodule' => $subModule);
+        return $roleInfo;
     }
 
     /**
@@ -150,7 +155,7 @@ class RoleHelper
     }
 
     /**
-     * @todo: allow custom translation strategies and refactor this
+     * @todo: refactor this
      * @param string $label
      * @param string $domain
      * @return string
@@ -158,17 +163,19 @@ class RoleHelper
     public function translateLabelCallback($label, $domain)
     {
         // translate admin role
-        if (preg_match('/^ROLE_([A-Z]+)_([A-Z]+)_ADMIN_([A-Z]+)_([A-Z]+)$/', $label, $matches)) {
-            $transKey = sprintf('admin_role.%s', strtolower($matches[4]));
-            $transParams = array(
-                '%singular%' => $this->translator->trans(sprintf('admin_object.%s.%s', strtolower($matches[1] . '_' . $matches[2] . '_' . $matches[3]), 'singular'), array(), $domain),
-                '%plural%' => $this->translator->trans(sprintf('admin_object.%s.%s', strtolower($matches[1] . '_' . $matches[2] . '_' . $matches[3]), 'plural'), array(), $domain),
-            );
-            $label = $this->translator->trans($transKey, $transParams, $domain);
-        } else {
-            // translate standard role name
-            $label = $this->translator->trans($label, array(), $domain);
-        }
+//        if (preg_match('/^ROLE_([A-Z]+)_([A-Z]+)_ADMIN_([A-Z]+)_([A-Z]+)$/', $label, $matches)) {
+//            $transKey = sprintf('admin_role.%s', strtolower($matches[4]));
+//            $transParams = array(
+//                '%singular%' => $this->translator->trans(sprintf('admin_object.%s.%s', strtolower($matches[1] . '_' . $matches[2] . '_' . $matches[3]), 'singular'), array(), $domain),
+//                '%plural%' => $this->translator->trans(sprintf('admin_object.%s.%s', strtolower($matches[1] . '_' . $matches[2] . '_' . $matches[3]), 'plural'), array(), $domain),
+//            );
+//            $label = $this->translator->trans($transKey, $transParams, $domain);
+//        } else {
+//            // translate standard role name
+//            $label = $this->translator->trans($label, array(), $domain);
+//        }
+
+        $label = ucfirst(strtolower(str_replace(array('_', 'ROLE'), ' ', $label)));
 
         return $label;
     }

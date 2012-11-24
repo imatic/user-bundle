@@ -1,0 +1,26 @@
+# Common
+User:               Uživatel
+Group personal:     Osobní údaje
+Group access:       Nastavení přístupu
+
+# Object
+Plural:             Uživatel
+Singular:           Uživatelé
+
+# Properties
+Fullname:           Celé jméno
+Username:           Uživatelské jméno
+Email:              E-mail
+Enabled:            Povolen
+Roles:              Role
+Groups:             Skupiny
+
+# Pages
+User Show:          Detail uživatele
+User Edit:          Editace uživatele
+User List:          Výpis uživatelů
+
+# Actions
+Action:             Akce
+Switch user:        Přepnout uživatele
+Switch user exit:   Opustit přepnutí uživatele

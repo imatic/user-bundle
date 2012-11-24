@@ -1,0 +1,18 @@
+# Common
+Group:              Skupina
+
+# Object
+Plural:             Skupina
+Singular:           Skupiny
+
+# Properties
+Name:               Název
+Roles:              Role
+
+# Pages
+User Show:          Detail skupiny
+User Edit:          Editace skupin
+Group List:         Výpis skupin
+
+# Actions
+Action:             Akce

@@ -51,7 +51,7 @@ class UserMenuListener
             $userMenu->addChild($t->trans('Change Password', array(), 'ImaticUserBundle'), array('route' => 'fos_user_change_password'));
             $factory->addDivider($userMenu);
             if ($this->securityContext->isGranted('ROLE_PREVIOUS_ADMIN')) {
-                $userMenu->addChild($t->trans('Switch user exit', array(), 'ImaticUserBundle'), array('route' => 'homepage', 'routeParameters' => array('_switch_user' => '_exit')));
+                $userMenu->addChild($t->trans('Switch user exit', array(), 'ImaticUserBundleUser'), array('route' => 'homepage', 'routeParameters' => array('_switch_user' => '_exit')));
             }
             $userMenu->addChild($t->trans('layout.logout', array(), 'FOSUserBundle'), array('route' => 'fos_user_security_logout'));
         } else {

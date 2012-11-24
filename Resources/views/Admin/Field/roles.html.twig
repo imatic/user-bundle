@@ -2,7 +2,7 @@
 
 {% block field %}
     <ul class="unstyled">
-        {% for module_name, module in imatic_user_organize_roles(imatic_user_get_user_roles(object)) %}
+        {% for module_name, module in imatic_user_organize_roles(imatic_user_get_object_roles(object)) %}
             <li>
                 <h4>{{ module_name }}</h4>
                 <ul class="unstyled">

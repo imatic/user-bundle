@@ -14,6 +14,8 @@ class UserAdmin extends Admin
      */
     protected $userManager;
 
+    protected $translationDomain = 'ImaticUserBundleUser';
+
     protected $formOptions = array(
         'validation_groups' => 'Profile'
     );
@@ -21,21 +23,21 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('personal', array('collapsed' => false))
+            ->with($this->trans('Group personal'), array('collapsed' => false))
             ->add('fullname')
             ->add('username')
             ->add('email')
             ->end()
-            ->with('access', array('collapsed' => false))
+            ->with($this->trans('Group access'), array('collapsed' => false))
             ->add('enabled', null, array('required' => false))
             ->add('groups', null, array('expanded' => true, 'multiple' => true))
             ->add('roles', 'sonata_security_roles', array('expanded' => true, 'multiple' => true, 'required' => false))
             ->end();
     }
 
-    protected function configureShowFields(ShowMapper $filter)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
-        $filter
+        $showMapper
             ->add('fullname')
             ->add('username')
             ->add('email')
@@ -71,6 +73,11 @@ class UserAdmin extends Admin
         );
     }
 
+    /**
+     * @todo: use doctrine lifecycle event
+     * @param object $user
+     * @return void
+     */
     public function preUpdate($user)
     {
         $this->getUserManager()->updateCanonicalFields($user);

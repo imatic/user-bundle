@@ -4,7 +4,6 @@ namespace Imatic\Bundle\UserBundle\Twig\Extension;
 
 use Twig_Extension;
 use Twig_Function_Method;
-use Imatic\Bundle\UserBundle\Entity\User;
 use Imatic\Bundle\UserBundle\Helper\RoleHelper;
 use Symfony\Component\Form\FormView;
 
@@ -33,18 +32,18 @@ class RoleExtension extends Twig_Extension
     {
         return array(
             'imatic_user_get_form_roles' => new Twig_Function_Method($this, 'getFormRoles'),
-            'imatic_user_get_user_roles' => new Twig_Function_Method($this, 'getUserRoles'),
+            'imatic_user_get_object_roles' => new Twig_Function_Method($this, 'getObjectRoles'),
             'imatic_user_organize_roles' => new Twig_Function_Method($this, 'organizeRoles')
         );
     }
 
     /**
-     * @param \Imatic\Bundle\UserBundle\Entity\User $user
+     * @param object $object
      * @return array
      */
-    public function getUserRoles(User $user)
+    public function getObjectRoles($object)
     {
-        return $this->roleHelper->getUserRoles($user);
+        return $this->roleHelper->getObjectRoles($object);
     }
 
     /**

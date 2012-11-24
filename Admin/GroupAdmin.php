@@ -2,11 +2,14 @@
 namespace Imatic\Bundle\UserBundle\Admin;
 
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 class GroupAdmin extends Admin
 {
+    protected $translationDomain = 'ImaticUserBundleGroup';
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -18,6 +21,14 @@ class GroupAdmin extends Admin
         ));
     }
 
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
+    }
+
     protected function configureDatagridFilters(DatagridMapper $dataGridMapper)
     {
         $dataGridMapper
@@ -26,7 +37,13 @@ class GroupAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $actions = array(
+            'view' => array(),
+            'edit' => array(),
+        );
+
         $listMapper
-            ->addIdentifier('name');
+            ->addIdentifier('name')
+            ->add('_action', 'actions', array('actions' => $actions));
     }
 }

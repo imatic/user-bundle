@@ -1,14 +1,15 @@
 parameters:
+    imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
+    imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
+
     imatic_user.admin.user.class:       'Imatic\Bundle\UserBundle\Admin\UserAdmin'
     imatic_user.admin.group.class:      'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
 
     imatic_user.controller.user.class:  'SonataAdminBundle:CRUD'
     imatic_user.controller.group.class: 'SonataAdminBundle:CRUD'
 
-    imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
-    imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
-
 services:
+    # Sonata admin
     imatic_user.admin.user:
         class: %imatic_user.admin.user.class%
         arguments:
@@ -16,7 +17,7 @@ services:
             - %imatic_user.entity.user.class%
             - %imatic_user.controller.user.class%
         tags:
-            - { name: sonata.admin, manager_type: orm, group: User, label: User }
+            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: User }
         calls:
             - [ setUserManager, [@fos_user.user_manager] ]
 
@@ -27,8 +28,9 @@ services:
             - %imatic_user.entity.group.class%
             - %imatic_user.controller.group.class%
         tags:
-            - { name: sonata.admin, manager_type: orm, group: User, label: Group }
+            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: Group }
 
+    # Form
     imatic_user.profile.form.type:
         class: Imatic\Bundle\UserBundle\Form\Type\ProfileFormType
         arguments: [%fos_user.model.user.class%]
@@ -42,6 +44,7 @@ services:
         tags:
             - { name: form.type, alias: sonata_security_roles }
 
+    # Menu
     imatic_user.listener.user_menu_listener:
         class: Imatic\Bundle\UserBundle\Listener\UserMenuListener
         arguments:
@@ -50,6 +53,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: imatic_view.configure_menu.imatic.main_side, method: onConfigure }
 
+    # Twig
     imatic_user.twig.extension.convert_roles:
         class: Imatic\Bundle\UserBundle\Twig\Extension\RoleExtension
         arguments:
@@ -57,6 +61,7 @@ services:
         tags:
             - { name: twig.extension }
 
+    # Helper
     imatic_user.helper.role_helper:
         class: Imatic\Bundle\UserBundle\Helper\RoleHelper
         arguments:

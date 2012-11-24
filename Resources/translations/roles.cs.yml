@@ -1,22 +1,3 @@
 # Common roles
 ROLE_ALLOWED_TO_SWITCH:                 'Změna uživatele'
 ROLE_SUPER_ADMIN:                       'Hlavní administrátor'
-
-# Role modules
-modules:
-    imatic_user:
-        name:                           'Uživatelé'
-        submodules:
-            user:                       'Uživatelé'
-            group:                      'Skupiny'
-    common:
-        name:                           'Obecné'
-
-# Admin roles
-admin_object:
-    imatic_user_user:
-        singular:                       'uživatele'
-        plural:                         'uživatelů'
-    imatic_user_group:
-        singular:                       'skupiny'
-        plural:                         'skupin'

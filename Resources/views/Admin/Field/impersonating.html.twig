@@ -1,7 +1,7 @@
-{% if object.username != app.user.username %}
-    <a href="{{ path('homepage', {'_switch_user': object.username}) }}" title="{{ 'Switch user'|trans({}, 'ImaticUserBundle')}}">
-        <img src="{{ asset('bundles/imaticuser/icon/switch-user.png') }}" alt="{{ 'Switch user'|trans({}, 'ImaticUserBundle')}}" />
+{% if object.username != app.user.username and false == is_granted('ROLE_PREVIOUS_ADMIN') and is_granted('ROLE_ALLOWED_TO_SWITCH') %}
+    <a href="{{ path('homepage', {'_switch_user': object.username}) }}" title="{{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}">
+        <img src="{{ asset('bundles/imaticuser/icon/switch-user.png') }}" alt="{{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}" />
     </a>
 {% else %}
-    -
+    <img src="{{ asset('bundles/imaticuser/icon/switch-user-disabled.png') }}" alt="{{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}" />
 {% endif %}
