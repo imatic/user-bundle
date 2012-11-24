@@ -1,7 +1,4 @@
 parameters:
-    imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
-    imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
-
     imatic_user.admin.user.class:       'Imatic\Bundle\UserBundle\Admin\UserAdmin'
     imatic_user.admin.group.class:      'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
 
@@ -45,13 +42,10 @@ services:
             - { name: form.type, alias: sonata_security_roles }
 
     # Menu
-    imatic_user.listener.user_menu_listener:
-        class: Imatic\Bundle\UserBundle\Listener\UserMenuListener
-        arguments:
-            - @security.context
-            - @translator
+    imatic_user.menu.user_menu:
+        class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
         tags:
-            - { name: kernel.event_listener, event: imatic_view.configure_menu.imatic.main_side, method: onConfigure }
+            - { name: imatic_view.menu, alias: imatic.user }
 
     # Twig
     imatic_user.twig.extension.convert_roles:
