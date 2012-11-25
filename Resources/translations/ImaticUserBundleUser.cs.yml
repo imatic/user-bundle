@@ -19,6 +19,7 @@ Groups:             Skupiny
 User Show:          Detail uživatele
 User Edit:          Editace uživatele
 User List:          Výpis uživatelů
+User Create:        Vytvořit uživatele
 
 # Actions
 Action:             Akce

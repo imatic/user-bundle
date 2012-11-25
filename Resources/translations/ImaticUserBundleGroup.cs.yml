@@ -10,9 +10,10 @@ Name:               Název
 Roles:              Role
 
 # Pages
-User Show:          Detail skupiny
-User Edit:          Editace skupin
+Group Show:         Detail skupiny
+Group Edit:         Editace skupin
 Group List:         Výpis skupin
+Group Create:       Vytvořit skupinu
 
 # Actions
 Action:             Akce

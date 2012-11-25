@@ -1,22 +1,24 @@
-{% from 'MopaBootstrapBundle::flash.html.twig' import session_flash %}
+{% from 'ImaticViewBundle:Component:flash.html.twig' import session_message %}
 {% extends '::base.html.twig' %}
 
-{#{% block body %}#}
-    {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
-        {#{{ parent() }}#}
-    {#{% else %}#}
-        {#<div class="row-fluid" style="margin-top: 50px;">#}
-            {#{{ block('action') }}#}
-        {#</div>#}
-    {#{% endif %}#}
-{#{% endblock %}#}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/imaticuser/css/style.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ parent() }}
+    {% else %}
+        <div class="row-fluid" style="margin-top: 50px;">
+            {{ block('action') }}
+        </div>
+    {% endif %}
+{% endblock %}
 
 {% block action %}
     <div>
-
-        {% if app.session.flashbag.peekAll|length > 0 %}
-            {{ session_flash(null, null, null, 'FOSUserBundle') }}
-        {% endif %}
+        {{ session_message() }}
 
         {% block fos_user_content %}
         {% endblock fos_user_content %}

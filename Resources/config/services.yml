@@ -46,6 +46,7 @@ services:
         class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
         tags:
             - { name: imatic_view.menu, alias: imatic.user }
+            - { name: imatic_view.menu, alias: imatic.user_anon, method: getMenuAnon }
 
     # Twig
     imatic_user.twig.extension.convert_roles:
