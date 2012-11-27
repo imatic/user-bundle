@@ -19,7 +19,7 @@ abstract class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Bundle\UserBundle\Entity\Group")
+     * @ORM\ManyToMany(targetEntity="App\Bundle\UserBundle\Entity\Group", cascade={"persist"})
      * @ORM\JoinTable(name="user_user_group",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")}
