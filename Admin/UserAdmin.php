@@ -42,6 +42,7 @@ class UserAdmin extends Admin
             ->add('username')
             ->add('email')
             ->add('enabled')
+            ->add('lastLogin')
             ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
     }
 
@@ -68,6 +69,7 @@ class UserAdmin extends Admin
             ->add('fullname')
             ->addIdentifier('username')
             ->add('email')
+            ->add('lastLogin')
             ->add('enabled', null, array('editable' => true))
             ->add('_action', 'actions', array('actions' => $actions)
         );
