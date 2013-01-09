@@ -2,8 +2,8 @@
 Group:              Skupina
 
 # Object
-Plural:             Skupina
-Singular:           Skupiny
+Plural:             Skupiny
+Singular:           Skupina
 
 # Properties
 Name:               Název
@@ -16,4 +16,4 @@ Group List:         Výpis skupin
 Group Create:       Vytvořit skupinu
 
 # Actions
-Action:             Akce
+" Action":          Akce

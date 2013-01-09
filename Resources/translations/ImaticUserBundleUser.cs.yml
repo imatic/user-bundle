@@ -4,8 +4,8 @@ Group personal:     Osobní údaje
 Group access:       Nastavení přístupu
 
 # Object
-Plural:             Uživatel
-Singular:           Uživatelé
+Plural:             Uživatelé
+Singular:           Uživatel
 
 # Properties
 Fullname:           Celé jméno
@@ -23,6 +23,6 @@ User List:          Výpis uživatelů
 User Create:        Vytvořit uživatele
 
 # Actions
-Action:             Akce
+" Action":          Akce
 Switch user:        Přepnout uživatele
 Switch user exit:   Opustit přepnutí uživatele
