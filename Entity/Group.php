@@ -29,7 +29,7 @@ abstract class Group extends BaseGroup
      * @var string $description
      *
      * @ORM\Column(type="string", length=255, unique=true, nullable=true)
-     * @Assert\MaxLength(255)
+     * @Assert\Length(max=255)
      */
     protected $description;
 

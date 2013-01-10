@@ -31,8 +31,8 @@ abstract class User extends BaseUser
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\MinLength(3)
-     * @Assert\MaxLength(255)
+     * @Assert\Length(min=3)
+     * @Assert\Length(max=255)
      */
     protected $fullname;
 
