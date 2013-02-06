@@ -5,3 +5,7 @@
 .login .widget-footer .btn {
     margin-bottom: 10px;
 }
+
+.login .widget-footer label {
+    white-space: nowrap;
+}
