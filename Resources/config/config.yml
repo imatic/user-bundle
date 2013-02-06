@@ -8,7 +8,7 @@ fos_user:
     user_class:     %imatic_user.entity.user.class%
 
     group:
-        group_class: %imatic_user.entity.user.class%
+        group_class: %imatic_user.entity.group.class%
 
     profile:
         form:
