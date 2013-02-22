@@ -26,6 +26,7 @@ class UserAdmin extends Admin
             ->with($this->trans('Group personal'), array('collapsed' => false))
             ->add('fullname')
             ->add('username')
+            ->add('plainPassword', 'password', array('label' => 'Password', 'required' => false))
             ->add('email')
             ->end()
             ->with($this->trans('Group access'), array('collapsed' => false))

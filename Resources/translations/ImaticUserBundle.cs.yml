@@ -1,10 +1,21 @@
 # Common
-Forgotten password: Zapomenuté heslo
+User:               Uživatel
+Group personal:     Osobní údaje
+Group access:       Nastavení přístupu
 
 # Properties
 Fullname:           Celé jméno
+Username:           Uživatelské jméno
+Email:              E-mail
+Enabled:            Povolen
+Roles:              Role
+Groups:             Skupiny
+Last Login:         Poslední přihlášení
+Password:           Heslo
+New Password:       Nové heslo
 
 # Pages
-User Profile:       Profil uživatele
-User Profile Edit:  Editace profilu
-Change Password:    Změna hesla
+User Show:          Detail uživatele
+User Edit:          Editace uživatele
+User List:          Výpis uživatelů
+User Create:        Vytvořit uživatele
