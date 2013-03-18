@@ -38,6 +38,8 @@ abstract class User extends BaseUser
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setFullname($name)
     {
