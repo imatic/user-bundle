@@ -1,0 +1,24 @@
+parameters:
+    imatic_user.admin.user.class:       'Imatic\Bundle\UserBundle\Admin\UserAdmin'
+    imatic_user.admin.group.class:      'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
+
+services:
+    imatic_user.admin.user:
+        class: %imatic_user.admin.user.class%
+        arguments:
+            - ~
+            - %imatic_user.entity.user.class%
+            - %imatic_user.controller.user.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: User }
+        calls:
+            - [ setUserManager, [@fos_user.user_manager] ]
+
+    imatic_user.admin.group:
+        class: %imatic_user.admin.group.class%
+        arguments:
+            - ~
+            - %imatic_user.entity.group.class%
+            - %imatic_user.controller.group.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: Group }
