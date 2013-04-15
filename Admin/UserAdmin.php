@@ -29,8 +29,8 @@ class UserAdmin extends Admin
             ->add('plainPassword', 'password', array('label' => 'Password', 'required' => false))
             ->add('email')
             ->end()
-            ->with($this->trans('Group access'), array('collapsed' => false))
-            ->add('enabled', null, array('required' => false))
+            ->with($this->trans('Group access'), array('collapsed' => true))
+            ->add('enabled', null, array('required' => false, 'label_render' => false))
             ->add('groups', null, array('expanded' => true, 'multiple' => true))
             ->add('roles', 'sonata_security_roles', array('expanded' => true, 'multiple' => true, 'required' => false))
             ->end();
