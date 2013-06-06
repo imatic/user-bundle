@@ -13,7 +13,3 @@ fos_user:
     profile:
         form:
             type: imatic_user_profile
-
-security:
-    role_hierarchy:
-        ROLE_SUPER_ADMIN:   [ROLE_ALLOWED_TO_SWITCH]

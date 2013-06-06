@@ -21,11 +21,6 @@ class RoleHelper
     protected $roleHierarchy;
 
     /**
-     * @var array
-     */
-    protected $baseRoles;
-
-    /**
      * @var string
      */
     protected $translationDomain;
@@ -40,11 +35,6 @@ class RoleHelper
         $this->translator = $translator;
         $this->roleHierarchy = $roleHierarchy;
         $this->translationDomain = 'roles';
-        $this->baseRoles = array(
-            'ROLE_USER',
-            'ROLE_SUPER_ADMIN',
-            'ROLE_ALLOWED_TO_SWITCH'
-        );
     }
 
     public function getObjectRoles($object)
@@ -85,7 +75,7 @@ class RoleHelper
         $modules = array();
 
         foreach ($roles as $roleName => $role) {
-            $roleInfo = $this->parseRole($roleName, $this->baseRoles);
+            $roleInfo = $this->parseRole($roleName);
             $moduleName = sprintf('%s.%s', $roleInfo['vendor'], $roleInfo['bundle']);
             $subModuleName = sprintf('%s.%s', $roleInfo['object'], $roleInfo['type']);
 
@@ -113,27 +103,24 @@ class RoleHelper
 
     /**
      * @param string $role
-     * @param array $baseRoles
      * @return array
      */
-    public function parseRole($role, array $baseRoles)
+    public function parseRole($role)
     {
         $roleArray = explode('_', $role);
 
-        if (in_array($role, $baseRoles)) {
-            $roleInfo['vendor'] = 'imatic';
-            $roleInfo['bundle'] = 'user';
-            $roleInfo['type'] = 'common';
-            $roleInfo['object'] = 'common';
+        if (count($roleArray) < 5) {
+            $roleInfo['vendor'] = 'app';
+            $roleInfo['bundle'] = 'global';
+            $roleInfo['type'] = 'global';
+            $roleInfo['object'] = 'global';
             $roleInfo['action'] = '';
-            $roleInfo['base'] = true;
         } else {
             $roleInfo['vendor'] = strtolower($roleArray[1]);
             $roleInfo['bundle'] = strtolower($roleArray[2]);
             $roleInfo['type'] = strtolower($roleArray[3]);
             $roleInfo['object'] = strtolower($roleArray[4]);
             $roleInfo['action'] = strtolower($roleArray[5]);
-            $roleInfo['base'] = false;
         }
         $roleInfo['role'] = $role;
 
