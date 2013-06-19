@@ -8,8 +8,8 @@ use Imatic\Bundle\ViewBundle\Menu\Helper;
 class UserMenuBuilder
 {
     /**
-     * @param Factory $factory
-     * @param Helper $helper
+     * @param  Factory                 $factory
+     * @param  Helper                  $helper
      * @return \Knp\Menu\ItemInterface
      */
     public function getMenu(Factory $factory, Helper $helper)
@@ -28,8 +28,8 @@ class UserMenuBuilder
     }
 
     /**
-     * @param Factory $factory
-     * @param Helper $helper
+     * @param  Factory                 $factory
+     * @param  Helper                  $helper
      * @return \Knp\Menu\ItemInterface
      */
     public function getMenuAnon(Factory $factory, Helper $helper)

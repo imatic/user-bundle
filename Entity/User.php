@@ -73,8 +73,9 @@ abstract class User extends BaseUser
     public function __toString()
     {
         if ($this->getFullname()) {
-            return (string)$this->getFullname();
+            return (string) $this->getFullname();
         }
-        return (string)$this->getUsername();
+
+        return (string) $this->getUsername();
     }
 }

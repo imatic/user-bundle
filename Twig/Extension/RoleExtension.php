@@ -38,7 +38,7 @@ class RoleExtension extends Twig_Extension
     }
 
     /**
-     * @param object $object
+     * @param  object $object
      * @return array
      */
     public function getObjectRoles($object)
@@ -47,7 +47,7 @@ class RoleExtension extends Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $form
+     * @param  \Symfony\Component\Form\FormView   $form
      * @return \Symfony\Component\Form\FormView[]
      */
     public function getFormRoles(FormView $form)
@@ -56,7 +56,7 @@ class RoleExtension extends Twig_Extension
     }
 
     /**
-     * @param array $roles
+     * @param  array $roles
      * @return array
      */
     public function organizeRoles(array $roles)

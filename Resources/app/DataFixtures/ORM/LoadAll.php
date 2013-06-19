@@ -44,13 +44,13 @@ class LoadAll extends ContainerAwareFixture
     }
 
     /**
-     * @param string $username
-     * @param string $password
-     * @param string $email
-     * @param string $fullName
-     * @param array $roles
-     * @param array $groups
-     * @param bool $enabled
+     * @param  string $username
+     * @param  string $password
+     * @param  string $email
+     * @param  string $fullName
+     * @param  array  $roles
+     * @param  array  $groups
+     * @param  bool   $enabled
      * @return User
      */
     protected function createUser($username, $password, $email, $fullName, array $groups = array(), array $roles = array(), $enabled = true)
@@ -79,9 +79,9 @@ class LoadAll extends ContainerAwareFixture
     }
 
     /**
-     * @param string $name
-     * @param string $description
-     * @param array $roles
+     * @param  string $name
+     * @param  string $description
+     * @param  array  $roles
      * @return Group
      */
     protected function createGroup($name, $description, array $roles = array())

@@ -26,8 +26,8 @@ class RoleHelper
     protected $translationDomain;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array $roleHierarchy
+     * @param  TranslatorInterface $translator
+     * @param  array               $roleHierarchy
      * @return RoleHelper
      */
     public function __construct(TranslatorInterface $translator, array $roleHierarchy)
@@ -48,11 +48,12 @@ class RoleHelper
             }
             $roles[$roleName] = $this->translateLabel($label, $this->translationDomain);
         }
+
         return $roles;
     }
 
     /**
-     * @param FormView $formView
+     * @param  FormView   $formView
      * @return FormView[]
      */
     public function getFormRoles(FormView $formView)
@@ -67,7 +68,7 @@ class RoleHelper
     }
 
     /**
-     * @param array $roles
+     * @param  array $roles
      * @return array
      */
     public function organizeRoles(array $roles)
@@ -102,7 +103,7 @@ class RoleHelper
     }
 
     /**
-     * @param string $role
+     * @param  string $role
      * @return array
      */
     public function parseRole($role)
@@ -128,8 +129,8 @@ class RoleHelper
     }
 
     /**
-     * @param string $label
-     * @param string $domain
+     * @param  string $label
+     * @param  string $domain
      * @return string
      */
     public function translateLabel($label, $domain)
@@ -143,8 +144,8 @@ class RoleHelper
 
     /**
      * @todo: refactor this
-     * @param string $label
-     * @param string $domain
+     * @param  string $label
+     * @param  string $domain
      * @return string
      */
     public function translateLabelCallback($label, $domain)

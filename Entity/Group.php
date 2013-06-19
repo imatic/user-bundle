@@ -35,7 +35,7 @@ abstract class Group extends BaseGroup
 
     /**
      * @param string $name
-     * @param array $roles
+     * @param array  $roles
      */
     public function __construct($name = null, $roles = array())
     {
@@ -58,12 +58,11 @@ abstract class Group extends BaseGroup
         $this->description = $description;
     }
 
-
     /**
      * @return string
      */
     public function __toString()
     {
-        return (string)$this->getName();
+        return (string) $this->getName();
     }
 }

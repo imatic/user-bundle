@@ -78,7 +78,7 @@ class UserAdmin extends Admin
 
     /**
      * @todo: use doctrine lifecycle event
-     * @param object $user
+     * @param  object $user
      * @return void
      */
     public function preUpdate($user)

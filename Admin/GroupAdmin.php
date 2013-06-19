@@ -21,7 +21,6 @@ class GroupAdmin extends Admin
         ));
     }
 
-
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
