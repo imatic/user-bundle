@@ -17,7 +17,7 @@
     ],
     "require": {
         "php":">=5.3.3",
-        "symfony/framework-bundle":"2.2.*",
+        "symfony/framework-bundle":"2.3.*",
         "friendsofsymfony/user-bundle": "2.0.x"
     },
     "autoload": {
@@ -27,7 +27,7 @@
     "target-dir": "Imatic/Bundle/UserBundle",
     "extra":{
         "branch-alias":{
-            "dev-master":"2.2.x-dev"
+            "dev-master":"2.3.x-dev"
         }
     }
 }
