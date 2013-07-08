@@ -26,7 +26,6 @@ class ProfileFormType extends BaseProfileFormType
      */
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fullname', null, array('label' => 'Fullname', 'translation_domain' => 'ImaticUserBundle'));
         parent::buildUserForm($builder, $options);
     }
 

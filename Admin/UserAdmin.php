@@ -24,7 +24,6 @@ class UserAdmin extends Admin
     {
         $formMapper
             ->with($this->trans('Group personal'), array('collapsed' => false))
-            ->add('fullname')
             ->add('username')
             ->add('plainPassword', 'password', array('label' => 'Password', 'required' => false))
             ->add('email')
@@ -39,7 +38,6 @@ class UserAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('fullname')
             ->add('username')
             ->add('email')
             ->add('enabled')
@@ -50,7 +48,6 @@ class UserAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $dataGridMapper)
     {
         $dataGridMapper
-            ->add('fullname')
             ->add('username')
             ->add('email')
             ->add('enabled');
@@ -67,7 +64,6 @@ class UserAdmin extends Admin
         }
 
         $listMapper
-            ->add('fullname')
             ->addIdentifier('username')
             ->add('email')
             ->add('lastLogin')
