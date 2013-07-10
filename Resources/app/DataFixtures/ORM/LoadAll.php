@@ -34,10 +34,10 @@ class LoadAll extends ContainerAwareFixture
         $adminGroup = $this->createGroup('Administrators', 'System administrators', $adminRoles);
         $userGroup = $this->createGroup('Users', 'Standard users', $userRoles);
 
-        $adminUser = $this->createUser('admin', 'adminpass123', 'admin@example.com', 'Admin', array($adminGroup));
+        $adminUser = $this->createUser('admin', 'adminpass123', 'admin@example.com', array($adminGroup));
         $manager->persist($adminUser);
 
-        $userUser = $this->createUser('user', 'userpass123', 'user@example.com', 'User', array($userGroup));
+        $userUser = $this->createUser('user', 'userpass123', 'user@example.com', array($userGroup));
         $manager->persist($userUser);
 
         $manager->flush();
@@ -47,17 +47,15 @@ class LoadAll extends ContainerAwareFixture
      * @param  string $username
      * @param  string $password
      * @param  string $email
-     * @param  string $fullName
      * @param  array  $roles
      * @param  array  $groups
      * @param  bool   $enabled
      * @return User
      */
-    protected function createUser($username, $password, $email, $fullName, array $groups = array(), array $roles = array(), $enabled = true)
+    protected function createUser($username, $password, $email, array $groups = array(), array $roles = array(), $enabled = true)
     {
         $user = new User();
         $user->setUsername($username);
-        $user->setFullname($fullName);
         $user->setEmail($email);
         $user->setPlainPassword($password);
         $user->setEnabled($enabled);

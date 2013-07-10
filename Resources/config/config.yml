@@ -1,6 +1,6 @@
 parameters:
-    imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
-    imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
+    imatic_user.entity.user.class:      'Imatic\Bundle\UserBundle\Entity\User'
+    imatic_user.entity.group.class:     'Imatic\Bundle\UserBundle\Entity\Group'
 
 fos_user:
     db_driver:      orm # can be orm or odm

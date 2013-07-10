@@ -8,7 +8,6 @@ Plural:             Uživatelé
 Singular:           Uživatel
 
 # Properties
-Fullname:           Celé jméno
 Username:           Uživatelské jméno
 Password:           Heslo
 Email:              E-mail

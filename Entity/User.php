@@ -28,33 +28,6 @@ abstract class User extends BaseUser
     protected $groups;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min=3)
-     * @Assert\Length(max=255)
-     */
-    protected $fullname;
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setFullname($name)
-    {
-        $this->fullname = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFullname()
-    {
-        return $this->fullname;
-    }
-
-    /**
      * @return array
      */
     public function getGroupRoles()
@@ -72,10 +45,6 @@ abstract class User extends BaseUser
      */
     public function __toString()
     {
-        if ($this->getFullname()) {
-            return (string) $this->getFullname();
-        }
-
         return (string) $this->getUsername();
     }
 }
