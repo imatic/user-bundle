@@ -1,17 +1,13 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class ImaticUserExtension extends Extension
 {
     /**
@@ -19,10 +15,45 @@ class ImaticUserExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $configuration = $this->processConfiguration(new Configuration(), $configs);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+        $this->loadSecurity($configuration['security'], $container);
+    }
+
+    /**
+     * @param array $configuration
+     * @param ContainerBuilder $container
+     * @throws \InvalidArgumentException
+     */
+    private function loadSecurity(array $configuration, ContainerBuilder $container)
+    {
+        $tag = 'imatic_user.role_provider';
+        $interface = 'Imatic\Bundle\UserBundle\Security\Role\RoleProviderInterface';
+
+        foreach ($container->findTaggedServiceIds($tag) as $id => $tags) {
+            if (!is_subclass_of($container->getDefinition($id)->getClass(), $interface)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'The service "%s" tagged as "%s" must be an instance of "%s".',
+                    $id,
+                    $tag,
+                    $interface
+                ));
+            }
+
+            foreach ($tags as $attributes) {
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
+                $configurationId = $alias . '.configuration';
+                $definition = new DefinitionDecorator('imatic_user.security.configuration.abstract');
+
+                if (isset($configuration[$alias])) {
+                    $config = $configuration[$alias];
+                    $definition->setArguments([$config['excludes'], $config['includes'], $config['groups']]);
+                }
+
+                $container->setDefinition($configurationId, $definition);
+                $container->getDefinition($id)->addMethodCall('setConfiguration', [new Reference($configurationId)]);
+            }
+        }
     }
 }

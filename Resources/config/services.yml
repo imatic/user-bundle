@@ -32,9 +32,32 @@ services:
         tags:
             - { name: twig.extension }
 
+    imatic_user.twig.extension.security:
+        class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
+        arguments:
+            - @imatic_user.security.model_role_provider
+        tags:
+            - { name: twig.extension }
+
     # Helper
     imatic_user.helper.role_helper:
         class: Imatic\Bundle\UserBundle\Helper\RoleHelper
         arguments:
             - @translator
             - %security.role_hierarchy.roles%
+
+    # Security
+    imatic_user.security.configuration.abstract:
+        class: Imatic\Bundle\UserBundle\Security\Role\Configuration
+        abstract: true
+
+    imatic_user.security.metadata_factory:
+        class: Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getMetadataFactory
+
+    imatic_user.security.model_role_provider:
+        class: Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider
+        arguments: [@imatic_user.security.metadata_factory]
+        tags:
+            - { name: imatic_user.role_provider, alias: imatic.model_role_provider }
