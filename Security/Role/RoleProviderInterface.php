@@ -4,22 +4,15 @@ namespace Imatic\Bundle\UserBundle\Security\Role;
 interface RoleProviderInterface
 {
     /**
-     * @param string|null $class
      * @return Role[]
      */
-    public function getRoles($class = null);
+    public function getRoles();
 
     /**
-     * @param object|string $object
+     * @param mixed $object
      * @param string $property
      * @param string $action
-     * @return Role
+     * @return Role|null
      */
-    public function getRole($object, $property, $action);
-
-    /**
-     * @param Configuration $configuration
-     * @return $this
-     */
-    public function setConfiguration(Configuration $configuration);
+    public function getRole($object, $property = '', $action = '');
 }

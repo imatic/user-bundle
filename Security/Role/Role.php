@@ -31,7 +31,7 @@ class Role implements RoleInterface
      * @param string $action
      * @param string $property
      */
-    public function __construct($vendor, $bundle, $type, $name, $action, $property = '')
+    public function __construct($vendor, $bundle, $type, $name, $action = '', $property = '')
     {
         $this->vendor = (string) $vendor;
         $this->bundle = (string) $bundle;
@@ -102,6 +102,14 @@ class Role implements RoleInterface
     public function getProperty()
     {
         return $this->property;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbsoluteName()
+    {
+        return sprintf('%s%s%s', $this->vendor, $this->bundle == '' ? '' : $this->bundle . 'Bundle', $this->getName());
     }
 
     /**

@@ -28,32 +28,30 @@ class ImaticUserExtension extends Extension
      */
     private function loadSecurity(array $configuration, ContainerBuilder $container)
     {
-        $tag = 'imatic_user.role_provider';
-        $interface = 'Imatic\Bundle\UserBundle\Security\Role\RoleProviderInterface';
+        $interface = 'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface';
+        $definition = $container->getDefinition('imatic_user.security.chain_role_provider');
+        $aliases = [];
 
-        foreach ($container->findTaggedServiceIds($tag) as $id => $tags) {
-            if (!is_subclass_of($container->getDefinition($id)->getClass(), $interface)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'The service "%s" tagged as "%s" must be an instance of "%s".',
-                    $id,
-                    $tag,
-                    $interface
-                ));
-            }
+        foreach ($container->getAliases() as $name => $alias) {
+            $aliases[(string) $alias][] = $name;
+        }
 
-            foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
-                $configurationId = $alias . '.configuration';
-                $definition = new DefinitionDecorator('imatic_user.security.configuration.abstract');
+        foreach (array_keys($container->findTaggedServiceIds('imatic_user.role_provider')) as $id) {
+            if (is_subclass_of($container->getDefinition($id)->getClass(), $interface)) {
+                $ids = isset($aliases[$id]) ? $aliases[$id] : [];
+                $ids[] = $id;
 
-                if (isset($configuration[$alias])) {
-                    $config = $configuration[$alias];
-                    $definition->setArguments([$config['excludes'], $config['includes'], $config['groups']]);
+                foreach ($ids as $name) {
+                    if (isset($configuration['config'][$name])) {
+                        $container->getDefinition($id)->addMethodCall('setConfig', [$configuration['config'][$name]]);
+                        break;
+                    }
                 }
-
-                $container->setDefinition($configurationId, $definition);
-                $container->getDefinition($id)->addMethodCall('setConfiguration', [new Reference($configurationId)]);
             }
+        }
+
+        foreach ($configuration['providers'] as $id) {
+            $definition->addMethodCall('addRoleProvider', [new Reference($id)]);
         }
     }
 }

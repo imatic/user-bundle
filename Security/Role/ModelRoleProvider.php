@@ -4,16 +4,24 @@ namespace Imatic\Bundle\UserBundle\Security\Role;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
-class ModelRoleProvider implements RoleProviderInterface
+class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 {
+    const CONFIG_INCLUDES = 'includes';
+    const CONFIG_EXCLUDES = 'excludes';
+    const CONFIG_GROUPS = 'groups';
+
     /** @var ClassMetadataFactory */
     private $metadataFactory;
 
     /** @var ObjectRoleFactory */
     private $roleFactory;
 
-    /** @var Configuration */
-    private $configuration;
+    /** @var array */
+    private $config = [
+        self::CONFIG_INCLUDES => [],
+        self::CONFIG_EXCLUDES => [],
+        self::CONFIG_GROUPS => []
+    ];
 
     /** @var string[] */
     private $actions = ['show', 'edit'];
@@ -29,28 +37,23 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param ClassMetadataFactory $metadataFactory
-     * @param ObjectRoleFactory $roleFactory
      */
-    public function __construct(
-        ClassMetadataFactory $metadataFactory,
-        ObjectRoleFactory $roleFactory = null
-    ) {
+    public function __construct(ClassMetadataFactory $metadataFactory)
+    {
         $this->metadataFactory = $metadataFactory;
-        $this->roleFactory = $roleFactory ?: new ObjectRoleFactory();
-        $this->configuration = new Configuration;
+        $this->roleFactory = new ObjectRoleFactory();
     }
 
     /**
-     * @param string|null $class
      * @return Role[]
      */
-    public function getRoles($class = null)
+    public function getRoles()
     {
         if ($this->roles === null) {
             $this->roles = [];
 
             foreach ($this->getAllMetadata() as $metadata) {
-                if ($this->isExcluded($metadata->name)) {
+                if (!$this->isIncluded($metadata->name)) {
                     continue;
                 }
 
@@ -67,25 +70,20 @@ class ModelRoleProvider implements RoleProviderInterface
             }
         }
 
-        if ($class === null) {
-            return $this->roles ? array_values(call_user_func_array('array_merge', $this->roles)) : [];
-        }
-
-        return isset($this->roles[$class]) ? array_values($this->roles[$class]) : [];
+        return $this->roles ? array_values(call_user_func_array('array_merge', $this->roles)) : [];
     }
 
     /**
-     * @param object|string $object
+     * @param mixed $object
      * @param string $property
      * @param string $action
-     * @return Role
+     * @return Role|null
      */
-    public function getRole($object, $property, $action)
+    public function getRole($object, $property = '', $action = '')
     {
         $this->getRoles();
         $class = $this->getClass($object);
         $properties = $this->getProperties();
-
         $key = $this->getRoleKey(
             $class,
             isset($properties[$class][$property]) ? $properties[$class][$property] : $property,
@@ -96,12 +94,20 @@ class ModelRoleProvider implements RoleProviderInterface
     }
 
     /**
-     * @param Configuration $configuration
+     * @param array $config
      * @return $this
+     * @throws \InvalidArgumentException
      */
-    public function setConfiguration(Configuration $configuration)
+    public function setConfig(array $config)
     {
-        $this->configuration = $configuration;
+        foreach ($config as $name => $value) {
+            if (!isset($this->config[$name])) {
+                throw new \InvalidArgumentException(sprintf('The config name "%s" is not valid.', $name));
+            }
+
+            $this->config[$name] = (array) $value;
+        }
+
         $this->roles = null;
         $this->groups = null;
 
@@ -123,11 +129,11 @@ class ModelRoleProvider implements RoleProviderInterface
      * @param string $class
      * @return bool
      */
-    public function isExcluded($class)
+    public function isIncluded($class)
     {
         foreach ($this->getFilters() as $prefix => $filter) {
             if (!strncasecmp($class . '\\', $prefix, strlen($prefix))) {
-                return $filter[0] == 'exclude';
+                return $filter[0] == 'include';
             }
         }
 
@@ -193,7 +199,7 @@ class ModelRoleProvider implements RoleProviderInterface
         if ($this->groups === null) {
             $this->groups = [];
 
-            foreach ($this->configuration->getGroups() as $class => $group) {
+            foreach ($this->config[static::CONFIG_GROUPS] as $class => $group) {
                 $this->groups[$this->metadataFactory->getMetadataFor($class)->name] = $group;
             }
         }
@@ -227,8 +233,8 @@ class ModelRoleProvider implements RoleProviderInterface
     private function getFilters()
     {
         $configuration = [
-            'exclude' => $this->configuration->getExcludes(),
-            'include' => $this->configuration->getIncludes()
+            'include' => $this->config[static::CONFIG_INCLUDES],
+            'exclude' => $this->config[static::CONFIG_EXCLUDES]
         ];
         $filters = [];
 
@@ -238,7 +244,7 @@ class ModelRoleProvider implements RoleProviderInterface
             }
         }
 
-        uksort($filters, [$this, 'sortFilters']);
+        uasort($filters, [$this, 'sortFilters']);
 
         return $filters;
     }
@@ -254,6 +260,6 @@ class ModelRoleProvider implements RoleProviderInterface
             return 0;
         }
 
-        return $a[1] > $b[1] ? 1 : -1;
+        return $a[1] > $b[1] ? -1 : 1;
     }
 }
