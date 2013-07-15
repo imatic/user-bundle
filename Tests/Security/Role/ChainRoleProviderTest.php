@@ -3,7 +3,7 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\RoleProviderInterface;
-use Imatic\Bundle\UserBundle\Security\Role\Role;
+use Imatic\Bundle\UserBundle\Security\Role\SimpleRole;
 
 class ChainRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,12 +17,12 @@ class ChainRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->roleProvider = new ChainRoleProvider([
             $this->createRoleProviderMock([
-                new Role('vendor', 'bundle', 'type', 'name_a'),
-                new Role('vendor', 'bundle', 'type', 'name_b')
+                new SimpleRole('role_a'),
+                new SimpleRole('role_b')
             ]),
             $this->createRoleProviderMock([
-                new Role('vendor', 'bundle', 'type', 'name_c'),
-                new Role('vendor', 'bundle', 'type', 'name_d')
+                new SimpleRole('role_c'),
+                new SimpleRole('role_d')
             ])
         ]);
     }
@@ -31,10 +31,10 @@ class ChainRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             [
-                new Role('vendor', 'bundle', 'type', 'name_a'),
-                new Role('vendor', 'bundle', 'type', 'name_b'),
-                new Role('vendor', 'bundle', 'type', 'name_c'),
-                new Role('vendor', 'bundle', 'type', 'name_d')
+                new SimpleRole('role_a'),
+                new SimpleRole('role_b'),
+                new SimpleRole('role_c'),
+                new SimpleRole('role_d')
             ],
             $this->roleProvider->getRoles()
         );

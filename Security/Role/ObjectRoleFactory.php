@@ -7,7 +7,7 @@ class ObjectRoleFactory
      * @param object|string $object
      * @param string $property
      * @param string $action
-     * @return Role
+     * @return ObjectRole
      * @throws \InvalidArgumentException
      */
     public function createRole($object, $property, $action)
@@ -31,6 +31,6 @@ class ObjectRoleFactory
             $bundle = substr($bundle, 0, -6);
         }
 
-        return new Role($vendor, $bundle, $type, implode('_', $name), $action, $property);
+        return new ObjectRole($vendor, $bundle, $type, implode('_', $name), $property, $action);
     }
 }

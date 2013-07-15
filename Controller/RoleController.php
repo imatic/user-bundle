@@ -6,9 +6,6 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
 use Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\HierarchyRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,7 +31,7 @@ class RoleController extends Controller
         $roleMap = [];
 
         foreach ($this->getRoleProvider()->getRoles() as $role) {
-            $roleMap[$role->getType()][$role->getAbsoluteName()][] = $role;
+            $roleMap[$role->getType()][$role->getDomain()][] = $role;
         }
 
         return [
@@ -65,6 +62,14 @@ class RoleController extends Controller
         $this->updateObject($object);
 
         return new Response();
+    }
+
+    /**
+     * @return ChainRoleProvider
+     */
+    private function getRoleProvider()
+    {
+        return $this->get('imatic.role_provider');
     }
 
     /**
@@ -106,13 +111,5 @@ class RoleController extends Controller
         } else {
             $this->getManager(static::TYPE_GROUP)->updateGroup($object);
         }
-    }
-
-    /**
-     * @return ChainRoleProvider
-     */
-    private function getRoleProvider()
-    {
-        return $this->get('imatic.role_provider');
     }
 }

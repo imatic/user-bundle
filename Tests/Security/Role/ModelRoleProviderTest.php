@@ -3,9 +3,8 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
-use Imatic\Bundle\UserBundle\Security\Role\Configuration;
 use Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\Role;
+use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,14 +25,14 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->roleProvider->setConfig([ModelRoleProvider::CONFIG_INCLUDES => 'Vendor']);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'association'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'association'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'show', 'property'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'edit', 'property')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'edit')
             ],
             $this->roleProvider->getRoles()
         );
@@ -49,12 +48,12 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'association'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'association')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit')
             ],
             $this->roleProvider->getRoles()
         );
@@ -71,8 +70,8 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'group'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'group')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'edit')
             ],
             $this->roleProvider->getRoles()
         );

@@ -21,7 +21,7 @@ class HierarchyRoleProvider implements RoleProviderInterface
     }
 
     /**
-     * @return Role[]
+     * @return SimpleRole[]
      */
     public function getRoles()
     {
@@ -36,7 +36,7 @@ class HierarchyRoleProvider implements RoleProviderInterface
             );
 
             foreach ($roles as $role) {
-                $this->roles[$role] = new Role('', '', 'global', 'roles', $role);
+                $this->roles[$role] = new SimpleRole($role);
             }
         }
 
@@ -45,7 +45,7 @@ class HierarchyRoleProvider implements RoleProviderInterface
 
     /**
      * @param string $role
-     * @return Role|null
+     * @return SimpleRole|null
      */
     public function getRole($role, $_ = '', $_ = '')
     {

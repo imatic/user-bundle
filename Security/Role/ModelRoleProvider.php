@@ -45,7 +45,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
-     * @return Role[]
+     * @return ObjectRole[]
      */
     public function getRoles()
     {
@@ -77,7 +77,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      * @param mixed $object
      * @param string $property
      * @param string $action
-     * @return Role|null
+     * @return ObjectRole|null
      */
     public function getRole($object, $property = '', $action = '')
     {

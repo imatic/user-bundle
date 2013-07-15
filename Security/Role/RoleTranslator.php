@@ -29,17 +29,20 @@ class RoleTranslator
     public function translateRole(Role $role)
     {
         $translation = $this->translator->trans($role->getRole(), [], 'roles');
-        $label = $this->translatorStrategy->getLabel($role->getProperty());
+        $label = $this->translatorStrategy->getLabel($role->getLabel());
+        $action = $role->getAction();
 
         if ($translation != $role->getRole()) {
             return $translation;
         }
 
-        return sprintf(
-            '%s – %s',
-            $this->translator->trans($label, [], $role->getAbsoluteName()),
-            $this->translator->trans($role->getAction(), [], 'role_actions')
-        );
+        $translation = $this->translator->trans($label, [], $role->getDomain());
+
+        if ($action != '') {
+            $translation .= sprintf(' – %s', $this->translator->trans($role->getAction(), [], 'role_actions'));
+        }
+
+        return $translation;
     }
 
     /**
@@ -52,13 +55,13 @@ class RoleTranslator
     }
 
     /**
-     * @param string $roleName
+     * @param string $domain
      * @return string
      */
-    public function translateRoleAbsoluteName($roleName)
+    public function translateRoleDomain($domain)
     {
-        $translation = $this->translator->trans('Plural', [], $roleName);
+        $translation = $this->translator->trans('Plural', [], $domain);
 
-        return $translation == 'Plural' ? $roleName : $translation;
+        return $translation == 'Plural' ? $domain : $translation;
     }
 }

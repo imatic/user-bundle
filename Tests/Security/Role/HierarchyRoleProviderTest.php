@@ -2,7 +2,7 @@
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\Role;
+use Imatic\Bundle\UserBundle\Security\Role\SimpleRole;
 
 class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,10 +25,10 @@ class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], (new HierarchyRoleProvider([]))->getRoles());
         $this->assertEquals(
             [
-                new Role('app', 'global', 'global', 'ROLE_ADMIN'),
-                new Role('app', 'global', 'global', 'ROLE_SUPER_ADMIN'),
-                new Role('app', 'global', 'global', 'ROLE_USER'),
-                new Role('app', 'global', 'global', 'ROLE_ALLOWED_TO_SWITCH')
+                new SimpleRole('ROLE_ADMIN'),
+                new SimpleRole('ROLE_SUPER_ADMIN'),
+                new SimpleRole('ROLE_USER'),
+                new SimpleRole('ROLE_ALLOWED_TO_SWITCH')
             ],
             $this->roleProvider->getRoles()
         );
@@ -38,7 +38,7 @@ class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->roleProvider->getRole('FOO'));
         $this->assertEquals(
-            new Role('app', 'global', 'global', 'ROLE_ADMIN'),
+            new SimpleRole('ROLE_ADMIN'),
             $this->roleProvider->getRole('ROLE_ADMIN')
         );
     }
