@@ -36,6 +36,7 @@ services:
         class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
         arguments:
             - @imatic_user.security.model_role_provider
+            - @imatic_user.security.role_translator
         tags:
             - { name: twig.extension }
 
@@ -47,10 +48,6 @@ services:
             - %security.role_hierarchy.roles%
 
     # Security
-    imatic_user.security.configuration.abstract:
-        class: Imatic\Bundle\UserBundle\Security\Role\Configuration
-        abstract: true
-
     imatic_user.security.metadata_factory:
         class: Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
         factory_service: doctrine.orm.entity_manager
@@ -59,5 +56,30 @@ services:
     imatic_user.security.model_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider
         arguments: [@imatic_user.security.metadata_factory]
+        public: false
         tags:
-            - { name: imatic_user.role_provider, alias: imatic.model_role_provider }
+            - { name: imatic_user.role_provider }
+
+    imatic_user.security.hierarchy_role_provider:
+        class: Imatic\Bundle\UserBundle\Security\Role\HierarchyRoleProvider
+        arguments: [%security.role_hierarchy.roles%]
+        tags:
+            - { name: imatic_user.role_provider }
+
+    imatic_user.security.chain_role_provider:
+        class: Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider
+        tags:
+            - { name: imatic_user.role_provider }
+
+    imatic_user.security.role_translator:
+        class: Imatic\Bundle\UserBundle\Security\Role\RoleTranslator
+        arguments: [@translator, @sonata.admin.label.strategy.native]
+
+    imatic.model_role_provider:
+        alias: imatic_user.security.model_role_provider
+
+    imatic.hierarchy_role_provider:
+        alias: imatic_user.security.hierarchy_role_provider
+
+    imatic.role_provider:
+        alias: imatic_user.security.chain_role_provider

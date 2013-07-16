@@ -3,9 +3,8 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
-use Imatic\Bundle\UserBundle\Security\Role\Configuration;
 use Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider;
-use Imatic\Bundle\UserBundle\Security\Role\Role;
+use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,37 +23,39 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRoles()
     {
+        $this->assertEmpty($this->roleProvider->getRoles());
+        $this->roleProvider->setConfig([ModelRoleProvider::CONFIG_INCLUDES => 'Vendor']);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyA'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'propertyB'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'association'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'association'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'show', 'property'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'edit', 'property')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'edit')
             ],
             $this->roleProvider->getRoles()
-        );
-        $this->assertEquals(
-            [
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'show', 'property'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'edit', 'property')
-            ],
-            $this->roleProvider->getRoles('Vendor\Foo\Entity\Bar\ClassB')
         );
     }
 
     public function testGetRolesShouldBeFiltered()
     {
-        $this->roleProvider->setConfiguration(new Configuration(['Vendor']));
+        $this->roleProvider->setConfig([ModelRoleProvider::CONFIG_INCLUDES => 'Foo']);
         $this->assertEmpty($this->roleProvider->getRoles());
-        $this->roleProvider->setConfiguration(new Configuration(['Vendor\Foo'], ['Vendor\Foo\Entity\Bar']));
+        $this->roleProvider->setConfig([
+            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor'],
+            ModelRoleProvider::CONFIG_EXCLUDES => ['Vendor\Foo\Entity\Bar']
+        ]);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'show', 'property'),
-                new Role('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'edit', 'property')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit')
             ],
             $this->roleProvider->getRoles()
         );
@@ -62,15 +63,17 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRolesShouldContainGroupsOnly()
     {
-        $this->roleProvider->setConfiguration(new Configuration(
-            ['Vendor'],
-            ['Vendor\Foo\Entity\ClassA'],
-            ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]]
-        ));
+        $this->roleProvider->setConfig([
+            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor\Foo\Entity\ClassA'],
+            ModelRoleProvider::CONFIG_EXCLUDES => [],
+            ModelRoleProvider::CONFIG_GROUPS => [
+                'Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]
+            ]
+        ]);
         $this->assertEquals(
             [
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'show', 'group'),
-                new Role('Vendor', 'Foo', 'entity', 'ClassA', 'edit', 'group')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'edit')
             ],
             $this->roleProvider->getRoles()
         );
@@ -78,9 +81,10 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRole()
     {
-        $this->roleProvider->setConfiguration(new Configuration([], [], [
-            'Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]
-        ]));
+        $this->roleProvider->setConfig([
+            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor'],
+            ModelRoleProvider::CONFIG_GROUPS => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]]
+        ]);
         $this->assertNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'list'));
         $this->assertNotNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'show'));
         $this->assertNotNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'edit'));

@@ -11,16 +11,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /** @var \Closure */
-    private $arrayValue;
-
-    public function __construct()
-    {
-        $this->arrayValue = function($value) {
-            return [$value];
-        };
-    }
-
     /**
      * @return TreeBuilder
      */
@@ -41,28 +31,13 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('security')
-                    ->prototype('array')
-                        ->children()
-                            ->arrayNode('excludes')
-                                ->beforeNormalization()
-                                    ->ifString()
-                                    ->then($this->arrayValue)
-                                ->end()
-                                ->prototype('scalar')->end()
-                            ->end()
-                            ->arrayNode('includes')
-                                ->beforeNormalization()
-                                    ->ifString()
-                                    ->then($this->arrayValue)
-                                ->end()
-                                ->prototype('scalar')->end()
-                            ->end()
-                            ->arrayNode('groups')
-                                ->prototype('array')
-                                    ->prototype('array')
-                                        ->prototype('scalar')->end()
-                                    ->end()
-                                ->end()
+                    ->children()
+                        ->arrayNode('providers')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->arrayNode('config')
+                            ->prototype('array')
+                                ->prototype('variable')->end()
                             ->end()
                         ->end()
                     ->end()

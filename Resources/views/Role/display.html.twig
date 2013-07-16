@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block action %}
+    <div class="roles">
+        <ul class="nav nav-tabs">
+            {% for type in roleMap|keys %}
+                <li class="{{ {active: loop.first}|imatic_class }}">
+                    <a href="#roles-{{ type|imatic_slug }}" data-toggle="tab">{{ type|trans_role_type }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for type, roleList in roleMap %}
+                <div id="roles-{{ type|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                    <ul class="nav nav-pills nav-stacked pull-left">
+                        {% for domain in roleList|keys %}
+                            <li class="{{ {active: loop.first}|imatic_class }}">
+                                <a href="#roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" data-toggle="pill">
+                                    {{ domain|trans_role_domain }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for domain, roles in roleList %}
+                            <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                                <ul class="unstyled" style="margin-left: 2em">
+                                    {% for role in roles %}
+                                        <li>
+                                            <label class="checkbox">
+                                                <input
+                                                    data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role, enabled: '_enabled_'}) }}"
+                                                    type="checkbox"
+                                                    {% if object.hasRole(role.role) %} checked{% endif %}
+                                                >
+                                                {{ role|trans_role }}
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        $('.roles input').change(function() {
+            var $this = $(this);
+            $.get($this.data('url').replace('_enabled_', $this.prop('checked') ? 1 : 0));
+        });
+    </script>
+{% endblock %}

@@ -1,22 +1,13 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
-use InvalidArgumentException;
-
-/**
- * Class ObjectRoleFactory
- * @package Imatic\Bundle\UserBundle\Security\Role
- */
 class ObjectRoleFactory
 {
     /**
      * @param object|string $object
-     * @param string        $property
-     * @param string        $action
-     *
-     * @return Role
-     *
+     * @param string $property
+     * @param string $action
+     * @return ObjectRole
      * @throws \InvalidArgumentException
      */
     public function createRole($object, $property, $action)
@@ -40,6 +31,6 @@ class ObjectRoleFactory
             $bundle = substr($bundle, 0, -6);
         }
 
-        return new Role($vendor, $bundle, $type, implode('_', $name), $action, $property);
+        return new ObjectRole($vendor, $bundle, $type, implode('_', $name), $property, $action);
     }
 }
