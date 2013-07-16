@@ -1,0 +1,9 @@
+fos_user:
+    db_driver:                  orm
+    firewall_name:              main
+    user_class:                 Imatic\Bundle\UserBundle\Model\UserInterface
+    group:
+        group_class:            Imatic\Bundle\UserBundle\Model\GroupInterface
+    profile:
+        form:
+            type:               imatic_user_profile

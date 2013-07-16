@@ -1,0 +1,823 @@
+<?php
+
+namespace Imatic\Bundle\UserBundle\Model;
+
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
+
+/**
+ * User.
+ *
+ * @author Viliam Husár <viliam.husar@imatic.cz>
+ */
+class User implements UserInterface
+{
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @var string
+     */
+    protected $usernameCanonical;
+
+    /**
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * @var string
+     */
+    protected $emailCanonical;
+
+    /**
+     * Encrypted password
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * Plain password, Used for model validation, must not be persisted
+     * @var string
+     */
+    protected $plainPassword;
+
+    /**
+     * The salt to use for hashing
+     * @var string
+     */
+    protected $salt;
+
+    /**
+     * @var DateTime
+     */
+    protected $lastLogin;
+
+    /**
+     * Random string sent to the user email address in order to verify it
+     * @var string
+     */
+    protected $confirmationToken;
+
+    /**
+     * @var DateTime
+     */
+    protected $passwordRequestedAt;
+
+    /**
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
+     * @var bool
+     */
+    protected $locked;
+
+    /**
+     * @var bool
+     */
+    protected $expired;
+
+    /**
+     * @var DateTime
+     */
+    protected $expiresAt;
+
+    /**
+     * @var bool
+     */
+    protected $credentialsExpired;
+
+    /**
+     * @var DateTime
+     */
+    protected $credentialsExpireAt;
+
+    /**
+     * @var array
+     */
+    protected $roles;
+
+    /**
+     * @var Collection
+     */
+    protected $groups;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->enabled = false;
+        $this->locked = false;
+        $this->expired = false;
+        $this->credentialsExpired = false;
+        $this->roles = array();
+        $this->groups = new ArrayCollection();
+    }
+
+    /**
+     * Returns string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getUsername();
+    }
+
+
+    /**
+     * Returns id.
+     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets username.
+     *
+     * @param string $username
+     *
+     * @return $this
+     */
+    public function setUsername($username)
+    {
+        $this->username = (string) $username;
+
+        return $this;
+    }
+
+    /**
+     * Returns username.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Sets canonical username.
+     *
+     * @param string $usernameCanonical
+     *
+     * @return $this
+     */
+    public function setUsernameCanonical($usernameCanonical)
+    {
+        $this->usernameCanonical = (string) $usernameCanonical;
+
+        return $this;
+    }
+
+    /**
+     * Returns canonical username.
+     *
+     * @return string
+     */
+    public function getUsernameCanonical()
+    {
+        return $this->usernameCanonical;
+    }
+
+    /**
+     * Sets email.
+     *
+     * @param string $email
+     *
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = (string) $email;
+
+        return $this;
+    }
+
+    /**
+     * Returns email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Sets canonical email.
+     *
+     * @param string $emailCanonical
+     *
+     * @return $this
+     */
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->emailCanonical = (string) $emailCanonical;
+
+        return $this;
+    }
+
+    /**
+     * Returns canonical email.
+     *
+     * @return string
+     */
+    public function getEmailCanonical()
+    {
+        return $this->emailCanonical;
+    }
+
+    /**
+     * Sets encrypted password.
+     *
+     * @param string $password
+     *
+     * @return $this
+     */
+    public function setPassword($password)
+    {
+        $this->password = (string) $password;
+
+        return $this;
+    }
+
+    /**
+     * Returns encrypted password.
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Sets plain password.
+     *
+     * @param string $password
+     *
+     * @return $this
+     */
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = (string) $password;
+
+        return $this;
+    }
+
+    /**
+     * Returns plain password.
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Returns salt.
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Sets last login.
+     *
+     * @param DateTime $time
+     *
+     * @return $this
+     */
+    public function setLastLogin(DateTime $time = null)
+    {
+        $this->lastLogin = $time;
+
+        return $this;
+    }
+
+    /**
+     * Returns last login time.
+     *
+     * @return DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * Sets confirmation token.
+     *
+     * @param string $confirmationToken
+     *
+     * @return $this
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = (string) $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Returns confirmation token.
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Sets password request at.
+     *
+     * @param DateTime $date
+     *
+     * @return $this
+     */
+    public function setPasswordRequestedAt(DateTime $date = null)
+    {
+        $this->passwordRequestedAt = $date;
+
+        return $this;
+    }
+
+    /**
+     * Returns password requested at.
+     *
+     * @return null|\DateTime
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    /**
+     * Sets enabled.
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setEnabled($bool)
+    {
+        $this->enabled = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
+     * Returns true if user is enabled, false otherwise.
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Sets locked.
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setLocked($bool)
+    {
+        $this->locked = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
+     * Returns true if user is locked, false otherwise.
+     *
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return !$this->isAccountNonLocked();
+    }
+
+    /**
+     * Sets expired.
+     *
+     * @param bool $bool
+     *
+     * @return User
+     */
+    public function setExpired($bool)
+    {
+        $this->expired = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
+     * Returns true if user is expired, false otherwise.
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        return !$this->isAccountNonExpired();
+    }
+
+    /**
+     * Sets expired at.
+     *
+     * @param DateTime $date
+     *
+     * @return $this
+     */
+    public function setExpiresAt(DateTime $date = null)
+    {
+        $this->expiresAt = $date;
+
+        return $this;
+    }
+
+    /**
+     * Sets credential expired at.
+     *
+     * @param DateTime $date
+     *
+     * @return $this
+     */
+    public function setCredentialsExpireAt(DateTime $date = null)
+    {
+        $this->credentialsExpireAt = $date;
+
+        return $this;
+    }
+
+    /**
+     * Sets credentials expired.
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setCredentialsExpired($bool)
+    {
+        $this->credentialsExpired = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
+     * Sets roles.
+     *
+     * @param array $roles
+     *
+     * @return $this
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = array();
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds role.
+     *
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function addRole($role)
+    {
+        $role = (string) $role;
+        $role = strtoupper($role);
+        if ($role === static::ROLE_DEFAULT) {
+            return $this;
+        }
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes role.
+     *
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function removeRole($role)
+    {
+        $role = (string) $role;
+
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns roles.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+
+        foreach ($this->getGroups() as $group) {
+            $roles = array_merge($roles, $group->getRoles());
+        }
+
+        // we need to make sure to have at least one role
+        $roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
+
+    /**
+     * Returns true if user has role.
+     *
+     * Never use this to check if this user has access to anything!
+     * Use the SecurityContext, or an implementation of AccessDecisionManager
+     * instead, e.g.
+     *
+     *         $securityContext->isGranted('ROLE_USER');
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        $role = (string) $role;
+
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    /**
+     * Adds group.
+     *
+     * @param GroupInterface $group
+     *
+     * @return $this
+     */
+    public function addGroup(GroupInterface $group)
+    {
+        if (!$this->getGroups()->contains($group)) {
+            $this->getGroups()->add($group);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes group.
+     *
+     * @param GroupInterface $group
+     *
+     * @return $this
+     */
+    public function removeGroup(GroupInterface $group)
+    {
+        if ($this->getGroups()->contains($group)) {
+            $this->getGroups()->removeElement($group);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns groups.
+     *
+     * @return Collection|GroupInterface[]
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Returns group names.
+     *
+     * @return array
+     */
+    public function getGroupNames()
+    {
+        $names = array();
+        foreach ($this->getGroups() as $group) {
+            $names[] = $group->getName();
+        }
+
+        return $names;
+    }
+
+    /**
+     * Returns true if user has given group, false otherwise.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasGroup($name)
+    {
+        return in_array($name, $this->getGroupNames());
+    }
+
+    /**
+     * Sets super admin.
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setSuperAdmin($bool)
+    {
+        $bool = (bool) $bool;
+
+        if (true === $bool) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns true if user is super admin, false otherwise.
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+    }
+
+    /**
+     * Returns true if user account is not expired, false otherwsie.
+     *
+     * @return bool
+     */
+    public function isAccountNonExpired()
+    {
+        if (true === $this->expired) {
+            return false;
+        }
+
+        if (null !== $this->expiresAt && $this->expiresAt->getTimestamp() < time()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns true if account is not locked, false otherwise.
+     *
+     * @return bool
+     */
+    public function isAccountNonLocked()
+    {
+        return !$this->locked;
+    }
+
+    /**
+     * Returns true if user credentials are not expired, false otherwise.
+     *
+     * @return bool
+     */
+    public function isCredentialsNonExpired()
+    {
+        if (true === $this->credentialsExpired) {
+            return false;
+        }
+
+        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < time()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns true if user credentials expired, false otherwise.
+     *
+     * @return bool
+     */
+    public function isCredentialsExpired()
+    {
+        return !$this->isCredentialsNonExpired();
+    }
+
+    /**
+     * Returns true if password request is not expired.
+     *
+     * @param int $ttl
+     *
+     * @return bool
+     */
+    public function isPasswordRequestNonExpired($ttl)
+    {
+        return $this->getPasswordRequestedAt() instanceof DateTime &&
+        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+    }
+
+    /**
+     * Returns true if same user, false otherwise.
+     *
+     * @param BaseUserInterface $user
+     *
+     * @return bool
+     */
+    public function isUser(BaseUserInterface $user = null)
+    {
+        return null !== $user && $this->getId() === $user->getId();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+    /**
+     * Serializes the user.
+     *
+     * The serialized data have to contain the fields used by the equals method and the username.
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize(array(
+                $this->password,
+                $this->salt,
+                $this->usernameCanonical,
+                $this->username,
+                $this->expired,
+                $this->locked,
+                $this->credentialsExpired,
+                $this->enabled,
+                $this->id,
+            ));
+    }
+
+    /**
+     * Unserializes the user.
+     *
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        // add a few extra elements in the array to ensure that we have enough keys when unserializing
+        // older data which does not include all properties.
+        $data = array_merge($data, array_fill(0, 2, null));
+
+        list(
+            $this->password,
+            $this->salt,
+            $this->usernameCanonical,
+            $this->username,
+            $this->expired,
+            $this->locked,
+            $this->credentialsExpired,
+            $this->enabled,
+            $this->id
+            ) = $data;
+    }
+}
