@@ -9,7 +9,9 @@ use Imatic\Bundle\UserBundle\Security\Role\Role;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var ModelRoleProvider */
+    /**
+     * @var ModelRoleProvider
+     */
     private $roleProvider;
 
     /**

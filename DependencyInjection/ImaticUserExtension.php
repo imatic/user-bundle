@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -8,6 +9,9 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+/**
+ * @author Marek Stipek <marek.stipek@imatic.cz>
+ */
 class ImaticUserExtension extends Extension
 {
     /**
@@ -22,8 +26,8 @@ class ImaticUserExtension extends Extension
     }
 
     /**
-     * @param array $configuration
-     * @param ContainerBuilder $container
+     * @param  array                     $configuration
+     * @param  ContainerBuilder          $container
      * @throws \InvalidArgumentException
      */
     private function loadSecurity(array $configuration, ContainerBuilder $container)

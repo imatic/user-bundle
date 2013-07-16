@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -6,42 +7,55 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
 class ModelRoleProvider implements RoleProviderInterface
 {
-    /** @var ClassMetadataFactory */
+    /**
+     * @var ClassMetadataFactory
+     */
     private $metadataFactory;
 
-    /** @var ObjectRoleFactory */
+    /**
+     * @var ObjectRoleFactory
+     */
     private $roleFactory;
 
-    /** @var Configuration */
+    /**
+     * @var Configuration
+     */
     private $configuration;
 
-    /** @var string[] */
+    /**
+     * @var array
+     */
     private $actions = ['show', 'edit'];
 
-    /** @var Role[]|null */
+    /**
+     * @var Role[]|null
+     */
     private $roles;
 
-    /** @var array|null */
+    /**
+     * @var array|null
+     */
     private $groups;
 
-    /** @var array|null */
+    /**
+     * @var array|null
+     */
     private $properties;
 
     /**
      * @param ClassMetadataFactory $metadataFactory
-     * @param ObjectRoleFactory $roleFactory
+     * @param ObjectRoleFactory    $roleFactory
      */
-    public function __construct(
-        ClassMetadataFactory $metadataFactory,
-        ObjectRoleFactory $roleFactory = null
-    ) {
+    public function __construct(ClassMetadataFactory $metadataFactory, ObjectRoleFactory $roleFactory = null)
+    {
         $this->metadataFactory = $metadataFactory;
-        $this->roleFactory = $roleFactory ?: new ObjectRoleFactory();
+        $this->roleFactory = $roleFactory ? : new ObjectRoleFactory();
         $this->configuration = new Configuration;
     }
 
     /**
      * @param string|null $class
+     *
      * @return Role[]
      */
     public function getRoles($class = null)
@@ -76,8 +90,9 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param object|string $object
-     * @param string $property
-     * @param string $action
+     * @param string        $property
+     * @param string        $action
+     *
      * @return Role
      */
     public function getRole($object, $property, $action)
@@ -97,6 +112,7 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param Configuration $configuration
+     *
      * @return $this
      */
     public function setConfiguration(Configuration $configuration)
@@ -109,7 +125,8 @@ class ModelRoleProvider implements RoleProviderInterface
     }
 
     /**
-     * @param string[] $actions
+     * @param array $actions
+     *
      * @return $this
      */
     public function setActions(array $actions)
@@ -121,6 +138,7 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param string $class
+     *
      * @return bool
      */
     public function isExcluded($class)
@@ -144,7 +162,8 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param ClassMetadata $metadata
-     * @return string[]
+     *
+     * @return array
      */
     private function getModelProperties(ClassMetadata $metadata)
     {
@@ -161,6 +180,7 @@ class ModelRoleProvider implements RoleProviderInterface
 
     /**
      * @param object|string $object
+     *
      * @return string
      */
     private function getClass($object)
@@ -178,6 +198,7 @@ class ModelRoleProvider implements RoleProviderInterface
      * @param string $class
      * @param string $property
      * @param string $action
+     *
      * @return string
      */
     private function getRoleKey($class, $property, $action)
@@ -246,6 +267,7 @@ class ModelRoleProvider implements RoleProviderInterface
     /**
      * @param string $a
      * @param string $b
+     *
      * @return int
      */
     private function sortFilters($a, $b)

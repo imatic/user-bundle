@@ -5,22 +5,34 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 
 class Role implements RoleInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendor;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $bundle;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $type;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $action;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $property;
 
     /**

@@ -1,10 +1,14 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @author Marek Stipek <marek.stipek@imatic.cz>
+ */
 class Configuration implements ConfigurationInterface
 {
     /** @var \Closure */

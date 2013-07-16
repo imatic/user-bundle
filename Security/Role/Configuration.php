@@ -1,20 +1,29 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
+/**
+ * @author Marek Stipek <marek.stipek@imatic.cz>
+ */
 class Configuration
 {
-    /** @var string[] */
+    /**
+     * @var array
+     */
     private $excludes;
 
-    /** @var string[] */
+    /**
+     * @var array
+     */
     private $includes;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $groups;
 
     /**
-     * @param string[] $excludes
-     * @param string[] $includes
+     * @param array $excludes
+     * @param array $includes
      * @param array $groups
      */
     public function __construct(array $excludes = [], array $includes = [], array $groups = [])
@@ -25,7 +34,7 @@ class Configuration
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getExcludes()
     {
@@ -33,7 +42,7 @@ class Configuration
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getIncludes()
     {

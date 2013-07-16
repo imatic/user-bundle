@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin as BaseAdmin;

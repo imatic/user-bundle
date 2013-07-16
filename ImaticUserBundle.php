@@ -1,7 +1,6 @@
 <?php
 namespace Imatic\Bundle\UserBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ImaticUserBundle extends Bundle
