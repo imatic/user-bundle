@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Admin;
 
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -7,6 +8,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
 
+/**
+ * {@inheritDoc}
+ */
 class UserAdmin extends Admin
 {
     /**
@@ -14,12 +18,21 @@ class UserAdmin extends Admin
      */
     protected $userManager;
 
+    /**
+     * {@inheritDoc}
+     */
     protected $translationDomain = 'ImaticUserBundleUser';
 
+    /**
+     * {@inheritDoc}
+     */
     protected $formOptions = array(
         'validation_groups' => 'Profile'
     );
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -35,6 +48,9 @@ class UserAdmin extends Admin
             ->end();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
@@ -45,6 +61,9 @@ class UserAdmin extends Admin
             ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configureDatagridFilters(DatagridMapper $dataGridMapper)
     {
         $dataGridMapper
@@ -53,6 +72,9 @@ class UserAdmin extends Admin
             ->add('enabled');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $actions = array(
