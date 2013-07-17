@@ -1,6 +1,8 @@
 parameters:
     imatic_user.admin.user.class:       'Imatic\Bundle\UserBundle\Admin\UserAdmin'
     imatic_user.admin.group.class:      'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
+    imatic_user.controller.user.class:  'SonataAdminBundle:CRUD'
+    imatic_user.controller.group.class: 'SonataAdminBundle:CRUD'
 
 services:
     imatic_user.admin.user:

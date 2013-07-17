@@ -4,7 +4,6 @@
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
     <class name="Imatic\Bundle\UserBundle\Model\User">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">usernameCanonical</option>
@@ -15,7 +14,6 @@
                 <value>Profile</value>
             </option>
         </constraint>
-
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">emailCanonical</option>
             <option name="errorPath">email</option>
@@ -26,5 +24,4 @@
             </option>
         </constraint>
     </class>
-
 </constraint-mapping>

@@ -20,8 +20,10 @@ class ImaticUserExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = $this->processConfiguration(new Configuration(), $configs);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+
         $this->loadSecurity($configuration['security'], $container);
     }
 

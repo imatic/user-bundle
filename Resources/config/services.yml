@@ -1,7 +1,3 @@
-parameters:
-    imatic_user.controller.user.class:  'SonataAdminBundle:CRUD'
-    imatic_user.controller.group.class: 'SonataAdminBundle:CRUD'
-
 services:
     # Form
     imatic_user.profile.form.type:
@@ -10,19 +6,12 @@ services:
         tags:
             - { name: form.type, alias: imatic_user_profile }
 
-    sonata.user.form.type.security_roles:
-        class: 'Imatic\Bundle\UserBundle\Form\Type\SecurityRolesType'
-        arguments:
-            - @sonata.admin.pool
-        tags:
-            - { name: form.type, alias: sonata_security_roles }
-
-    # Menu
-    imatic_user.menu.user_menu:
-        class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
-        tags:
-            - { name: imatic_view.menu, alias: imatic.user }
-            - { name: imatic_view.menu, alias: imatic.user_anon, method: getMenuAnon }
+#    sonata.user.form.type.security_roles:
+#        class: 'Imatic\Bundle\UserBundle\Form\Type\SecurityRolesType'
+#        arguments:
+#            - @sonata.admin.pool
+#        tags:
+#            - { name: form.type, alias: sonata_security_roles }
 
     # Twig
     imatic_user.twig.extension.convert_roles:
@@ -32,13 +21,13 @@ services:
         tags:
             - { name: twig.extension }
 
-    imatic_user.twig.extension.security:
-        class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
-        arguments:
-            - @imatic_user.security.model_role_provider
-            - @imatic_user.security.role_translator
-        tags:
-            - { name: twig.extension }
+#    imatic_user.twig.extension.security:
+#        class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
+#        arguments:
+#            - @imatic_user.security.model_role_provider
+#            - @imatic_user.security.role_translator
+#        tags:
+#            - { name: twig.extension }
 
     # Helper
     imatic_user.helper.role_helper:
@@ -71,9 +60,9 @@ services:
         tags:
             - { name: imatic_user.role_provider }
 
-    imatic_user.security.role_translator:
-        class: Imatic\Bundle\UserBundle\Security\Role\RoleTranslator
-        arguments: [@translator, @sonata.admin.label.strategy.native]
+#    imatic_user.security.role_translator:
+#        class: Imatic\Bundle\UserBundle\Security\Role\RoleTranslator
+#        arguments: [@translator, @sonata.admin.label.strategy.native]
 
     imatic.model_role_provider:
         alias: imatic_user.security.model_role_provider

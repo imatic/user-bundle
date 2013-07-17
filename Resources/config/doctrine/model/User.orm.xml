@@ -4,6 +4,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass name="Imatic\Bundle\UserBundle\Model\User">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
         <field name="username" column="username" type="string" length="255"/>
         <field name="usernameCanonical" column="username_canonical" type="string" length="255" unique="true"/>
         <field name="email" column="email" type="string" length="255"/>
@@ -20,5 +23,6 @@
         <field name="roles" column="roles" type="array"/>
         <field name="credentialsExpired" column="credentials_expired" type="boolean"/>
         <field name="credentialsExpireAt" column="credentials_expire_at" type="datetime" nullable="true"/>
+        <many-to-many field="groups" target-entity="Imatic\Bundle\UserBundle\Model\GroupInterface" />
     </mapped-superclass>
 </doctrine-mapping>
