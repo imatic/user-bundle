@@ -40,7 +40,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getRole()
     {

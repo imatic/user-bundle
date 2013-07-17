@@ -12,6 +12,25 @@ class ObjectRoleFactory
      */
     public function createRole($object, $property, $action)
     {
+        $arguments = $this->parseClassName($object);
+
+        return new ObjectRole(
+            $arguments['vendor'],
+            $arguments['bundle'],
+            $arguments['type'],
+            $arguments['name'],
+            $property,
+            $action
+        );
+    }
+
+    /**
+     * @param $object
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    protected  function parseClassName($object)
+    {
         $class = is_object($object) ? get_class($object) : $object;
         $path = explode('\\', $class);
         $vendor = $path[0];
@@ -31,6 +50,11 @@ class ObjectRoleFactory
             $bundle = substr($bundle, 0, -6);
         }
 
-        return new ObjectRole($vendor, $bundle, $type, implode('_', $name), $property, $action);
+        return [
+            'vendor' => $vendor,
+            'bundle' => $bundle,
+            'type' => $type,
+            'name' => implode('_', $name)
+        ];
     }
 }

@@ -1,9 +1,9 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
-use Symfony\Component\Security\Core\Role\Role as BaseRole;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
-abstract class Role extends BaseRole
+abstract class Role implements RoleInterface
 {
     /**
      * @return string
@@ -32,6 +32,14 @@ abstract class Role extends BaseRole
     public function getDomain()
     {
         return 'roles';
+    }
+
+    /**
+     * @return Role[]
+     */
+    public function getChildren()
+    {
+        return [];
     }
 
     /**

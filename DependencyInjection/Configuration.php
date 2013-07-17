@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('security')
+                    ->canBeDisabled()
                     ->children()
                         ->arrayNode('providers')
                             ->prototype('scalar')->end()

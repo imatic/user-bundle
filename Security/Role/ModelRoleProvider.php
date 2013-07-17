@@ -26,7 +26,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     /** @var string[] */
     private $actions = ['show', 'edit'];
 
-    /** @var Role[]|null */
+    /** @var ObjectRole[]|null */
     private $roles;
 
     /** @var array|null */

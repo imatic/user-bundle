@@ -25,9 +25,13 @@ class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], (new HierarchyRoleProvider([]))->getRoles());
         $this->assertEquals(
             [
-                new SimpleRole('ROLE_ADMIN'),
-                new SimpleRole('ROLE_SUPER_ADMIN'),
+                new SimpleRole('ROLE_ADMIN', [new SimpleRole('ROLE_USER')]),
                 new SimpleRole('ROLE_USER'),
+                new SimpleRole('ROLE_SUPER_ADMIN', [
+                    new SimpleRole('ROLE_USER'),
+                    new SimpleRole('ROLE_ADMIN', [new SimpleRole('ROLE_USER')]),
+                    new SimpleRole('ROLE_ALLOWED_TO_SWITCH')
+                ]),
                 new SimpleRole('ROLE_ALLOWED_TO_SWITCH')
             ],
             $this->roleProvider->getRoles()
@@ -38,7 +42,7 @@ class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->roleProvider->getRole('FOO'));
         $this->assertEquals(
-            new SimpleRole('ROLE_ADMIN'),
+            new SimpleRole('ROLE_ADMIN', [new SimpleRole('ROLE_USER')]),
             $this->roleProvider->getRole('ROLE_ADMIN')
         );
     }

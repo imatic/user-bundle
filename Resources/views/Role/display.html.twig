@@ -1,55 +1,83 @@
-{% extends '::base.html.twig' %}
-
-{% block action %}
+{% block container %}
     <div class="roles">
-        <ul class="nav nav-tabs">
-            {% for type in roleMap|keys %}
-                <li class="{{ {active: loop.first}|imatic_class }}">
-                    <a href="#roles-{{ type|imatic_slug }}" data-toggle="tab">{{ type|trans_role_type }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="tab-content">
-            {% for type, roleList in roleMap %}
-                <div id="roles-{{ type|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
-                    <ul class="nav nav-pills nav-stacked pull-left">
-                        {% for domain in roleList|keys %}
-                            <li class="{{ {active: loop.first}|imatic_class }}">
-                                <a href="#roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" data-toggle="pill">
-                                    {{ domain|trans_role_domain }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="tab-content">
-                        {% for domain, roles in roleList %}
-                            <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
-                                <ul class="unstyled" style="margin-left: 2em">
-                                    {% for role in roles %}
-                                        <li>
-                                            <label class="checkbox">
-                                                <input
-                                                    data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role, enabled: '_enabled_'}) }}"
-                                                    type="checkbox"
-                                                    {% if object.hasRole(role.role) %} checked{% endif %}
-                                                >
-                                                {{ role|trans_role }}
-                                            </label>
-                                        </li>
+        {% block nav %}
+            <ul class="nav nav-tabs">
+                {% for type in roleMap|keys %}
+                    {% block link %}
+                        <li class="{{ {active: loop.first}|imatic_class }}">
+                            <a href="#roles-{{ type|imatic_slug }}" data-toggle="tab">{{ type|trans_role_type }}</a>
+                        </li>
+                    {% endblock %}
+                {% endfor %}
+            </ul>
+        {% endblock %}
+        {% block content %}
+            <div class="tab-content">
+                {% for type, roleList in roleMap %}
+                    {% block tabs %}
+                        <div id="roles-{{ type|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                            {% block pills %}
+                                <ul class="nav nav-pills nav-stacked pull-left">
+                                    {% for domain in roleList|keys %}
+                                        {% block pill %}
+                                            <li class="{{ {active: loop.first}|imatic_class }}">
+                                                <a href="#roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" data-toggle="pill">
+                                                    {{ domain|trans_role_domain }}
+                                                </a>
+                                            </li>
+                                        {% endblock %}
                                     {% endfor %}
                                 </ul>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                            {% endblock %}
+                            {% block tab %}
+                                <div class="tab-content">
+                                    {% for domain, roles in roleList %}
+                                        {% block roles %}
+                                            <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                                                <table style="margin: 0 2em 2em">
+                                                    {% for role in roles %}
+                                                        {% block role %}
+                                                            <tr>
+                                                                <td>{{ role|trans_role }}</td>
+                                                                <td>
+                                                                    <button
+                                                                        class="btn {{ object.hasRole(role.role) ? 'allowed' : 'btn-primary' }}"
+                                                                        data-loading-text="{{ 'Processing'|trans({}, 'roles') }}"
+                                                                        data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role}) }}"
+                                                                        data-text-allow="{{ 'Allow'|trans({}, 'roles') }}"
+                                                                        data-text-deny="{{ 'Deny'|trans({}, 'roles') }}"
+                                                                        style="margin-left: 2em; width: 9em"
+                                                                    >
+                                                                        {{ (object.hasRole(role.role) ? 'Deny' : 'Allow')|trans({}, 'roles') }}
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        {% endblock %}
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        {% endblock %}
+                                    {% endfor %}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
     </div>
-
-    <script>
-        $('.roles input').change(function() {
-            var $this = $(this);
-            $.get($this.data('url').replace('_enabled_', $this.prop('checked') ? 1 : 0));
-        });
-    </script>
 {% endblock %}
+
+<script>
+    $('.roles button').click(function() {
+        var $button = $(this);
+        $button.button('loading');
+        $.get($button.data('url') + '?allowed=' + ($button.is('.allowed') ? '0' : '1'), function() {
+            $button
+                .toggleClass('allowed btn-primary')
+                .button('reset')
+                .text($button.data('text-' + ($button.is('.allowed') ? 'deny' : 'allow')))
+            ;
+        });
+    });
+</script>

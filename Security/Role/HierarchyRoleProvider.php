@@ -6,9 +6,7 @@ class HierarchyRoleProvider implements RoleProviderInterface
     /** @var string[] */
     private $roleHierarchy;
 
-    private $roleFactory;
-
-    /** @var Role[] */
+    /** @var SimpleRole[] */
     private $roles;
 
     /**
@@ -17,7 +15,6 @@ class HierarchyRoleProvider implements RoleProviderInterface
     public function __construct(array $roleHierarchy)
     {
         $this->roleHierarchy = $roleHierarchy;
-        $this->roleFactory = new ObjectRoleFactory();
     }
 
     /**
@@ -30,13 +27,16 @@ class HierarchyRoleProvider implements RoleProviderInterface
                 return [];
             }
 
-            $roles = array_merge(
-                array_keys($this->roleHierarchy),
-                call_user_func_array('array_merge', $this->roleHierarchy)
-            );
+            foreach ($this->roleHierarchy as $name => $roles) {
+                $children = [];
+                $this->roles[$name] = null;
 
-            foreach ($roles as $role) {
-                $this->roles[$role] = new SimpleRole($role);
+                foreach ($roles as $role) {
+                    $this->roles[$role] = isset($this->roles[$role]) ? $this->roles[$role] : new SimpleRole($role);
+                    $children[] = $this->roles[$role];
+                }
+
+                $this->roles[$name] = new SimpleRole($name, $children);
             }
         }
 
@@ -45,9 +45,11 @@ class HierarchyRoleProvider implements RoleProviderInterface
 
     /**
      * @param string $role
+     * @param string $property
+     * @param string $action
      * @return SimpleRole|null
      */
-    public function getRole($role, $_ = '', $_ = '')
+    public function getRole($role, $property = '', $action = '')
     {
         $this->getRoles();
 

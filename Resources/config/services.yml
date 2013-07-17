@@ -66,6 +66,12 @@ services:
         tags:
             - { name: imatic_user.role_provider }
 
+    imatic_user.security.sonata_role_provider:
+        class: Imatic\Bundle\UserBundle\Security\Role\SonataRoleProvider
+        arguments: [@sonata.admin.pool]
+        tags:
+            - { name: imatic_user.role_provider }
+
     imatic_user.security.chain_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider
         tags:
@@ -73,13 +79,16 @@ services:
 
     imatic_user.security.role_translator:
         class: Imatic\Bundle\UserBundle\Security\Role\RoleTranslator
-        arguments: [@translator, @sonata.admin.label.strategy.native]
+        arguments: [@translator]
 
     imatic.model_role_provider:
         alias: imatic_user.security.model_role_provider
 
     imatic.hierarchy_role_provider:
         alias: imatic_user.security.hierarchy_role_provider
+
+    imatic.sonata_role_provider:
+        alias: imatic_user.security.sonata_role_provider
 
     imatic.role_provider:
         alias: imatic_user.security.chain_role_provider

@@ -105,11 +105,13 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $bMetadata->mapField(['fieldName' => 'property']);
         $metadataFactoryMock
             ->expects($this->any())
-            ->method('getAllMetadata')->will($this->returnValue([$aMetadata, $bMetadata]))
+            ->method('getAllMetadata')
+            ->will($this->returnValue([$aMetadata, $bMetadata]))
         ;
         $metadataFactoryMock
             ->expects($this->any())
-            ->method('getMetadataFor')->will($this->returnValue($aMetadata))
+            ->method('getMetadataFor')
+            ->will($this->returnValue($aMetadata))
         ;
 
         return $metadataFactoryMock;

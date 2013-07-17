@@ -9,6 +9,7 @@ use Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -23,7 +24,6 @@ class RoleController extends Controller
      * @param string $user
      * @param int $id
      * @return array
-     * @Route("/display/{type}/{id}", requirements={"type"="user|group", "id"="\d+"})
      * @Template
      */
     public function displayAction($type, $id)
@@ -42,18 +42,19 @@ class RoleController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param string $type
      * @param int $id
      * @param string $role
      * @param bool $enabled
      * @return Response
-     * @Route("/switch/{type}/{id}/{role}/{enabled}", requirements={"type"="user|group", "id"="\d+"})
+     * @Route("/switch/{type}/{id}/{role}", requirements={"type"="user|group", "id"="\d+"})
      */
-    public function switchAction($type, $id, $role, $enabled)
+    public function switchAction(Request $request, $type, $id, $role)
     {
         $object = $this->findObject($type, $id);
 
-        if ($enabled) {
+        if ($request->get('allowed')) {
             $object->addRole($role);
         } else {
             $object->removeRole($role);

@@ -9,37 +9,38 @@ class RoleTranslator
     /** @var TranslatorInterface */
     private $translator;
 
-    /** @var LabelTranslatorStrategyInterface */
-    private $translatorStrategy;
-
     /**
      * @param TranslatorInterface $translator
-     * @param LabelTranslatorStrategyInterface $translatorStrategy
      */
-    public function __construct(TranslatorInterface $translator, LabelTranslatorStrategyInterface $translatorStrategy)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
-        $this->translatorStrategy = $translatorStrategy;
     }
 
     /**
      * @param Role $role
      * @return string
      */
-    public function translateRole(Role $role)
+    public function translateRole(Role $role, $showChildren = true)
     {
         $translation = $this->translator->trans($role->getRole(), [], 'roles');
-        $label = $this->translatorStrategy->getLabel($role->getLabel());
         $action = $role->getAction();
+        $children = $role->getChildren();
 
-        if ($translation != $role->getRole()) {
-            return $translation;
+        if ($translation == $role->getRole()) {
+            $translation = $this->translator->trans($role->getLabel(), [], $role->getDomain());
         }
 
-        $translation = $this->translator->trans($label, [], $role->getDomain());
-
         if ($action != '') {
-            $translation .= sprintf(' – %s', $this->translator->trans($role->getAction(), [], 'role_actions'));
+            if ($translation != '') {
+                $translation .= ' – ';
+            }
+
+            $translation .= $this->translator->trans($role->getAction(), [], 'role_actions');
+        }
+
+        if ($showChildren && $children) {
+            $translation .= sprintf(' (%s)', implode(', ', array_map([$this, 'translateRole'], $children, [false])));
         }
 
         return $translation;
