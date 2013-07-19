@@ -1,9 +1,9 @@
 <?php
-namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
+namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
-use Imatic\Bundle\UserBundle\Security\Role\ModelRoleProvider;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase

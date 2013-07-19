@@ -5,15 +5,15 @@ use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
-use Imatic\Bundle\UserBundle\Security\Role\ChainRoleProvider;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContext;
 
 /**
- * @Route("/imatic/user/role")
+ * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route("/imatic/user/role")
  */
 class RoleController extends Controller
 {
@@ -21,10 +21,10 @@ class RoleController extends Controller
     const TYPE_GROUP = 'group';
 
     /**
-     * @param string $user
+     * @param $type
      * @param int $id
      * @return array
-     * @Template
+     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Template
      */
     public function displayAction($type, $id)
     {
@@ -46,12 +46,19 @@ class RoleController extends Controller
      * @param string $type
      * @param int $id
      * @param string $role
-     * @param bool $enabled
      * @return Response
-     * @Route("/switch/{type}/{id}/{role}", requirements={"type"="user|group", "id"="\d+"})
+     * @throws AccessDeniedException
+     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
+     *     path="/switch/{type}/{id}/{role}",
+     *     requirements={"type"="user|group", "id"="\d+"}
+     * )
      */
     public function switchAction(Request $request, $type, $id, $role)
     {
+        if (!$this->getSecurityContext()->isGranted(sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', strtoupper($type)))) {
+            throw new AccessDeniedException();
+        }
+
         $object = $this->findObject($type, $id);
 
         if ($request->get('allowed')) {
@@ -80,6 +87,14 @@ class RoleController extends Controller
     private function getManager($type)
     {
         return $this->get(sprintf('fos_user.%s_manager', $type));
+    }
+
+    /**
+     * @return SecurityContext
+     */
+    private function getSecurityContext()
+    {
+        return $this->get('security.context');
     }
 
     /**

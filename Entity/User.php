@@ -31,7 +31,7 @@ abstract class User extends BaseUser
      */
     public function getGroupRoles()
     {
-        $roles = array();
+        $roles = [];
         foreach ($this->getGroups() as $group) {
             $roles = array_merge($roles, $group->getRoles());
         }

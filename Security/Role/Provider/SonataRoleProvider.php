@@ -1,6 +1,8 @@
 <?php
-namespace Imatic\Bundle\UserBundle\Security\Role;
+namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
+use Imatic\Bundle\UserBundle\Security\Role\SonataRole;
+use Imatic\Bundle\UserBundle\Security\Role\SonataRoleFactory;
 use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\DependencyInjection\Exception\ExceptionInterface;
 
@@ -27,6 +29,7 @@ class SonataRoleProvider implements RoleProviderInterface
     {
         if ($this->roles === null) {
             $this->roles = [];
+            $roleFactory = new SonataRoleFactory();
 
             foreach ($this->pool->getAdminServiceIds() as $id) {
                 try {
@@ -39,25 +42,11 @@ class SonataRoleProvider implements RoleProviderInterface
 
                 foreach (array_keys($admin->getSecurityInformation()) as $action) {
                     $role = sprintf($baseRole, $action);
-                    $roleFactory = new SonataRoleFactory();
-                    $this->roles[$role] = $roleFactory->createRole($admin, $action, $role);
+                    $this->roles[] = $roleFactory->createRole($admin, $action, $role);
                 }
             }
         }
 
-        return array_values($this->roles);
-    }
-
-    /**
-     * @param string $role
-     * @param string $property
-     * @param string $action
-     * @return SonataRole|null
-     */
-    public function getRole($role, $property = '', $action = '')
-    {
-        $this->getRoles();
-
-        return isset($this->roles[$role]) ? $this->roles[$role] : null;
+        return $this->roles;
     }
 }

@@ -27,12 +27,4 @@ class SonataRole extends ObjectRole
     {
         return $this->role;
     }
-
-    /**
-     * @return string
-     */
-    public function getLabel()
-    {
-        return '';
-    }
 }

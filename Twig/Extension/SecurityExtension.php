@@ -1,8 +1,8 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Twig\Extension;
 
-use Imatic\Bundle\UserBundle\Security\Role\RoleProviderInterface;
-use Imatic\Bundle\UserBundle\Security\Role\RoleTranslator;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
+use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
 
 class SecurityExtension extends \Twig_Extension
 {

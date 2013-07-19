@@ -106,14 +106,6 @@ class ObjectRole extends Role
     /**
      * @return string
      */
-    public function getLabel()
-    {
-        return $this->property;
-    }
-
-    /**
-     * @return string
-     */
     public function getDomain()
     {
         return sprintf('%s%sBundle%s', $this->vendor, $this->bundle, $this->name);

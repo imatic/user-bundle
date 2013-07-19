@@ -37,7 +37,7 @@ abstract class Group extends BaseGroup
      * @param string $name
      * @param array  $roles
      */
-    public function __construct($name = null, $roles = array())
+    public function __construct($name = null, $roles = [])
     {
         parent::__construct($name, $roles);
     }

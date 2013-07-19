@@ -1,5 +1,7 @@
 <?php
-namespace Imatic\Bundle\UserBundle\Security\Role;
+namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
+
+use Imatic\Bundle\UserBundle\Security\Role\Role;
 
 class ChainRoleProvider implements RoleProviderInterface
 {
@@ -31,23 +33,6 @@ class ChainRoleProvider implements RoleProviderInterface
         }
 
         return $this->roles;
-    }
-
-    /**
-     * @param mixed $object
-     * @param string $property
-     * @param string $action
-     * @return Role|null
-     */
-    public function getRole($object, $property = '', $action = '')
-    {
-        foreach ($this->roleProviders as $roleProvider) {
-            if ($role = $roleProvider->getRole($object, $property, $action)) {
-                return $role;
-            }
-        }
-
-        return null;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
-namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
+namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
+use Imatic\Bundle\UserBundle\Security\Role\Provider\SonataRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\SonataRole;
-use Imatic\Bundle\UserBundle\Security\Role\SonataRoleProvider;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
@@ -24,21 +24,13 @@ class SonataRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             [
-                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_AdminMock', 'EDIT', 'ROLE_A_EDIT'),
-                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_AdminMock', 'LIST', 'ROLE_A_LIST'),
-                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_AdminMock', 'EDIT', 'ROLE_B_EDIT'),
-                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_AdminMock', 'LIST', 'ROLE_B_LIST')
+                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_Provider_AdminMock', 'EDIT', 'ROLE_A_EDIT'),
+                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_Provider_AdminMock', 'LIST', 'ROLE_A_LIST'),
+                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_Provider_AdminMock', 'EDIT', 'ROLE_B_EDIT'),
+                new SonataRole('Imatic', 'User', 'tests', 'Security_Role_Provider_AdminMock', 'LIST', 'ROLE_B_LIST')
             ],
             $this->roleProvider->getRoles()
         );
-    }
-
-    public function testGetRole()
-    {
-        $this->assertNull($this->roleProvider->getRole('FOO'));
-        $role = new SonataRole('Imatic', 'User', 'tests', 'Security_Role_AdminMock', 'EDIT', 'ROLE_A_EDIT');
-        $this->assertEquals($role, $this->roleProvider->getRole('ROLE_A_EDIT'));
-        $this->assertEquals('ROLE_A_EDIT', $role->getRole());
     }
 
     /**

@@ -1,3 +1,10 @@
 # Common roles
-ROLE_ALLOWED_TO_SWITCH:                 'Změna uživatele'
-ROLE_SUPER_ADMIN:                       'Hlavní administrátor'
+ROLE_ADMIN: Administrátor
+ROLE_USER: Uživatel
+ROLE_SUPER_ADMIN: Hlavní administrátor
+ROLE_ALLOWED_TO_SWITCH: Změna uživatele
+
+Plural: Role
+Allow: Povolit
+Deny: Zakázat
+Processing: Zpracovávám…

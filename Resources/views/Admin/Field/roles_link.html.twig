@@ -1,6 +1,0 @@
-{% if admin.isGranted('ROLES', object) and admin.hasRoute('roles') %}
-    <a href="{{ admin.generateObjectUrl('roles', object) }}" class="btn" title="{{ 'action_roles'|trans({}, 'ImaticUserBundle') }}">
-        <i class="icon-eye-close"></i>
-        {{ 'action_roles'|trans({}, 'ImaticUserBundle') }}
-    </a>
-{% endif %}

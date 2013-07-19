@@ -39,7 +39,7 @@ class RoleHelper
 
     public function getObjectRoles($object)
     {
-        $roles = array();
+        $roles = [];
         foreach ($object->getRoles() as $roleName) {
             if (!empty($this->roleHierarchy[$roleName]) && is_array($this->roleHierarchy[$roleName])) {
                 $label = sprintf('%s: %s', $roleName, implode(', ', $this->roleHierarchy[$roleName]));
@@ -58,7 +58,7 @@ class RoleHelper
      */
     public function getFormRoles(FormView $formView)
     {
-        $roles = array();
+        $roles = [];
         foreach ($formView as $form) {
             $form->vars['label'] = $this->translateLabel($form->vars['label'], $this->translationDomain);
             $roles[$form->vars['value']] = $form;
@@ -73,7 +73,7 @@ class RoleHelper
      */
     public function organizeRoles(array $roles)
     {
-        $modules = array();
+        $modules = [];
 
         foreach ($roles as $roleName => $role) {
             $roleInfo = $this->parseRole($roleName);
@@ -81,10 +81,10 @@ class RoleHelper
             $subModuleName = sprintf('%s.%s', $roleInfo['object'], $roleInfo['type']);
 
             if (!isset($modules[$moduleName])) {
-                $modules[$moduleName] = array();
+                $modules[$moduleName] = [];
             }
             if (!isset($modules[$moduleName][$subModuleName])) {
-                $modules[$moduleName][$subModuleName] = array();
+                $modules[$moduleName][$subModuleName] = [];
             }
 
             $modules[$moduleName][$subModuleName][$roleName] = $role;
@@ -163,7 +163,7 @@ class RoleHelper
 //            $label = $this->translator->trans($label, array(), $domain);
 //        }
 
-        $label = ucfirst(strtolower(str_replace(array('_', 'ROLE'), ' ', $label)));
+        $label = ucfirst(strtolower(str_replace(['_', 'ROLE'], ' ', $label)));
 
         return $label;
     }

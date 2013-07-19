@@ -67,8 +67,8 @@ class SecurityRolesType extends ChoiceType
     {
         parent::setDefaultOptions($resolver);
 
-        $roles = array();
-        $rolesReadOnly = array();
+        $roles = [];
+        $rolesReadOnly = [];
 
         $securityContext = $this->pool->getContainer()->get('security.context');
 
@@ -112,17 +112,17 @@ class SecurityRolesType extends ChoiceType
             }
         }
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'choices' => function (Options $options, $parentChoices) use ($roles) {
-                return empty($parentChoices) ? $roles : array();
+                return empty($parentChoices) ? $roles : [];
             },
 
             'read_only_choices' => function (Options $options) use ($rolesReadOnly) {
-                return empty($options['choices']) ? $rolesReadOnly : array();
+                return empty($options['choices']) ? $rolesReadOnly : [];
             },
 
             'data_class' => null
-        ));
+        ]);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
-class SimpleRole extends Role
+class HierarchyRole extends Role
 {
     /** @var string */
     private $role;

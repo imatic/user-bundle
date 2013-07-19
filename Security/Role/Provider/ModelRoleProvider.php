@@ -1,8 +1,11 @@
 <?php
-namespace Imatic\Bundle\UserBundle\Security\Role;
+namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
+use Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface;
+use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
+use Imatic\Bundle\UserBundle\Security\Role\ObjectRoleFactory;
 
 class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 {
@@ -79,7 +82,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      * @param string $action
      * @return ObjectRole|null
      */
-    public function getRole($object, $property = '', $action = '')
+    public function getRole($object, $property, $action)
     {
         $this->getRoles();
         $class = $this->getClass($object);
@@ -244,7 +247,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
             }
         }
 
-        uasort($filters, [$this, 'sortFilters']);
+        uasort($filters, [$this, 'compareFilters']);
 
         return $filters;
     }
@@ -254,7 +257,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      * @param string $b
      * @return int
      */
-    private function sortFilters($a, $b)
+    private function compareFilters($a, $b)
     {
         if ($a[1] == $b[1]) {
             return 0;

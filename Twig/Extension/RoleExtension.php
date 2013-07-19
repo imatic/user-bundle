@@ -30,11 +30,11 @@ class RoleExtension extends Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             'imatic_user_get_form_roles' => new Twig_Function_Method($this, 'getFormRoles'),
             'imatic_user_get_object_roles' => new Twig_Function_Method($this, 'getObjectRoles'),
             'imatic_user_organize_roles' => new Twig_Function_Method($this, 'organizeRoles')
-        );
+        ];
     }
 
     /**

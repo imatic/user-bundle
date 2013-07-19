@@ -1,22 +1,6 @@
-{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
-
-{% block field %}
-    <ul class="unstyled">
-        {% for module_name, module in imatic_user_organize_roles(imatic_user_get_object_roles(object)) %}
-            <li>
-                <h4>{{ module_name }}</h4>
-                <ul class="unstyled">
-                    {% for sub_module_name, sub_module in module %}
-                        <li><h5>{{ sub_module_name }}</h5>
-                            <ul class="unstyled">
-                                {% for role in sub_module %}
-                                    <li>{{ role }}</li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+{% if admin.isGranted('ROLES', object) and admin.hasRoute('roles') %}
+    <a href="{{ admin.generateObjectUrl('roles', object) }}" class="btn" title="{{ 'Roles'|trans({}, 'ImaticUserBundle') }}">
+        <i class="icon-eye-close"></i>
+        {{ 'Roles'|trans({}, 'ImaticUserBundle') }}
+    </a>
+{% endif %}

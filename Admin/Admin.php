@@ -10,7 +10,7 @@ class Admin extends BaseAdmin
     {
         return array_merge(
             parent::getFormTheme(),
-            array('ImaticUserBundle:Admin:form_theme.html.twig')
+            ['ImaticUserBundle:Admin:form_theme.html.twig']
         );
     }
 }
