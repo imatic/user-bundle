@@ -36,14 +36,11 @@ class ObjectStrategy extends TranslationStrategy
      */
     protected function doTranslate($role)
     {
-        $property = $role->getProperty();
-        /** @Ignore */
-        $translation = $property == ''
-            ? ''
-            : $this->trans($this->labelTranslatorStrategy->getLabel($property), $role->getDomain()) . ' – '
-        ;
+        if ($role->getProperty() != '') {
+            return $this->trans($this->labelTranslatorStrategy->getLabel($role->getLabel()), $role->getDomain());
+        }
 
-        /** @Ignore */
-        return $translation . $this->trans($role->getAction(), 'role_actions');
+       /** @Ignore */
+        return $this->trans($role->getLabel(), 'role_actions');
     }
 }

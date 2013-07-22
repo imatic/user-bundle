@@ -31,25 +31,30 @@
                             {% endblock %}
                             {% block tab %}
                                 <div class="tab-content">
-                                    {% for domain, roles in roleList %}
+                                    {% for domain, labels in roleList %}
                                         {% block roles %}
                                             <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
                                                 <table style="margin: 0 2em 2em">
-                                                    {% for role in roles %}
+                                                    {% for label, roles in labels %}
                                                         {% block role %}
                                                             <tr>
-                                                                <td>{{ role|trans_role }}</td>
-                                                                <td>
-                                                                    <button
-                                                                        class="btn {{ object.hasRole(role.role) ? 'allowed' : 'btn-primary' }}"
-                                                                        data-loading-text="{{ 'Processing'|trans({}, 'roles') }}"
-                                                                        data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role}) }}"
-                                                                        data-text-allow="{{ 'Allow'|trans({}, 'roles') }}"
-                                                                        data-text-deny="{{ 'Deny'|trans({}, 'roles') }}"
-                                                                        style="margin-left: 2em; width: 9em"
-                                                                    >
-                                                                        {{ (object.hasRole(role.role) ? 'Deny' : 'Allow')|trans({}, 'roles') }}
-                                                                    </button>
+                                                                <td>{{ roles.0|trans_role }}</td>
+                                                                <td style="padding-left: 2em">
+                                                                    {% for role in roles %}
+                                                                        {% if role.action != '' %}
+                                                                            <label style="display: inline-block; width: 7em; margin-right: 2em; text-align: right">{{ role.action|trans_role_action }}</label>
+                                                                        {% endif %}
+                                                                        <button
+                                                                            class="btn {{ object.hasRole(role.role) ? 'allowed' : 'btn-primary' }}"
+                                                                            data-loading-text="{{ 'Processing'|trans({}, 'roles') }}"
+                                                                            data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role}) }}"
+                                                                            data-text-allow="{{ 'Allow'|trans({}, 'roles') }}"
+                                                                            data-text-deny="{{ 'Deny'|trans({}, 'roles') }}"
+                                                                            style="margin-right: 2em; width: 9em"
+                                                                        >
+                                                                            {{ (object.hasRole(role.role) ? 'Deny' : 'Allow')|trans({}, 'roles') }}
+                                                                        </button>
+                                                                    {% endfor %}
                                                                 </td>
                                                             </tr>
                                                         {% endblock %}

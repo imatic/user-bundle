@@ -31,7 +31,7 @@ class RoleController extends Controller
         $roleMap = [];
 
         foreach ($this->getRoleProvider()->getRoles() as $role) {
-            $roleMap[$role->getType()][$role->getDomain()][] = $role;
+            $roleMap[$role->getType()][$role->getDomain()][$role->getLabel()][] = $role;
         }
 
         return [
@@ -55,7 +55,10 @@ class RoleController extends Controller
      */
     public function switchAction(Request $request, $type, $id, $role)
     {
-        if (!$this->getSecurityContext()->isGranted(sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', strtoupper($type)))) {
+        if (
+            !$this->getSecurityContext()->isGranted(sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', strtoupper($type)))
+            && !$this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN')
+        ) {
             throw new AccessDeniedException();
         }
 

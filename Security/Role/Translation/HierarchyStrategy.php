@@ -6,21 +6,13 @@ use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 class HierarchyStrategy extends TranslationStrategy
 {
     /**
-     * {@inheritDoc}
-     */
-    public function getSupportedClass()
-    {
-        return 'Imatic\Bundle\UserBundle\Security\Role\HierarchyRole';
-    }
-
-    /**
      * @param HierarchyRole $role
      * @param bool $deep
      * @return string
      */
     protected function doTranslate($role, $deep = true)
     {
-        $translation = $this->trans($role->getRole());
+        $translation = $this->trans($role->getLabel());
         $children = $role->getChildren();
 
         if ($deep && $children) {
@@ -28,5 +20,13 @@ class HierarchyStrategy extends TranslationStrategy
         }
 
         return $translation;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSupportedClass()
+    {
+        return 'Imatic\Bundle\UserBundle\Security\Role\HierarchyRole';
     }
 }

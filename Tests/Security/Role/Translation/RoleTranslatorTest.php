@@ -41,6 +41,11 @@ class RoleTranslatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('domain', $this->roleTranslator->translateRoleDomain('domain'));
     }
 
+    public function testTranslateRoleAction()
+    {
+        $this->assertEquals('action', $this->roleTranslator->translateRoleDomain('action'));
+    }
+
     /**
      * @return TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject
      */

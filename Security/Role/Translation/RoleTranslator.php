@@ -76,6 +76,15 @@ class RoleTranslator
     }
 
     /**
+     * @param $action
+     * @return string
+     */
+    public function translateRoleAction($action)
+    {
+        return $this->trans($action, 'role_actions');
+    }
+
+    /**
      * @param $label
      * @param string $domain
      * @return string

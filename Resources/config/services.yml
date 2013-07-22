@@ -10,13 +10,6 @@ services:
         tags:
             - {name: form.type, alias: imatic_user_profile}
 
-    sonata.user.form.type.security_roles:
-        class: Imatic\Bundle\UserBundle\Form\Type\SecurityRolesType
-        arguments:
-            - @sonata.admin.pool
-        tags:
-            - {name: form.type, alias: sonata_security_roles}
-
     # Menu
     imatic_user.menu.user_menu:
         class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder

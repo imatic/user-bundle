@@ -27,7 +27,7 @@ class ObjectStrategyTest extends \PHPUnit_Framework_TestCase
             $this->strategy->translate(new SonataRole('vendor', 'bundle', 'type', 'name', 'action', 'role'))
         );
         $this->assertEquals(
-            'property – action',
+            'property',
             $this->strategy->translate(new ObjectRole('vendor', 'bundle', 'type', 'name', 'property', 'action'))
         );
     }

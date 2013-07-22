@@ -21,10 +21,26 @@ class SonataRole extends ObjectRole
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAction()
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return parent::getAction();
     }
 }

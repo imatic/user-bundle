@@ -1,6 +1,7 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Admin;
 
+use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -39,13 +40,7 @@ class GroupAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper
-            ->add('name')
-            ->add('roles', 'sonata_security_roles', [
-                'expanded' => true,
-                'multiple' => true,
-                'required' => false
-            ]);
+        $formMapper->add('name');
     }
 
     /**
@@ -53,9 +48,7 @@ class GroupAdmin extends Admin
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper
-            ->add('name')
-            ->add('roles', null, ['template' => 'ImaticUserBundle:Admin:Field/roles.html.twig']);
+        $showMapper->add('name');
     }
 
     /**

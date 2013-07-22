@@ -37,7 +37,8 @@ class SecurityExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFilter('trans_role', [$this->roleTranslator, 'translateRole']),
             new \Twig_SimpleFilter('trans_role_type', [$this->roleTranslator, 'translateRoleType']),
-            new \Twig_SimpleFilter('trans_role_domain', [$this->roleTranslator, 'translateRoleDomain'])
+            new \Twig_SimpleFilter('trans_role_domain', [$this->roleTranslator, 'translateRoleDomain']),
+            new \Twig_SimpleFilter('trans_role_action', [$this->roleTranslator, 'translateRoleAction'])
         ];
     }
 
