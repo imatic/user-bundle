@@ -8,9 +8,7 @@ use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var ModelRoleProvider
-     */
+    /** @var ModelRoleProvider */
     private $roleProvider;
 
     /**
@@ -24,13 +22,25 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetRoles()
     {
         $this->assertEmpty($this->roleProvider->getRoles());
-        $this->roleProvider->setConfig([ModelRoleProvider::CONFIG_INCLUDES => 'Vendor']);
+        $this->roleProvider->setConfig([
+            'namespaces' => ['includes' => ['Vendor\Foo\Entity\ClassA']],
+            'properties' => ['includes' => ['Vendor\Foo\Entity\ClassA' => ['propertyA']]],
+        ]);
+        $this->assertEquals(
+            [
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit')
+            ],
+            $this->roleProvider->getRoles()
+        );
+        $this->roleProvider->setConfig([
+            'namespaces' => ['includes' => ['Vendor']],
+            'properties' => ['excludes' => ['Vendor\Foo\Entity\ClassA' => ['propertyB']]],
+        ]);
         $this->assertEquals(
             [
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'show'),
@@ -42,12 +52,12 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRolesShouldBeFiltered()
     {
-        $this->roleProvider->setConfig([ModelRoleProvider::CONFIG_INCLUDES => 'Foo']);
+        $this->roleProvider->setConfig(['namespaces' => ['includes' => ['Foo']]]);
         $this->assertEmpty($this->roleProvider->getRoles());
-        $this->roleProvider->setConfig([
-            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor'],
-            ModelRoleProvider::CONFIG_EXCLUDES => ['Vendor\Foo\Entity\Bar']
-        ]);
+        $this->roleProvider->setConfig(['namespaces' => [
+            'includes' => ['Vendor'],
+            'excludes' => ['Vendor\Foo\Entity\Bar']
+        ]]);
         $this->assertEquals(
             [
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
@@ -64,10 +74,12 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetRolesShouldContainGroupsOnly()
     {
         $this->roleProvider->setConfig([
-            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor\Foo\Entity\ClassA'],
-            ModelRoleProvider::CONFIG_EXCLUDES => [],
-            ModelRoleProvider::CONFIG_GROUPS => [
-                'Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]
+            'namespaces' => [
+                'includes' => ['Vendor\Foo\Entity\ClassA'],
+                'excludes'=> [],
+            ],
+            'properties' => [
+                'groups'=> ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]]
             ]
         ]);
         $this->assertEquals(
@@ -82,8 +94,8 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetRole()
     {
         $this->roleProvider->setConfig([
-            ModelRoleProvider::CONFIG_INCLUDES => ['Vendor'],
-            ModelRoleProvider::CONFIG_GROUPS => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]]
+            'namespaces' => ['includes' => ['Vendor']],
+            'properties' => ['groups' => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]]]
         ]);
         $this->assertNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'list'));
         $this->assertNotNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'show'));

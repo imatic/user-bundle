@@ -6,13 +6,13 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRoleFactory;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\NodeInterface;
+use Symfony\Component\Config\Definition\Processor;
 
 class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 {
-    const CONFIG_INCLUDES = 'includes';
-    const CONFIG_EXCLUDES = 'excludes';
-    const CONFIG_GROUPS = 'groups';
-
     /** @var ClassMetadataFactory */
     private $metadataFactory;
 
@@ -20,11 +20,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     private $roleFactory;
 
     /** @var array */
-    private $config = [
-        self::CONFIG_INCLUDES => [],
-        self::CONFIG_EXCLUDES => [],
-        self::CONFIG_GROUPS => []
-    ];
+    private $config;
 
     /** @var string[] */
     private $actions = ['show', 'edit'];
@@ -33,10 +29,16 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     private $roles;
 
     /** @var array|null */
-    private $groups;
+    private $filters;
 
     /** @var array|null */
-    private $properties;
+    private $propertyIncludes;
+
+    /** @var array|null */
+    private $propertyExcludes;
+
+    /** @var array|null */
+    private $propertyGroups;
 
     /**
      * @param ClassMetadataFactory $metadataFactory
@@ -45,6 +47,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     {
         $this->metadataFactory = $metadataFactory;
         $this->roleFactory = new ObjectRoleFactory();
+        $this->setConfig();
     }
 
     /**
@@ -56,7 +59,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
             $this->roles = [];
 
             foreach ($this->getAllMetadata() as $metadata) {
-                if (!$this->isIncluded($metadata->name)) {
+                if (!$this->isClassIncluded($metadata->name)) {
                     continue;
                 }
 
@@ -77,7 +80,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
-     * @param mixed $object
+     * @param object|string $object
      * @param string $property
      * @param string $action
      * @return ObjectRole|null
@@ -86,10 +89,10 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     {
         $this->getRoles();
         $class = $this->getClass($object);
-        $properties = $this->getProperties();
+        $propertyGroups = $this->getPropertyGroups();
         $key = $this->getRoleKey(
             $class,
-            isset($properties[$class][$property]) ? $properties[$class][$property] : $property,
+            isset($propertyGroups[$class][$property]) ? $propertyGroups[$class][$property] : $property,
             $action
         );
 
@@ -99,20 +102,16 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     /**
      * @param array $config
      * @return $this
-     * @throws \InvalidArgumentException
+     * @throws InvalidConfigurationException
      */
-    public function setConfig(array $config)
+    public function setConfig(array $config = [])
     {
-        foreach ($config as $name => $value) {
-            if (!isset($this->config[$name])) {
-                throw new \InvalidArgumentException(sprintf('The config name "%s" is not valid.', $name));
-            }
-
-            $this->config[$name] = (array) $value;
-        }
-
+        $this->config = (new Processor())->process($this->getConfigurationTree(), [$config]);
         $this->roles = null;
-        $this->groups = null;
+        $this->filters = null;
+        $this->propertyIncludes = null;
+        $this->propertyExcludes = null;
+        $this->propertyGroups = null;
 
         return $this;
     }
@@ -124,23 +123,9 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     public function setActions(array $actions)
     {
         $this->actions = $actions;
+        $this->roles = null;
 
         return $this;
-    }
-
-    /**
-     * @param string $class
-     * @return bool
-     */
-    public function isIncluded($class)
-    {
-        foreach ($this->getFilters() as $prefix => $filter) {
-            if (!strncasecmp($class . '\\', $prefix, strlen($prefix))) {
-                return $filter[0] == 'include';
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -152,20 +137,57 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
+     * @param string $class
+     * @return bool
+     */
+    private function isClassIncluded($class)
+    {
+        foreach ($this->getFilters() as $prefix => $filter) {
+            if (!strncasecmp($class . '\\', $prefix, strlen($prefix))) {
+                return $filter[0] == 'include';
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param ClassMetadata $metadata
      * @return string[]
      */
     private function getModelProperties(ClassMetadata $metadata)
     {
-        $groups = $this->getGroups();
-        $properties = array_merge($metadata->getFieldNames(), $metadata->getAssociationNames());
+        $propertyIncludes = $this->getPropertyIncludes();
+        $propertyExcludes = $this->getPropertyExcludes();
+        $propertyGroups = $this->getPropertyGroups();
+        $properties = isset($propertyIncludes[$metadata->name])
+            ? $propertyIncludes[$metadata->name]
+            : array_merge($metadata->getFieldNames(), $metadata->getAssociationNames())
+        ;
 
-        if (isset($groups[$metadata->name])) {
-            $properties = array_diff($properties, call_user_func_array('array_merge', $groups[$metadata->name]));
-            $properties = array_merge($properties, array_keys($groups[$metadata->name]));
+        if (isset($propertyGroups[$metadata->name])) {
+            $properties = array_merge(
+                array_diff($properties, array_keys($propertyGroups[$metadata->name])),
+                $propertyGroups[$metadata->name]
+            );
+        }
+
+        if (isset($propertyExcludes[$metadata->name])) {
+            $properties = array_diff($properties, $propertyExcludes[$metadata->name]);
         }
 
         return $properties;
+    }
+
+    /**
+     * @param string $class
+     * @param string $property
+     * @param string $action
+     * @return string
+     */
+    private function getRoleKey($class, $property, $action)
+    {
+        return sprintf('%s-%s-%s', $class, $property, $action);
     }
 
     /**
@@ -184,72 +206,80 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
-     * @param string $class
-     * @param string $property
-     * @param string $action
-     * @return string
-     */
-    private function getRoleKey($class, $property, $action)
-    {
-        return sprintf('%s-%s-%s', $class, $property, $action);
-    }
-
-    /**
-     * @return array
-     */
-    private function getGroups()
-    {
-        if ($this->groups === null) {
-            $this->groups = [];
-
-            foreach ($this->config[static::CONFIG_GROUPS] as $class => $group) {
-                $this->groups[$this->metadataFactory->getMetadataFor($class)->name] = $group;
-            }
-        }
-
-        return $this->groups;
-    }
-
-    /**
-     * @return array
-     */
-    private function getProperties()
-    {
-        if ($this->properties === null) {
-            $this->properties = [];
-
-            foreach ($this->getGroups() as $class => $groups) {
-                $this->properties[$class] = [];
-
-                foreach ($groups as $name => $properties) {
-                    $this->properties[$class] += array_fill_keys($properties, $name);
-                }
-            }
-        }
-
-        return $this->properties;
-    }
-
-    /**
      * @return array
      */
     private function getFilters()
     {
-        $configuration = [
-            'include' => $this->config[static::CONFIG_INCLUDES],
-            'exclude' => $this->config[static::CONFIG_EXCLUDES]
-        ];
-        $filters = [];
+        if ($this->filters === null) {
+            $this->filters = [];
+            $configuration = [
+                'include' => $this->config['namespaces']['includes'],
+                'exclude' => $this->config['namespaces']['excludes']
+            ];
 
-        foreach ($configuration as $type => $filter) {
-            foreach ($filter as $prefix) {
-                $filters[ltrim(rtrim($prefix, '\\'), '\\') . '\\'] = [$type, substr_count($prefix, '\\')];
+            foreach ($configuration as $type => $filter) {
+                foreach ($filter as $prefix) {
+                    $this->filters[ltrim(rtrim($prefix, '\\'), '\\') . '\\'] = [$type, substr_count($prefix, '\\')];
+                }
+            }
+
+            uasort($this->filters, [$this, 'compareFilters']);
+        }
+
+        return $this->filters;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPropertyIncludes()
+    {
+        if ($this->propertyIncludes === null) {
+            $this->propertyIncludes = [];
+
+            foreach ($this->config['properties']['includes'] as $class => $property) {
+                $this->propertyIncludes[$this->metadataFactory->getMetadataFor($class)->name] = $property;
             }
         }
 
-        uasort($filters, [$this, 'compareFilters']);
+        return $this->propertyIncludes;
+    }
 
-        return $filters;
+    /**
+     * @return array
+     */
+    private function getPropertyExcludes()
+    {
+        if ($this->propertyExcludes === null) {
+            $this->propertyExcludes = [];
+
+            foreach ($this->config['properties']['excludes'] as $class => $property) {
+                $this->propertyExcludes[$this->metadataFactory->getMetadataFor($class)->name] = $property;
+            }
+        }
+
+        return $this->propertyExcludes;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPropertyGroups()
+    {
+        if ($this->propertyGroups === null) {
+            $this->propertyGroups = [];
+
+            foreach ($this->config['properties']['groups'] as $class => $group) {
+                $class = $this->metadataFactory->getMetadataFor($class)->name;
+                $this->propertyGroups[$class] = [];
+
+                foreach ($group as $name => $properties) {
+                    $this->propertyGroups[$class] += array_fill_keys($properties, $name);
+                }
+            }
+        }
+
+        return $this->propertyGroups;
     }
 
     /**
@@ -264,5 +294,53 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         }
 
         return $a[1] > $b[1] ? -1 : 1;
+    }
+
+    /**
+     * @return NodeInterface
+     */
+    private function getConfigurationTree()
+    {
+        $builder = new TreeBuilder();
+        $root = $builder->root('config');
+        $root
+            ->children()
+                ->arrayNode('namespaces')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('includes')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->arrayNode('excludes')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('properties')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('includes')
+                            ->prototype('array')
+                                ->prototype('scalar')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('excludes')
+                            ->prototype('array')
+                                ->prototype('scalar')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('groups')
+                            ->prototype('array')
+                                ->prototype('array')
+                                    ->prototype('scalar')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $builder->buildTree();
     }
 }
