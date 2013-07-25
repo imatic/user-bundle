@@ -52,10 +52,13 @@ abstract class Group extends BaseGroup
 
     /**
      * @param string $description
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**

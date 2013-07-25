@@ -21,7 +21,8 @@ class SecurityCompilerPass implements CompilerPassInterface
      */
     protected function processRoleProviders(ContainerBuilder $container)
     {
-        $configuration = $container->getExtensionConfig('imatic_user')[0]['security']['role'];
+        $config = $container->getExtensionConfig('imatic_user');
+        $configuration = isset($config[0]['security']['role']) ? $config[0]['security']['role'] : [];
         $interface = 'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface';
         $definition = $container->getDefinition('imatic_user.security.role.provider.chain_role_provider');
         $aliases = [];
