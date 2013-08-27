@@ -1,8 +1,6 @@
 parameters:
-    imatic_user.admin.user.class:       'Imatic\Bundle\UserBundle\Admin\UserAdmin'
-    imatic_user.admin.group.class:      'Imatic\Bundle\UserBundle\Admin\GroupAdmin'
-    imatic_user.controller.user.class:  'SonataAdminBundle:CRUD'
-    imatic_user.controller.group.class: 'SonataAdminBundle:CRUD'
+    imatic_user.admin.user.class: Imatic\Bundle\UserBundle\Admin\UserAdmin
+    imatic_user.admin.group.class: Imatic\Bundle\UserBundle\Admin\GroupAdmin
 
 services:
     imatic_user.admin.user:
@@ -12,9 +10,9 @@ services:
             - %imatic_user.entity.user.class%
             - %imatic_user.controller.user.class%
         tags:
-            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: User }
+            - {name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: User}
         calls:
-            - [ setUserManager, [@fos_user.user_manager] ]
+            - [setUserManager, [@fos_user.user_manager]]
 
     imatic_user.admin.group:
         class: %imatic_user.admin.group.class%
@@ -23,4 +21,4 @@ services:
             - %imatic_user.entity.group.class%
             - %imatic_user.controller.group.class%
         tags:
-            - { name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: Group }
+            - {name: sonata.admin, manager_type: orm, group: imatic_user.group.user, label: Group}

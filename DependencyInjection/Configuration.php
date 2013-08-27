@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -31,11 +30,9 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('security')
+                    ->canBeDisabled()
                     ->children()
-                        ->arrayNode('providers')
-                            ->prototype('scalar')->end()
-                        ->end()
-                        ->arrayNode('config')
+                        ->arrayNode('role')
                             ->prototype('array')
                                 ->prototype('variable')->end()
                             ->end()

@@ -1,7 +1,7 @@
 <?php
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
-class SimpleRole extends Role
+class HierarchyRole extends Role
 {
     /** @var string */
     private $role;
@@ -9,13 +9,19 @@ class SimpleRole extends Role
     /** @var string */
     private $type;
 
+    /** @var Role[] */
+    private $children;
+
     /**
      * @param string $role
+     * @param Role[] $children
+     * @param string $type
      */
-    public function __construct($role, $type = 'global')
+    public function __construct($role, array $children = [], $type = 'global')
     {
         $this->role = (string) $role;
         $this->type = (string) $type;
+        $this->children = $children;
     }
 
     /**
@@ -32,5 +38,13 @@ class SimpleRole extends Role
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return Role[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

@@ -20,7 +20,9 @@ Last Login:         Poslední přihlášení
 User Show:          Detail uživatele
 User Edit:          Editace uživatele
 User List:          Výpis uživatelů
+User Roles:         Editace rolí
 User Create:        Vytvořit uživatele
+Group Roles:        Editace rolí
 
 # Actions
 " Action":          Akce

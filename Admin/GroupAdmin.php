@@ -1,11 +1,12 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Admin;
 
-use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
  * Group admin.
@@ -14,23 +15,32 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 class GroupAdmin extends Admin
 {
+    /** {@inheritDoc} */
+    protected $translationDomain = 'ImaticUserBundleGroup';
+
     /**
      * {@inheritDoc}
      */
-    protected $translationDomain = 'ImaticUserBundleGroup';
+    public function configure()
+    {
+        $this->setTemplate('roles', 'ImaticUserBundle:Admin:group_roles.html.twig');
+        $this->securityInformation += ['ROLES' => ['ROLES']];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRoutes(RouteCollection $routeCollection)
+    {
+        $routeCollection->add('roles', '{id}/roles');
+    }
 
     /**
      * {@inheritDoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper
-            ->add('name')
-            ->add('roles', 'sonata_security_roles', array(
-            'expanded' => true,
-            'multiple' => true,
-            'required' => false
-        ));
+        $formMapper->add('name');
     }
 
     /**
@@ -38,9 +48,7 @@ class GroupAdmin extends Admin
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper
-            ->add('name')
-            ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
+        $showMapper->add('name');
     }
 
     /**
@@ -57,13 +65,12 @@ class GroupAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $actions = array(
-            'view' => array(),
-            'edit' => array(),
-        );
-
         $listMapper
             ->addIdentifier('name')
-            ->add('_action', 'actions', array('actions' => $actions));
+            ->add('_action', 'actions', ['actions' => [
+                'view' => [],
+                'edit' => [],
+                'roles' => ['template' => 'ImaticUserBundle:Admin:Field/roles.html.twig']
+            ]]);
     }
 }

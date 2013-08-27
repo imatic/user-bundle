@@ -40,7 +40,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getRole()
     {
@@ -72,7 +72,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getType()
     {
@@ -96,7 +96,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getAction()
     {
@@ -104,7 +104,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getLabel()
     {
@@ -112,7 +112,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getDomain()
     {
@@ -120,7 +120,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function __toString()
     {

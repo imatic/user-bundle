@@ -3,7 +3,7 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 
-class RoleTest extends \PHPUnit_Framework_TestCase
+class ObjectRoleTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ObjectRole */
     private $role;
@@ -14,11 +14,6 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->role = new ObjectRole('Vendor', 'Bundle', 'type', 'Name', 'property', 'action');
-    }
-
-    public function testGetLabel()
-    {
-        $this->assertEquals('property', $this->role->getLabel());
     }
 
     public function testGetDomain()

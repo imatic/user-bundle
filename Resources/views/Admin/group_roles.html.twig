@@ -1,0 +1,5 @@
+{% extends base_template %}
+
+{% block action %}
+    {{ render(controller('ImaticUserBundle:Role:display', {type: 'group', id: object.id})) }}
+{% endblock %}

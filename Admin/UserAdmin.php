@@ -1,34 +1,72 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Admin;
 
-use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Form\FormMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
  * {@inheritDoc}
  */
 class UserAdmin extends Admin
 {
-    /**
-     * @var UserManagerInterface
-     */
-    protected $userManager;
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected $translationDomain = 'ImaticUserBundleUser';
 
+    /** {@inheritDoc} */
+    protected $formOptions = ['validation_groups' => 'Profile'];
+
+    /** @var UserManagerInterface */
+    private $userManager;
+
     /**
      * {@inheritDoc}
      */
-    protected $formOptions = array(
-        'validation_groups' => 'Profile'
-    );
+    public function configure()
+    {
+        $this->setTemplate('roles', 'ImaticUserBundle:Admin:user_roles.html.twig');
+        $this->securityInformation += ['ROLES' => ['ROLES']];
+    }
+
+    /**
+     * @return UserManagerInterface
+     */
+    public function getUserManager()
+    {
+        return $this->userManager;
+    }
+
+    /**
+     * @param UserManagerInterface $userManager
+     */
+    public function setUserManager(UserManagerInterface $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
+     * @param  object $user
+     * @return void
+     * @TODO: use doctrine lifecycle event
+     */
+    public function preUpdate($user)
+    {
+        $userManager = $this->getUserManager();
+        $userManager->updateCanonicalFields($user);
+        $userManager->updatePassword($user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRoutes(RouteCollection $routeCollection)
+    {
+        $routeCollection->add('roles', '{id}/roles');
+    }
 
     /**
      * {@inheritDoc}
@@ -36,15 +74,14 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with($this->trans('Group personal'), array('collapsed' => false))
-            ->add('username')
-            ->add('plainPassword', 'password', array('label' => 'Password', 'required' => false))
-            ->add('email')
+            ->with($this->trans('Group personal'), ['collapsed' => false])
+                ->add('username')
+                ->add('plainPassword', 'password', ['label' => 'Password', 'required' => false])
+                ->add('email')
             ->end()
-            ->with($this->trans('Group access'), array('collapsed' => true))
-            ->add('enabled', null, array('required' => false, 'label_render' => false))
-            ->add('groups', null, array('expanded' => true, 'multiple' => true))
-            ->add('roles', 'sonata_security_roles', array('expanded' => true, 'multiple' => true, 'required' => false))
+            ->with($this->trans('Group access'), ['collapsed' => true])
+                ->add('enabled', null, ['required' => false, 'label_render' => false])
+                ->add('groups', null, ['expanded' => true, 'multiple' => true])
             ->end();
     }
 
@@ -57,8 +94,7 @@ class UserAdmin extends Admin
             ->add('username')
             ->add('email')
             ->add('enabled')
-            ->add('lastLogin')
-            ->add('roles', null, array('template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'));
+            ->add('lastLogin');
     }
 
     /**
@@ -77,47 +113,16 @@ class UserAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $actions = array(
-            'view' => array(),
-            'edit' => array(),
-        );
-        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-            $actions['impersonating'] = array('template' => 'ImaticUserBundle:Admin:Field/impersonating.html.twig');
-        }
-
         $listMapper
             ->addIdentifier('username')
             ->add('email')
             ->add('lastLogin')
-            ->add('enabled', null, array('editable' => true))
-            ->add('_action', 'actions', array('actions' => $actions)
-        );
-    }
-
-    /**
-     * @todo: use doctrine lifecycle event
-     * @param  object $user
-     * @return void
-     */
-    public function preUpdate($user)
-    {
-        $this->getUserManager()->updateCanonicalFields($user);
-        $this->getUserManager()->updatePassword($user);
-    }
-
-    /**
-     * @param UserManagerInterface $userManager
-     */
-    public function setUserManager(UserManagerInterface $userManager)
-    {
-        $this->userManager = $userManager;
-    }
-
-    /**
-     * @return UserManagerInterface
-     */
-    public function getUserManager()
-    {
-        return $this->userManager;
+            ->add('enabled', null, ['editable' => true])
+            ->add('_action', 'actions', ['actions' => [
+                'view' => [],
+                'edit' => [],
+                'roles' => ['template' => 'ImaticUserBundle:Admin:Field/roles.html.twig'],
+                'impersonating' => ['template' => 'ImaticUserBundle:Admin:Field/impersonating.html.twig']
+            ]]);
     }
 }
