@@ -5,7 +5,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class SecurityCompilerPass implements CompilerPassInterface
+class SecurityPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
