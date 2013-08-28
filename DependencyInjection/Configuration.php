@@ -17,8 +17,7 @@ class Configuration implements ConfigurationInterface
     {
         $builder = new TreeBuilder();
         $rootNode = $builder->root('imatic_user');
-        $this->addEntitySection($rootNode);
-        $this->addAdminSection($rootNode);
+        $this->addEntitiesSection($rootNode);
         $this->addSecuritySection($rootNode);
 
         return $builder;
@@ -27,11 +26,11 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addEntitySection($node)
+    private function addEntitiesSection($node)
     {
         $node
             ->children()
-                ->arrayNode('entity')
+                ->arrayNode('entities')
                     ->children()
                         ->scalarNode('em')
                             ->cannotBeEmpty()

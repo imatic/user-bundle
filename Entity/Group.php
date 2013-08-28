@@ -1,9 +1,9 @@
 <?php
 
-namespace Imatic\Bundle\UserBundle\Model;
+namespace Imatic\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Imatic\Bundle\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,8 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Viliam Husár <viliam.husar@imatic.cz>
  *
  * @ORM\MappedSuperclass()
- * @DoctrineAssert\Unique(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used",  groups={"Registration", "Profile"})
- * @DoctrineAssert\Unique(fields="emailCanonical", errorPath="email", message="fos_user.email.already_used",  groups={"Registration", "Profile"})
  */
 class Group implements GroupInterface
 {
@@ -29,7 +27,7 @@ class Group implements GroupInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="integer", unique="true", name="name")
+     * @ORM\Column(type="integer", unique=true, name="name")
      * @Assert\NotBlank(message="fos_user.group.blank", groups={"Registration"})
      * @Assert\Length(min=2, max=255, minMessage="fos_user.group.short", maxMessage="fos_user.group.long",  groups={"Registration"})
      */

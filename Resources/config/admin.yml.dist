@@ -1,3 +1,4 @@
+# This
 parameters:
     imatic_user.admin.user.class: Imatic\Bundle\UserBundle\Admin\UserAdmin
     imatic_user.admin.group.class: Imatic\Bundle\UserBundle\Admin\GroupAdmin

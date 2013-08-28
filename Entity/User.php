@@ -1,12 +1,14 @@
 <?php
 
-namespace Imatic\Bundle\UserBundle\Model;
+namespace Imatic\Bundle\UserBundle\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
+use Imatic\Bundle\UserBundle\Model\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Viliam Husár <viliam.husar@imatic.cz>
  *
  * @ORM\MappedSuperclass()
+ * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used",  groups={"Registration", "Profile"})
+ * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", message="fos_user.email.already_used",  groups={"Registration", "Profile"})
  */
 class User implements UserInterface
 {
@@ -30,7 +34,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length="255", name="username")
+     * @ORM\Column(type="string", length=255, name="username")
      * @Assert\NotBlank(message="fos_user.username.blank", groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=255, minMessage="fos_user.username.short", maxMessage="fos_user.username.long", groups={"Registration", "Profile"})
      */
@@ -39,14 +43,14 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length="255", unique=true, name="username_canonical")
+     * @ORM\Column(type="string", length=255, unique=true, name="username_canonical")
      */
     protected $usernameCanonical;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length="255", name="email")
+     * @ORM\Column(type="string", length=255, name="email")
      * @Assert\NotBlank(message="fos_user.email.blank", groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=254, minMessage="fos_user.email.short", maxMessage="fos_user.email.long", groups={"Registration", "Profile"})
      * @Assert\Email(message="fos_user.email.invalid", groups={"Registration", "Profile"})
@@ -56,7 +60,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length="255", unique=true, name=""email_canonical)
+     * @ORM\Column(type="string", length=255, unique=true, name="email_canonical")
      */
     protected $emailCanonical;
 
