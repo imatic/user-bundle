@@ -64,6 +64,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('admin')
+                    ->canBeDisabled()
                     ->children()
                         ->scalarNode('user')
                             ->isRequired()

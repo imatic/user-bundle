@@ -1,6 +1,0 @@
-services:
-    imatic_user.menu.user_menu:
-        class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
-        tags:
-            - { name: imatic_view.menu, alias: imatic.user }
-            - { name: imatic_view.menu, alias: imatic.user_anon, method: getMenuAnon }
