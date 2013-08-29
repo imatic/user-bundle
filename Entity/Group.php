@@ -27,7 +27,7 @@ class Group implements GroupInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="integer", unique=true, name="name")
+     * @ORM\Column(type="string", unique=true, name="name")
      * @Assert\NotBlank(message="fos_user.group.blank", groups={"Registration"})
      * @Assert\Length(min=2, max=255, minMessage="fos_user.group.short", maxMessage="fos_user.group.long",  groups={"Registration"})
      */

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
+use Imatic\Bundle\UserBundle\Model\GroupInterface;
 use Imatic\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -92,7 +93,7 @@ class User implements UserInterface
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="last_login")
+     * @ORM\Column(type="datetime", name="last_login", nullable=true)
      */
     protected $lastLogin;
 
@@ -107,7 +108,7 @@ class User implements UserInterface
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="password_requested_at")
+     * @ORM\Column(type="datetime", name="password_requested_at", nullable=true)
      */
     protected $passwordRequestedAt;
 
@@ -135,7 +136,7 @@ class User implements UserInterface
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="expires_at")
+     * @ORM\Column(type="datetime", name="expires_at", nullable=true)
      */
     protected $expiresAt;
 
@@ -149,7 +150,7 @@ class User implements UserInterface
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="credentials_expired_at")
+     * @ORM\Column(type="datetime", name="credentials_expired_at", nullable=true)
      */
     protected $credentialsExpireAt;
 
