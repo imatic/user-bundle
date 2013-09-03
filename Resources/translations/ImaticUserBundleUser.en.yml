@@ -1,0 +1,30 @@
+# Common
+User:               User
+Group personal:     Personal info
+Group access:       Access control
+
+# Object
+Plural:             Users
+Singular:           User
+
+# Properties
+Username:           Username
+Password:           Password
+Email:              E-mail
+Enabled:            Enabled
+Roles:              Roles
+Groups:             Groups
+Last Login:         Last login
+
+# Pages
+User Show:          User detail
+User Edit:          Edit user
+User List:          List users
+User Roles:         Edit roles
+User Create:        Create user
+Group Roles:        Edit roles
+
+# Actions
+" Action":          Action
+Switch user:        Switch user
+Switch user exit:   Exit user switch

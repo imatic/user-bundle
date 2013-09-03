@@ -1,0 +1,11 @@
+show: show
+edit: edit
+EDIT: edit
+LIST: list
+CREATE: create
+VIEW: view
+DELETE: delete
+EXPORT: export
+OPERATOR: operator
+MASTER: master
+ROLES: roles

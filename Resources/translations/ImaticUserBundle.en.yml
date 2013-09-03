@@ -1,0 +1,25 @@
+# Common
+User:               User
+Group personal:     Personal info
+Group access:       Access control
+
+# Properties
+Username:           User name
+Email:              E-mail
+Enabled:            Enabled
+Roles:              Roles
+Groups:             Groups
+Last Login:         Last login
+Password:           Password
+New Password:       New password
+
+# Pages
+User Show:          User detail
+User Edit:          Edit user
+User List:          List users
+User Create:        Create user
+User Profile:       User profile
+User Profile Edit:  Edit user profile
+Change Password:    Change password
+Forgotten password: Lost password
+Roles:              Roles

@@ -1,0 +1,10 @@
+# Common roles
+ROLE_ADMIN: Administrator
+ROLE_USER: User
+ROLE_SUPER_ADMIN: Super administrator
+ROLE_ALLOWED_TO_SWITCH: User switch
+
+Plural: Roles
+Allow: Allow
+Deny: Deny
+Processing: Processing…

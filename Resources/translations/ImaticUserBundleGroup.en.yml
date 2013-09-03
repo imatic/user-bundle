@@ -1,0 +1,20 @@
+# Common
+Group:              Group
+
+# Object
+Plural:             Groups
+Singular:           Group
+
+# Properties
+Name:               Name
+Roles:              Roles
+
+# Pages
+Group Show:         Group details
+Group Edit:         Edit goup
+Group List:         List groups
+Group Create:       Create group
+Group Roles:        Edit roles
+
+# Actions
+" Action":          Action
