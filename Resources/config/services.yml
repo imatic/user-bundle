@@ -80,3 +80,14 @@ services:
 
     imatic.role_provider:
         alias: imatic_user.security.role.provider.chain_role_provider
+
+    imatic_user.user_provider.username:
+        class: Imatic\Bundle\UserBundle\Security\UserProvider
+        public: false
+        arguments: [@fos_user.user_manager]
+
+    imatic_user.user_provider.username_email:
+        class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
+        public: false
+        arguments: [@fos_user.user_manager]
+
