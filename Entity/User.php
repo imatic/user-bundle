@@ -91,7 +91,7 @@ class User implements UserInterface
     protected $salt;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @ORM\Column(type="datetime", name="last_login", nullable=true)
      */
@@ -106,7 +106,7 @@ class User implements UserInterface
     protected $confirmationToken;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @ORM\Column(type="datetime", name="password_requested_at", nullable=true)
      */
@@ -134,7 +134,7 @@ class User implements UserInterface
     protected $expired;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
      */
@@ -148,7 +148,7 @@ class User implements UserInterface
     protected $credentialsExpired;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @ORM\Column(type="datetime", name="credentials_expired_at", nullable=true)
      */

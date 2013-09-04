@@ -46,7 +46,7 @@ class Group implements GroupInterface
      * @param string $name
      * @param array $roles
      */
-    public function __construct($name, $roles = array())
+    public function __construct($name = null, $roles = array())
     {
         $this
             ->setName($name)
@@ -166,5 +166,10 @@ class Group implements GroupInterface
         $role = (string) $role;
 
         return in_array(strtoupper($role), $this->roles, true);
+    }
+
+    public function __toString()
+    {
+        return (string) $this->name;
     }
 }
