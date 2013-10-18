@@ -17,11 +17,11 @@ Groups:             Skupiny
 Last Login:         Poslední přihlášení
 
 # Pages
-User Show:          Detail uživatele
-User Edit:          Editace uživatele
 User List:          Výpis uživatelů
+User Create:        Nový uživatel
+User Show:          Zobrazení uživatele
+User Edit:          Úprava uživatele
 User Roles:         Editace rolí
-User Create:        Vytvořit uživatele
 Group Roles:        Editace rolí
 
 # Actions

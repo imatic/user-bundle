@@ -48,7 +48,7 @@ class GroupAdmin extends Admin
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper->add('name');
+        $showMapper->add('name')->add('roles');
     }
 
     /**
@@ -68,7 +68,6 @@ class GroupAdmin extends Admin
         $listMapper
             ->addIdentifier('name')
             ->add('_action', 'actions', ['actions' => [
-                'view' => [],
                 'edit' => [],
                 'roles' => ['template' => 'ImaticUserBundle:Admin:Field/roles.html.twig']
             ]]);

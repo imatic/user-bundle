@@ -16,12 +16,71 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $builder = new TreeBuilder();
-        $root = $builder->root('imatic_user');
-        $this->addSecuritySection($root);
+        $rootNode = $builder->root('imatic_user');
+        $this->addEntitiesSection($rootNode);
+        $this->addSecuritySection($rootNode);
 
         return $builder;
     }
 
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addEntitiesSection($node)
+    {
+        $node
+            ->children()
+                ->arrayNode('entities')
+                    ->children()
+                        ->scalarNode('em')
+                            ->cannotBeEmpty()
+                            ->defaultValue('doctrine.orm.entity_manager')
+                            ->info('Entity manager service name')
+                            ->example('doctrine.orm.entity_manager')
+                        ->end()
+                        ->scalarNode('user')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\UserInterface')
+                            ->example('App\Bundle\CoreBundle\Entity\User')
+                        ->end()
+                        ->scalarNode('group')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\GroupInterface')
+                            ->example('App\Bundle\CoreBundle\Entity\Group')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addAdminSection($node)
+    {
+        $node
+            ->children()
+                ->arrayNode('admin')
+                    ->canBeDisabled()
+                    ->children()
+                        ->scalarNode('user')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\UserInterface')
+                            ->example('App\Bundle\CoreBundle\Entity\User')
+                        ->end()
+                        ->scalarNode('group')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\GroupInterface')
+                            ->example('App\Bundle\CoreBundle\Entity\Group')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
     /**
      * @param ArrayNodeDefinition $node
      */
@@ -39,7 +98,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 }

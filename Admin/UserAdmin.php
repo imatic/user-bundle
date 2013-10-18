@@ -2,7 +2,9 @@
 namespace Imatic\Bundle\UserBundle\Admin;
 
 use FOS\UserBundle\Model\UserManagerInterface;
-use Sonata\AdminBundle\Admin\Admin;
+use Imatic\Bundle\AdminBundle\Admin\Admin;
+use Knp\Menu\ItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -125,4 +127,21 @@ class UserAdmin extends Admin
                 'impersonating' => ['template' => 'ImaticUserBundle:Admin:Field/impersonating.html.twig']
             ]]);
     }
-}
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureSideMenu(ItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        if (!$childAdmin && in_array($action, ['list', 'create'])) {
+            return false;
+        }
+
+        $admin = $this->adminHelper->getCurrentAdmin($this);
+        $parameters = $this->adminHelper->getRouteParameters($admin);
+        $this->menuHelper->addHeader($menu, $admin->trans('User'));
+        $this->adminHelper
+            ->addMenuItem($admin, $menu, 'User Show', 'show', $parameters)
+            ->addMenuItem($admin, $menu, 'User Edit', 'edit', $parameters)
+        ;
+    }}
