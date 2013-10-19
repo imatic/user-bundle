@@ -1,0 +1,7 @@
+imports:
+    - { resource: fos_user.yml }
+
+imatic_user:
+    entities:
+        user: App\Bundle\CoreBundle\Entity\User
+        group: App\Bundle\CoreBundle\Entity\Group
