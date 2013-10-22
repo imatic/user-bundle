@@ -9,7 +9,7 @@ use Imatic\Bundle\UserBundle\Entity\User as BaseUser;
  * User
  *
  * @ORM\Entity
- * @ORM\Table(name="user_user")
+ * @ORM\Table()
  */
 class User extends BaseUser
 {

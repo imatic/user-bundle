@@ -9,7 +9,7 @@ use Imatic\Bundle\UserBundle\Entity\Group as BaseGroup;
  * Group
  *
  * @ORM\Entity()
- * @ORM\Table(name="user_group")
+ * @ORM\Table()
  */
 class Group extends BaseGroup
 {

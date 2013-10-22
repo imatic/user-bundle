@@ -164,7 +164,7 @@ class User implements UserInterface
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Model\GroupInterface")
+     * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Model\GroupInterface", cascade={"persist", "remove"})
      */
     protected $groups;
 

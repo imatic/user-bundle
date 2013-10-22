@@ -31,8 +31,8 @@ class LoadAll extends ContainerAwareFixture
         $adminRoles = array_keys($roleHierarchy);
         $userRoles = array(User::ROLE_DEFAULT);
 
-        $adminGroup = $this->createGroup('Administrators', 'System administrators', $adminRoles);
-        $userGroup = $this->createGroup('Users', 'Standard users', $userRoles);
+        $adminGroup = $this->createGroup('Administrators', $adminRoles);
+        $userGroup = $this->createGroup('Users', $userRoles);
 
         $adminUser = $this->createUser('admin', 'adminpass123', 'admin@example.com', array($adminGroup));
         $manager->persist($adminUser);
@@ -78,15 +78,13 @@ class LoadAll extends ContainerAwareFixture
 
     /**
      * @param  string $name
-     * @param  string $description
      * @param  array  $roles
      * @return Group
      */
-    protected function createGroup($name, $description, array $roles = array())
+    protected function createGroup($name, array $roles = array())
     {
         $group = new Group();
         $group->setName($name);
-        $group->setDescription($description);
 
         foreach ($roles as $role) {
             $group->addRole($role);
