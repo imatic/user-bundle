@@ -19,7 +19,7 @@
         "php":">=5.4",
         "symfony/framework-bundle":"2.3.*",
         "friendsofsymfony/user-bundle": "2.0.*",
-        "doctrine/orm": "2.3.*",
+        "doctrine/orm": ">=2.2.3,<2.5-dev",
         "doctrine/doctrine-bundle": "1.2.*",
         "sonata-project/admin-bundle": "2.2.*@dev"
     },
