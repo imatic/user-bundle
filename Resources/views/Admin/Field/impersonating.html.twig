@@ -1,5 +1,5 @@
 {% if object.username != app.user.username and false == is_granted('ROLE_PREVIOUS_ADMIN') and is_granted('ROLE_ALLOWED_TO_SWITCH') %}
-    <a href="{{ path('homepage', {'_switch_user': object.username}) }}" title="{{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}" class="btn">
+    <a href="{{ path('homepage', {'_switch_user': object.username}) }}" title="{{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}" class="btn btn btn-small">
         <i class="icon-user"></i>
         {{ 'Switch user'|trans({}, 'ImaticUserBundleUser')}}
     </a>
