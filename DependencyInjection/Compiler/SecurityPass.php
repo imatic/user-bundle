@@ -1,6 +1,8 @@
 <?php
 namespace Imatic\Bundle\UserBundle\DependencyInjection\Compiler;
 
+use Imatic\Bundle\UserBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -22,30 +24,25 @@ class SecurityPass implements CompilerPassInterface
     protected function processRoleProviders(ContainerBuilder $container)
     {
         $config = $container->getExtensionConfig('imatic_user');
-        $configuration = isset($config[0]['security']['role']) ? $config[0]['security']['role'] : [];
-        $interface = 'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface';
+        $processor = new Processor();
+        $configuration = $processor->processConfiguration(new Configuration(), $config);
         $definition = $container->getDefinition('imatic_user.security.role.provider.chain_role_provider');
-        $aliases = [];
+        $roleProviders = $configuration['security']['role'];
 
-        foreach ($container->getAliases() as $name => $alias) {
-            $aliases[(string) $alias][] = $name;
-        }
+        foreach ($container->findTaggedServiceIds('imatic_user.role_provider') as $id => $tagAttributes) {
+            foreach ($tagAttributes as $attributes) {
+                $alias = $attributes['alias'];
+                if (!isset($roleProviders[$alias])) continue;
 
-        foreach (array_keys($container->findTaggedServiceIds('imatic_user.role_provider')) as $id) {
-            $ids = isset($aliases[$id]) ? $aliases[$id] : [];
-            $ids[] = $id;
-
-            foreach ($ids as $name) {
-                if (array_key_exists($name, $configuration)) {
-                    $definition->addMethodCall('addRoleProvider', [new Reference($id)]);
-
-                    if (is_subclass_of($container->getDefinition($id)->getClass(), $interface)) {
-                        $container->getDefinition($id)->addMethodCall('setConfig', [$configuration[$name]]);
-                        break;
-                    }
+                $definition->addMethodCall('addRoleProvider', array(new Reference($id)));
+                if (is_subclass_of(
+                    $container->getDefinition($id)->getClass(),
+                    'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface')
+                ) {
+                    $container->getDefinition($id)->addMethodCall('setConfig', [$roleProviders[$alias]]);
+                    break;
                 }
             }
-
         }
     }
 

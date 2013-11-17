@@ -80,7 +80,7 @@ class RoleController extends Controller
      */
     private function getRoleProvider()
     {
-        return $this->get('imatic.role_provider');
+        return $this->get('imatic_user.role_provider');
     }
 
     /**

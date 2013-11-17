@@ -31,28 +31,33 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method: getMetadataFactory
 
+    # Security role provider
     imatic_user.security.role.provider.model_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider
         arguments: [@imatic_user.security.role.metadata_factory]
         public: false
         tags:
-            - {name: imatic_user.role_provider}
+            - {name: imatic_user.role_provider, alias: model}
 
     imatic_user.security.role.provider.hierarchy_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\HierarchyRoleProvider
         arguments: [%security.role_hierarchy.roles%]
         tags:
-            - {name: imatic_user.role_provider}
+            - {name: imatic_user.role_provider, alias: hierarchy}
 
     imatic_user.security.role.provider.sonata_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\SonataRoleProvider
         arguments: [@sonata.admin.pool]
         tags:
-            - {name: imatic_user.role_provider}
+            - {name: imatic_user.role_provider, alias: sonata}
 
     imatic_user.security.role.provider.chain_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider
 
+    imatic_user.role_provider:
+        alias: imatic_user.security.role.provider.chain_role_provider
+
+    # Security role translation
     imatic_user.security.role.translation.role_translator:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
         arguments: [@translator]
@@ -69,18 +74,7 @@ services:
         tags:
             - {name: imatic_user.role_translation_strategy}
 
-    imatic.model_role_provider:
-        alias: imatic_user.security.role.provider.model_role_provider
-
-    imatic.hierarchy_role_provider:
-        alias: imatic_user.security.role.provider.hierarchy_role_provider
-
-    imatic.sonata_role_provider:
-        alias: imatic_user.security.role.provider.sonata_role_provider
-
-    imatic.role_provider:
-        alias: imatic_user.security.role.provider.chain_role_provider
-
+    # User providers
     imatic_user.user_provider.username:
         class: Imatic\Bundle\UserBundle\Security\UserProvider
         public: false
