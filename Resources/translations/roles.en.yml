@@ -5,6 +5,6 @@ ROLE_SUPER_ADMIN: Super administrator
 ROLE_ALLOWED_TO_SWITCH: User switch
 
 Plural: Roles
-Allow: Allow
-Deny: Deny
+Allowed: Allowed
+Denied: Denied
 Processing: Processing…

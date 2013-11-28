@@ -5,6 +5,6 @@ ROLE_SUPER_ADMIN: Hlavní administrátor
 ROLE_ALLOWED_TO_SWITCH: Změna uživatele
 
 Plural: Role
-Allow: Povolit
-Deny: Zakázat
+Allowed: Povoleno
+Denied: Zakázáno
 Processing: Zpracovávám…

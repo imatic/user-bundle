@@ -45,14 +45,14 @@
                                                                             <label style="display: inline-block; width: 7em; margin-right: 2em; text-align: right">{{ role.action|trans_role_action }}</label>
                                                                         {% endif %}
                                                                         <button
-                                                                            class="btn {{ object.hasRole(role.role) ? 'allowed' : 'btn-primary' }}"
+                                                                            class="btn {{ object.hasRole(role.role) ? 'btn-success' : 'btn-danger' }}"
                                                                             data-loading-text="{{ 'Processing'|trans({}, 'roles') }}"
                                                                             data-url="{{ path('imatic_user_role_switch', {type: objectType, id: object.id, role: role.role}) }}"
-                                                                            data-text-allow="{{ 'Allow'|trans({}, 'roles') }}"
-                                                                            data-text-deny="{{ 'Deny'|trans({}, 'roles') }}"
+                                                                            data-text-allowed="{{ 'Allowed'|trans({}, 'roles') }}"
+                                                                            data-text-denied="{{ 'Denied'|trans({}, 'roles') }}"
                                                                             style="margin-right: 2em; width: 9em"
                                                                         >
-                                                                            {{ (object.hasRole(role.role) ? 'Deny' : 'Allow')|trans({}, 'roles') }}
+                                                                            {{ (object.hasRole(role.role) ? 'Allowed' : 'Denied')|trans({}, 'roles') }}
                                                                         </button>
                                                                     {% endfor %}
                                                                 </td>
@@ -77,11 +77,11 @@
     $('.roles button').click(function() {
         var $button = $(this);
         $button.button('loading');
-        $.get($button.data('url') + '?allowed=' + ($button.is('.allowed') ? '0' : '1'), function() {
+        $.get($button.data('url') + '?allowed=' + ($button.is('.btn-success') ? '0' : '1'), function() {
             $button
-                .toggleClass('allowed btn-primary')
+                .toggleClass('btn-success btn-danger')
                 .button('reset')
-                .text($button.data('text-' + ($button.is('.allowed') ? 'deny' : 'allow')))
+                .text($button.data('text-' + ($button.is('.btn-success') ? 'allowed' : 'denied')))
             ;
         });
     });
