@@ -48,6 +48,19 @@ Configuration
                     - app_example.admin.foo
                     # more admins..
 
+    # Imatic user
+    imatic_user:
+        # ...
+        security:
+            role:
+                model:
+                    namespaces:
+                        includes:
+                            - App
+                        excludes:
+                            - App\Bundle\ExampleBundle\Entity\Example   # exclude single entity
+                            - App\Bundle\FooBundle\Entity               # exclude all entities
+
 Translation
 -----------
 
