@@ -35,9 +35,9 @@ config.yml
 Admin and role translations
 ===========================
 
-- **Admin**: "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY+Admin"
+- Admin
+   - "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY+Admin"
    - example: "AppUserBundleUserAdmin"
-      - Plural: Users
-- **Admin role**: "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY"
+- Admin role
+   - "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY"
    - example: "AppUserBundleUser"
-      - Plural: Users
