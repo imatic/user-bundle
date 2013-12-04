@@ -31,9 +31,12 @@
     },
     "minimum-stability": "dev",
     "target-dir": "Imatic/Bundle/UserBundle",
-    "extra":{
+    "extra": {
         "branch-alias":{
             "dev-master":"2.3.x-dev"
         }
+    },
+    "suggest": {
+        "phpoffice/phpexcel": "To create and import role documents."
     }
 }
