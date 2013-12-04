@@ -20,7 +20,7 @@ abstract class AbstractRoleDocumentCommand extends ContainerAwareCommand
      */
     protected function checkPhpExcel(OutputInterface $output)
     {
-        if (!class_exists('PHPExcel') || true) {
+        if (!class_exists('PHPExcel')) {
             $output->writeln("\n<error>PHPExcel is not available.</error>\n");
             $output->writeln(<<<COMMENT
 <comment>
