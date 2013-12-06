@@ -24,24 +24,34 @@ class RoleDocumentWriter
     private $roleProvider;
     /** @var RoleTranslator */
     private $roleTranslator;
-    /** @var bool */
-    private $defaultState;
+    /** @var array|bool */
+    private $defaultRoles;
 
     /**
      * Constructor
      *
-     * @param RoleProviderInterface $roleProvider
-     * @param RoleTranslator        $roleTranslator
-     * @param bool                  $defaultState
+     * @param RoleProviderInterface $roleProvider   role provider
+     * @param RoleTranslator        $roleTranslator role translator
+     * @param array|bool            $defaultRoles   array of default roles, true for all or false for none
      */
     public function __construct(
         RoleProviderInterface $roleProvider,
         RoleTranslator $roleTranslator,
-        $defaultState = false
+        $defaultRoles = false
     ) {
         $this->roleProvider = $roleProvider;
         $this->roleTranslator = $roleTranslator;
-        $this->defaultState = $defaultState;
+        
+        // set default roles
+        if (is_array($defaultRoles)) {
+            $defaultRoles = array_flip($defaultRoles);
+        } elseif (!is_bool($defaultRoles)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid default roles. Expected array or boolean, got %s',
+                gettype($defaultRoles)
+            ));
+        }
+        $this->defaultRoles = $defaultRoles;
     }
 
     /**
@@ -176,14 +186,18 @@ class RoleDocumentWriter
         $roleNames = array();
         $roleColumn = D::COLUMN_ROLE_STATES_START;
         foreach ($roles as $role) {
-            $roleNames[] = $role->getRole();
+            $roleNames[] = $roleName = $role->getRole();
+            $roleState = is_bool($this->defaultRoles)
+                ? $this->defaultRoles
+                : isset($this->defaultRoles[$roleName])
+            ;
 
             // write action and state
             D::getCell($sheet, $row, $roleColumn)
                 ->setValue($this->roleTranslator->translateRoleAction($role->getAction()))
             ;
             D::getCell($sheet, $row, $roleColumn + 1)
-                ->setValue(D::stateToString($this->defaultState))
+                ->setValue(D::stateToString($roleState))
             ;
 
             $roleColumn += 2;

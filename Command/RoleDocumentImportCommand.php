@@ -69,7 +69,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
                 ));
             }
         } else {
-            throw new \InvalidArgumentException('You must specify either user or group');
+            throw new \LogicException('You must specify either user or group');
         }
     }
 
@@ -78,6 +78,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      *
      * @param string $userName
      * @param array  $roles
+     * @throws \RuntimeException
      */
     private function applyRolesToUser($userName, array $roles)
     {
@@ -97,6 +98,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      *
      * @param string $groupName
      * @param array  $roles
+     * @throws \RuntimeException
      */
     private function applyRolesToGroup($groupName, array $roles)
     {
