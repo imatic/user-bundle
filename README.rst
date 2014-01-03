@@ -97,8 +97,8 @@ This bundle has the following dependencies whose installation is not covered by 
         imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
         imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
 
-3. Download ImaticUserBundle using compoer
-==========================================
+3. Download ImaticUserBundle using composer
+===========================================
 
 .. sourcecode:: yaml
 
