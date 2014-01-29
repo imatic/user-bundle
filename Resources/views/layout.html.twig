@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ parent() }}
     {% else %}
         <div class="row-fluid" style="margin-top: 50px;">
