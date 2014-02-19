@@ -45,12 +45,6 @@ services:
         tags:
             - {name: imatic_user.role_provider, alias: hierarchy}
 
-    imatic_user.security.role.provider.sonata_role_provider:
-        class: Imatic\Bundle\UserBundle\Security\Role\Provider\SonataRoleProvider
-        arguments: [@sonata.admin.pool]
-        tags:
-            - {name: imatic_user.role_provider, alias: sonata}
-
     imatic_user.security.role.provider.chain_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider
 
@@ -62,11 +56,11 @@ services:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
         arguments: [@translator]
 
-    imatic_user.security.role.translation.object_strategy:
-        class: Imatic\Bundle\UserBundle\Security\Role\Translation\ObjectStrategy
-        arguments: [@translator, @sonata.admin.label.strategy.native]
-        tags:
-            - {name: imatic_user.role_translation_strategy}
+#    imatic_user.security.role.translation.object_strategy:
+#        class: Imatic\Bundle\UserBundle\Security\Role\Translation\ObjectStrategy
+#        arguments: [@translator, @sonata.admin.label.strategy.native]
+#        tags:
+#            - {name: imatic_user.role_translation_strategy}
 
     imatic_user.security.role.translation.hierarchy_strategy:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy
