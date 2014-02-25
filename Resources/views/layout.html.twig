@@ -1,16 +1,16 @@
-{% from 'ImaticViewBundle:Component:flash.html.twig' import session_message %}
+{% from 'ImaticViewBundle:Component:message.html.twig' import session_message %}
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('bundles/imaticuser/css/style.css') }}" type="text/css" media="all"/>
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/imaticuser/css/style.css') }}" type="text/css" media="all"/>
 {% endblock %}
 
 {% block body %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ parent() }}
     {% else %}
-        <div class="row-fluid" style="margin-top: 50px;">
+        <div style="margin-top: 50px;">
             {{ block('action') }}
         </div>
     {% endif %}

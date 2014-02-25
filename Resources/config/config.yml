@@ -3,5 +3,5 @@ imports:
 
 imatic_user:
     entities:
-        user: App\Bundle\CoreBundle\Entity\User
-        group: App\Bundle\CoreBundle\Entity\Group
+        user: App\Bundle\UserBundle\Entity\User
+        group: App\Bundle\UserBundle\Entity\Group

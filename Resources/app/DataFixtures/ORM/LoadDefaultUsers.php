@@ -7,10 +7,7 @@ use App\Bundle\UserBundle\Entity\Group;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 use FOS\UserBundle\Model\UserManagerInterface;
 
-/**
- * Load all fixtures
- */
-class LoadAll extends ContainerAwareFixture
+class LoadDefaultUsers extends ContainerAwareFixture
 {
     /**
      * @param ObjectManager $manager
