@@ -7,7 +7,3 @@ fos_user:
     change_password:
         form:
             type:               imatic_user_change_password
-
-    from_email:
-        address:        stepan.koci@imatic.cz
-        sender_name:    Stepan Koci
