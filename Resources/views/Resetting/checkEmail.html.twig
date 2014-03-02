@@ -1,4 +1,5 @@
-{% import "ImaticViewBundle:Component:widget.html.twig" as widget %}
+{% import "ImaticViewBundle:Component:message.html.twig" as message %}
+{% import "ImaticViewBundle:Component:panel.html.twig" as widget %}
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block headline %}
@@ -6,13 +7,19 @@
 {% endblock %}
 
 {% block fos_user_content %}
-    {{ widget.start("span4 offset4 widget-simple-form") }}
-    {{ widget.header_start() }}
-    <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
-    {{ widget.header_end() }}
+    {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
+        {% block reseting %}
 
-    {{ widget.body_start() }}
-    <p>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</p>
-    {{ widget.body_end() }}
-    {{ widget.end }}
+            {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                {% set panel = {type: 'app'} %}
+                {% block panel_header %}
+                    <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+                {% endblock %}
+                {% block panel_body %}
+                    {{ message.message('info', 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle')) }}
+                {% endblock %}
+            {% endembed %}
+
+        {% endblock %}
+    {% endembed %}
 {% endblock fos_user_content %}

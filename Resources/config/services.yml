@@ -4,11 +4,17 @@ parameters:
 
 services:
     # Form
-    imatic_user.profile.form.type:
-        class: Imatic\Bundle\UserBundle\Form\Type\ProfileFormType
+    imatic_user.form.type.profile:
+        class: Imatic\Bundle\UserBundle\Form\Type\ProfileType
         arguments: [%fos_user.model.user.class%]
         tags:
             - {name: form.type, alias: imatic_user_profile}
+
+    imatic_user.form.type.change_password:
+        class: Imatic\Bundle\UserBundle\Form\Type\ChangePasswordType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - {name: form.type, alias: imatic_user_change_password}
 
     # Menu
     imatic_user.menu.user_menu:

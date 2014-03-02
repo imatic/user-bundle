@@ -1,4 +1,5 @@
-{% import "ImaticViewBundle:Component:widget.html.twig" as widget %}
+{% import "ImaticViewBundle:Component:message.html.twig" as message %}
+{% import "ImaticViewBundle:Component:panel.html.twig" as widget %}
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block headline %}
@@ -7,25 +8,35 @@
 
 {% block fos_user_content %}
     <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-        {{ widget.start("span4 offset4 widget-simple-form") }}
-        {{ widget.header_start() }}
-        <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
-        {{ widget.header_end() }}
+        {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
+            {% block reseting %}
 
-        {{ widget.body_start() }}
-        {% if invalid_username is defined %}
-            <p class="alert alert-error">
-                {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
-            </p>
-        {% endif %}
-        <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
-        <input type="text" id="username" name="username" required="required"/>
-        {{ widget.body_end() }}
+                {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                    {% set panel = {type: 'app'} %}
+                    {% block panel_header %}
+                        <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+                    {% endblock %}
+                    {% block panel_body %}
+                        {% if invalid_username is defined %}
+                            {{ message.message('danger', 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle')) }}
+                        {% endif %}
+                        <div class="form-grop">
+                            <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+                            <input class="input-lg form-control"
+                                   type="text"
+                                   id="username"
+                                   name="username"
+                                   required="required"/>
+                        </div>
 
-        {{ widget.footer_start() }}
-        <input type="submit" class="btn btn-primary btn-block btn-large"
-               value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}"/>
-        {{ widget.footer_end() }}
-        {{ widget.end }}
+                    {% endblock %}
+                    {% block panel_footer %}
+                        <input type="submit" class="btn btn-primary btn-lg btn-block"
+                               value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}"/>
+                    {% endblock %}
+                {% endembed %}
+
+            {% endblock %}
+        {% endembed %}
     </form>
 {% endblock fos_user_content %}

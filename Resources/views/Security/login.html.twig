@@ -8,8 +8,8 @@
         {% set application_name = block('application_name') %}
         <form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off" role="form">
 
-            {% embed 'ImaticViewBundle:Component:layout1col.html.twig' with { first: {size: 4, offset: 4} } %}
-                {% block first %}
+            {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{login: {size: 4, offset: 4} } }] } %}
+                {% block login %}
 
                     {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
                         {% set panel = {type: 'app'} %}

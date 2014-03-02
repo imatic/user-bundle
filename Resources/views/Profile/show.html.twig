@@ -4,13 +4,13 @@
     {{ 'User Profile'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block sidebar %}
-    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
-{% endblock %}
-
 {% block fos_user_content %}
-    <div class="row-fluid">
-        <div class="span5">
+
+    {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, profile: {size:9} } }] } %}
+        {% block sidebar %}
+            {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
+        {% endblock %}
+        {% block profile %}
             <table class="table">
                 <tr>
                     <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
@@ -21,7 +21,7 @@
                     <td>{{ user.email }}</td>
                 </tr>
             </table>
-        </div>
-    </div>
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}

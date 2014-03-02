@@ -4,19 +4,15 @@
     {{ 'User Profile Edit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block sidebar %}
-    {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
-{% endblock %}
-
 {% block fos_user_content %}
 
-    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST"
-          class="fos_user_profile_edit">
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" class="btn btn-primary"
-                   value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
-        </div>
-    </form>
+    {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, form: {size:9} } }] } %}
+        {% block sidebar %}
+            {{ include('ImaticUserBundle:Profile:menu.html.twig') }}
+        {% endblock %}
+        {% block form %}
+            {{ include('ImaticViewBundle:Component:form.html.twig', {form: form}, with_context = false) }}
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}
