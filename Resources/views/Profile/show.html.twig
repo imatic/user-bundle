@@ -11,16 +11,13 @@
             {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
         {% endblock %}
         {% block profile %}
-            <table class="table">
-                <tr>
-                    <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
-                    <td>{{ user.username }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
-                    <td>{{ user.email }}</td>
-                </tr>
-            </table>
+
+            {% set fields = [
+            {name: 'username', label: 'profile.show.username'|trans({}, 'FOSUserBundle')},
+            {name: 'email', label: 'profile.show.email'|trans({}, 'FOSUserBundle')}
+            ] %}
+            {{ include('ImaticViewBundle:Component:show.html.twig', { item: user, fields: fields }) }}
+
         {% endblock %}
     {% endembed %}
 

@@ -7,3 +7,7 @@ fos_user:
     change_password:
         form:
             type:               imatic_user_change_password
+#
+#    from_email:
+#        address:                %app.mailer.from.address%
+#        sender_name:            %app.mailer.from.address%
