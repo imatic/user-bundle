@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block headline 'User edit'|trans({'%user%': item|default('new')}, 'ImaticUserBundleUser') %}
+
+{% set page_actions = [] %}
+{% if item is defined %}
+    {% set page_actions = page_actions | merge([{ label: 'Show'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_show', routeParams: {id: item.id} }]) %}
+{% endif %}
+{% set page_actions = page_actions | merge([{ label: 'List'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_list' }]) %}
+
+{% block action %}
+
+    {% include 'ImaticViewBundle:Component:form.html.twig' %}
+
+{% endblock %}

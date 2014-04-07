@@ -5,16 +5,44 @@ parameters:
 services:
     # Form
     imatic_user.form.type.profile:
-        class: Imatic\Bundle\UserBundle\Form\Type\ProfileType
+        class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
         arguments: [%fos_user.model.user.class%]
         tags:
             - {name: form.type, alias: imatic_user_profile}
 
     imatic_user.form.type.change_password:
-        class: Imatic\Bundle\UserBundle\Form\Type\ChangePasswordType
+        class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
         arguments: [%fos_user.model.user.class%]
         tags:
             - {name: form.type, alias: imatic_user_change_password}
+
+    imatic_user.form.type.user:
+        class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - {name: form.type, alias: imatic_user_user}
+
+    # Command handler
+    imatic_user.data.handler.user_edit:
+        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserEditHandler
+        arguments:
+            - '@fos_user.user_manager'
+        tags:
+            - { name: imatic_data.handler, alias: imatic.user.edit }
+
+    imatic_user.data.handler.user_create:
+        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserCreateHandler
+        arguments:
+            - '@fos_user.user_manager'
+        tags:
+            - { name: imatic_data.handler, alias: imatic.user.create }
+
+    imatic_user.data.handler.user_delete:
+        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserDeleteHandler
+        arguments:
+            - '@fos_user.user_manager'
+        tags:
+            - { name: imatic_data.handler, alias: imatic.user.delete }
 
     # Menu
     imatic_user.menu.user_menu:

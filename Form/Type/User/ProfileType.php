@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\UserBundle\Form\Type;
+namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseProfileFormType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block headline 'User show'|trans({'%user%': item}, 'ImaticUserBundleUser') %}
+
+{% set page_actions = [
+{ label: 'Edit'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_edit', routeParams: {id: item.id} },
+{ label: 'List'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_list' }
+] %}
+
+{% block action %}
+
+    {% set fields = [
+    {name: 'username', format: 'text'},
+    {name: 'enabled', format: 'boolean'},
+    {name: 'email', format: 'email'},
+    {name: 'lastLogin', format: 'date'}
+    ] %}
+
+    {% set show = {
+    translationDomain: 'ImaticUserBundle'
+    } %}
+
+    {% include 'ImaticViewBundle:Component:show.html.twig' %}
+
+{% endblock %}

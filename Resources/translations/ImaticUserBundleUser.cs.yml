@@ -1,12 +1,3 @@
-# Common
-User:               Uživatel
-Group personal:     Osobní údaje
-Group access:       Nastavení přístupu
-
-# Object
-Plural:             Uživatelé
-Singular:           Uživatel
-
 # Properties
 Username:           Uživatelské jméno
 Password:           Heslo
@@ -14,17 +5,16 @@ Email:              E-mail
 Enabled:            Povolen
 Roles:              Role
 Groups:             Skupiny
-Last Login:         Poslední přihlášení
+Last login:         Poslední přihlášení
 
 # Pages
-User List:          Výpis uživatelů
-User Create:        Nový uživatel
-User Show:          Zobrazení uživatele
-User Edit:          Úprava uživatele
-User Roles:         Editace rolí
-Group Roles:        Editace rolí
+User list:          Výpis uživatelů
+User create:        Nový uživatel
+User show:          Zobrazení uživatele %user%
+User edit:          Úprava uživatele %user%
+User roles:         Editace rolí
 
 # Actions
-" Action":          Akce
-Switch user:        Přepnout uživatele
+Impersonate:        Přepnout uživatele
 Switch user exit:   Opustit přepnutí uživatele
+Save:               Uložit

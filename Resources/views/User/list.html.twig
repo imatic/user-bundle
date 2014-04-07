@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block headline 'User list'|trans({}, 'ImaticUserBundleUser') %}
+
+{% set page_actions = [{ label: 'Create'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_create' }] %}
+
+{% block action %}
+
+    {% set table = {
+    attr: {data: {role:'container'}, id: 'user-list'},
+    translationDomain: 'ImaticUserBundleUser',
+    selectable: false,
+    rowActions: [
+    {label: 'Show'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_show', routeParams: {id: '#id'}, data: {target: 'modal', 'modal-size': 'large'} },
+    {label: 'Impersonate'|trans({}, 'ImaticUserBundleUser'), route: 'homepage', routeParams: {_switch_user: '#username'}, data: {ajaxify: 'false'}, nested:[
+    {label: 'Edit'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_edit', routeParams: {id: '#id'}, data: {ajaxify: 'false'} },
+    {label: 'Delete'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_delete', routeParams: {id: '#id'}, data: {method: 'delete', confirm: 'Are you sure?'} }
+    ]}
+    ]} %}
+
+    {% set columns = [
+    {name: 'username', format: 'text', sortable: true},
+    {name: 'enabled', format: 'boolean', sortable: true},
+    {name: 'email', format: 'email', sortable: true},
+    {name: 'lastLogin', format: 'date', sortable: true}
+    ] %}
+
+    {{ include('ImaticViewBundle:Component:table.html.twig') }}
+
+{% endblock %}
