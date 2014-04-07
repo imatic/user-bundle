@@ -1,12 +1,8 @@
-<ul class="nav nav-pills nav-stacked">
-    {% set user_navigation = [
-    {'name': 'User Profile'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_show'},
-    {'name': 'User Profile Edit'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_edit'},
-    {'name': 'Change Password'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_change_password'}
-    ] %}
-    {% for item in user_navigation %}
-        <li class="{{ app.request.get('_route') == item.route ? 'active' : '' }}">
-            <a href="{{ path(item.route) }}">{{ item.name|trans }}</a>
-        </li>
-    {% endfor %}
-</ul>
+{% import 'ImaticViewBundle:Component:menu.html.twig' as menu %}
+
+{% set side_menu = [
+{'name': 'User Profile'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_show'},
+{'name': 'User Profile Edit'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_profile_edit'},
+{'name': 'Change Password'|trans({}, 'ImaticUserBundle'), 'route': 'fos_user_change_password'}
+] %}
+{{ menu.side(side_menu) }}

@@ -94,13 +94,4 @@ class UserController implements ContainerAwareInterface
             ->redirect('imatic_user_user_list')
             ->getResponse();
     }
-
-    /**
-     * @Config\Route("/{id}/impersonate", requirements={"id"="\d+"})
-     * @Config\Method("DELETE")
-     */
-    public function impersonateAction()
-    {
-
-    }
 }

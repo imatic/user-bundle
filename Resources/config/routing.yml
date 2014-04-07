@@ -1,7 +1,10 @@
-imatic_user:
-    resource: @ImaticUserBundle/Controller/
+imatic_user_user:
+    resource: @ImaticUserBundle/Controller/UserController.php
     type: annotation
-    prefix: /
+
+imatic_user_role:
+    resource: @ImaticUserBundle/Controller/RoleController.php
+    type: annotation
 
 fos_user_security:
     resource: @FOSUserBundle/Resources/config/routing/security.xml

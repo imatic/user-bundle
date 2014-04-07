@@ -4,6 +4,7 @@ namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType
@@ -22,7 +23,13 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('plainPassword', 'password', ['label' => 'Password', 'required' => false])
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array('label' => 'form.new_password'),
+                'second_options' => array('label' => 'form.new_password_confirmation'),
+                'invalid_message' => 'fos_user.password.mismatch',
+            ))
             ->add('email')
             ->add('enabled')
             ->add('groups')
@@ -37,7 +44,14 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'translation_domain' => 'ImaticUserBundleUser',
             'data_class' => $this->userClass,
-            'validation_groups' => 'Profile',
+            'validation_groups' => function (FormInterface $form) {
+                    $user = $form->getData();
+                    if ($user->getId()) {
+                        return array('Profile');
+                    } else {
+                        return array('Profile', 'ChangePassword');
+                    }
+                },
             'empty_data' => function () {
                     return new $this->userClass;
                 }
