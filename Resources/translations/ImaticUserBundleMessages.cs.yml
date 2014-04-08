@@ -1,0 +1,11 @@
+imatic.user.edit:
+    success:            Uživatel byl upraven
+    error:              Nepodařilo se upravit uživatele
+
+imatic.user.create:
+    success:            Uživatel byl vytvořen
+    error:              Nepodařilo se vytvořit uživatele
+
+imatic.user.delete:
+    success:            Uživatel byl smazán
+    error:              Nepodařilo se smazat uživatele
