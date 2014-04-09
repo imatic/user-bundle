@@ -42,4 +42,12 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
             'lastLogin' => 'u.lastLogin',
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getDefaultSort()
+    {
+        return ['username' => 'ASC'];
+    }
 }
