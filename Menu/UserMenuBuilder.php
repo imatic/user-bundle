@@ -14,7 +14,7 @@ class UserMenuBuilder
      */
     public function getMenu(Factory $factory, Helper $helper)
     {
-        $menu = $factory->createItem($helper->getUser()->getUsername());
+        $menu = $factory->createItem((string)$helper->getUser());
         $helper->setDropdown($menu);
         $menu->addChild($helper->trans('User Profile', [], 'ImaticUserBundle'), ['route' => 'fos_user_profile_show']);
         $menu->addChild($helper->trans('Change Password', [], 'ImaticUserBundle'), ['route' => 'fos_user_change_password']);
