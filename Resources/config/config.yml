@@ -5,3 +5,7 @@ imatic_user:
     entities:
         user: App\Bundle\UserBundle\Entity\User
         group: App\Bundle\UserBundle\Entity\Group
+
+security:
+    role_hierarchy:
+        ROLE_IMATIC_USER_USER_ADMIN: ~

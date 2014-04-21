@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * @Config\Route("/user")
+ * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
 class UserController implements ContainerAwareInterface
 {
