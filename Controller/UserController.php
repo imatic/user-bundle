@@ -3,10 +3,6 @@
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use Imatic\Bundle\ControllerBundle\Controller\Api\ApiTrait;
-use Imatic\Bundle\ControllerBundle\Controller\Api\Command\CommandApiTrait;
-use Imatic\Bundle\ControllerBundle\Controller\Api\Form\FormApiTrait;
-use Imatic\Bundle\ControllerBundle\Controller\Api\Listing\ListingApiTrait;
-use Imatic\Bundle\ControllerBundle\Controller\Api\Show\ShowApiTrait;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserListQuery;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserQuery;
@@ -23,10 +19,6 @@ class UserController implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
     use ApiTrait;
-    use ShowApiTrait;
-    use FormApiTrait;
-    use ListingApiTrait;
-    use CommandApiTrait;
 
     /**
      * @Config\Route("")
