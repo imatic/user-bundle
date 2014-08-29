@@ -6,8 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 
-class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterface
+class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterface, FilterableQueryObjectInterface
 {
     /**
      * @var string
@@ -49,5 +50,12 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
     public function getDefaultSort()
     {
         return ['username' => 'ASC'];
+    }
+
+    public function getFilterMap()
+    {
+        return [
+            'username' => 'u.username',
+        ];
     }
 }

@@ -6,6 +6,7 @@ use Imatic\Bundle\ControllerBundle\Controller\Api\ApiTrait;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserListQuery;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserQuery;
+use Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -28,6 +29,7 @@ class UserController implements ContainerAwareInterface
     {
         return $this
             ->listing(new UserListQuery($this->container->getParameter('imatic_user.entity.user.class')))
+            ->filter(new UserFilter())
             ->setTemplateName('ImaticUserBundle:User:list.html.twig')
             ->getResponse();
     }
