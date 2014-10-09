@@ -113,3 +113,7 @@ services:
         public: false
         arguments: [@fos_user.user_manager]
 
+    imatic_user.user_filter:
+        class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
+        tags:
+            - { name: imatic_data.filter, alias: imatic_user.user }

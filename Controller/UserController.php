@@ -29,7 +29,7 @@ class UserController implements ContainerAwareInterface
     {
         return $this
             ->listing(new UserListQuery($this->container->getParameter('imatic_user.entity.user.class')))
-            ->filter(new UserFilter())
+            ->filter('imatic_user.user')
             ->setTemplateName('ImaticUserBundle:User:list.html.twig')
             ->getResponse();
     }
