@@ -27,6 +27,10 @@ class RoleController extends Controller
      * @param $type
      * @param int $id
      * @return array
+     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
+     *     path="/display/{type}/{id}",
+     *     requirements={"type"="user|group", "id"="\d+"}
+     * )
      * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Template
      */
     public function displayAction($type, $id)
