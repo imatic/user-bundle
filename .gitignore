@@ -6,3 +6,13 @@
 /composer.lock
 .DS_Store
 Thumbs.db
+Tests/Fixtures/TestProject/bower.json
+Tests/Fixtures/TestProject/.bowerrc
+Tests/Fixtures/TestProject/web/bundles
+Tests/Fixtures/TestProject/web/vendor
+Tests/Fixtures/TestProject/web/js
+Tests/Fixtures/TestProject/web/css
+Tests/Fixtures/TestProject/cache
+Tests/Fixtures/TestProject/logs
+Tests/Fixtures/TestProject/ProjectBundle/DataFixtures
+Tests/Fixtures/TestProject/ProjectBundle/Entity

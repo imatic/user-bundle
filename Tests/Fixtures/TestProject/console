@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/../../bootstrap.php';
+umask(0007);
+
+use Imatic\Bundle\TestingBundle\Test\Console;
+
+$console = new Console('Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\TestKernel');
+$console->run();

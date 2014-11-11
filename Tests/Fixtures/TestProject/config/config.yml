@@ -1,0 +1,107 @@
+parameters:
+    application.name: AppUserBundle
+    imatic_view.layout.grid_columns: 5
+
+framework:
+    secret:                     test
+    test: ~
+    session:
+        storage_id:             session.storage.filesystem
+    form:                       true
+    csrf_protection:            true
+    validation:
+        enabled:                true
+        enable_annotations:     true
+    translator:
+        enabled:                true
+    router:
+        resource:               %kernel.root_dir%/config/routing.yml
+    templating:
+        engines:                [twig]
+    default_locale:             cs_CZ
+    profiler:                   { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+
+twig:
+    debug:                      %kernel.debug%
+    strict_variables:           %kernel.debug%
+
+assetic:
+    read_from: '%kernel.root_dir%/web'
+    filters:
+        cssrewrite:
+            apply_to: "\.css$"
+        less:
+            apply_to: "\.less$"
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                wrapper_class: "Imatic\\Bundle\\TestingBundle\\Doctrine\\DBAL\\PersistedConnection"
+                driver:         pdo_sqlite
+                memory:         false
+                path:           %kernel.root_dir%/cache/test.db
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping:           true
+        resolve_target_entities:
+            Imatic\Bundle\UserBundle\Model\UserInterface: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User
+            Imatic\Bundle\UserBundle\Model\GroupInterface: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\Group
+
+monolog:
+    handlers:
+        main:
+          type:                 "null"
+
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User: plaintext
+
+    role_hierarchy:
+        ROLE_ADMIN:             ROLE_USER
+        ROLE_SUPER_ADMIN:       [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        imatic_user:
+            id: imatic_user.user_provider.username
+        in_memory:
+            memory:
+                users:
+                    user:
+                        password: password
+                        roles:  [ROLE_SUPER_ADMIN, ROLE_IMATIC_USER_USER_ADMIN]
+        chain_provider:
+            chain:
+                providers:
+                    - imatic_user
+                    - in_memory
+
+    firewalls:
+        main:
+            pattern:            ^.*
+            http_basic:
+                provider:       chain_provider
+            logout:
+                target:         /editor
+            anonymous:          false
+
+    access_control:
+        - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User
+
+imatic_user:
+    entities:
+        user: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User
+        group: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\Group
+    security:
+        role:
+            dumm_role_provider: ~
