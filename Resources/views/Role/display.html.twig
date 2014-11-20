@@ -1,4 +1,6 @@
-{% block container %}
+{% extends '::base.html.twig' %}
+
+{% block action %}
     <div class="roles">
         {% block nav %}
             <ul class="nav nav-tabs">
@@ -71,18 +73,18 @@
             </div>
         {% endblock %}
     </div>
-{% endblock %}
 
-<script>
-    $('.roles button').click(function() {
-        var $button = $(this);
-        $button.button('loading');
-        $.get($button.data('url') + '?allowed=' + ($button.is('.btn-success') ? '0' : '1'), function() {
-            $button
-                .toggleClass('btn-success btn-danger')
-                .button('reset')
-                .text($button.data('text-' + ($button.is('.btn-success') ? 'allowed' : 'denied')))
-            ;
+    <script>
+        $('.roles button').click(function() {
+            var $button = $(this);
+            $button.button('loading');
+            $.get($button.data('url') + '?allowed=' + ($button.is('.btn-success') ? '0' : '1'), function() {
+                $button
+                    .toggleClass('btn-success btn-danger')
+                    .button('reset')
+                    .text($button.data('text-' + ($button.is('.btn-success') ? 'allowed' : 'denied')))
+                ;
+            });
         });
-    });
-</script>
+    </script>
+{% endblock %}

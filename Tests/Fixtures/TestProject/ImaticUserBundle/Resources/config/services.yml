@@ -1,0 +1,5 @@
+services:
+    app_imatic_user.role_provider:
+        class: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Security\Role\Provider\RoleProvider
+        tags:
+            - { name: imatic_user.role_provider, alias: dumm_role_provider }
