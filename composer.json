@@ -23,8 +23,8 @@
         "doctrine/doctrine-bundle": ">=1.2",
         "symfony/swiftmailer-bundle": "~2.3",
         "imatic/view-bundle": "*",
-        "imatic/controller-bundle": "dev-RESEARCH-114",
-        "imatic/importexport-bundle": "dev-RESEARCH-114",
+        "imatic/controller-bundle": "*",
+        "imatic/importexport-bundle": "*",
         "symfony/assetic-bundle": "~2.3"
     },
     "require-dev": {
