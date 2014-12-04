@@ -6,7 +6,7 @@
             <ul class="nav nav-tabs">
                 {% for type in roleMap|keys %}
                     {% block link %}
-                        <li class="{{ {active: loop.first}|imatic_class }}">
+                        <li class="{{ loop.first ? 'active' }}">
                             <a href="#roles-{{ type|imatic_slug }}" data-toggle="tab">{{ type|trans_role_type }}</a>
                         </li>
                     {% endblock %}
@@ -17,12 +17,12 @@
             <div class="tab-content">
                 {% for type, roleList in roleMap %}
                     {% block tabs %}
-                        <div id="roles-{{ type|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                        <div id="roles-{{ type|imatic_slug }}" class="tab-pane {{ loop.first ? 'active' }}">
                             {% block pills %}
                                 <ul class="nav nav-pills nav-stacked pull-left">
                                     {% for domain in roleList|keys %}
                                         {% block pill %}
-                                            <li class="{{ {active: loop.first}|imatic_class }}">
+                                            <li class="{{ loop.first ? 'active' }}">
                                                 <a href="#roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" data-toggle="pill">
                                                     {{ domain|trans_role_domain }}
                                                 </a>
@@ -35,7 +35,7 @@
                                 <div class="tab-content">
                                     {% for domain, labels in roleList %}
                                         {% block roles %}
-                                            <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ {active: loop.first}|imatic_class }}">
+                                            <div id="roles-{{ '%s-%s'|format(type, domain)|imatic_slug }}" class="tab-pane {{ loop.first ? 'active' }}">
                                                 <table style="margin: 0 2em 2em">
                                                     {% for label, roles in labels %}
                                                         {% block role %}
