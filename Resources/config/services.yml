@@ -90,12 +90,6 @@ services:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
         arguments: [@translator]
 
-#    imatic_user.security.role.translation.object_strategy:
-#        class: Imatic\Bundle\UserBundle\Security\Role\Translation\ObjectStrategy
-#        arguments: [@translator, @sonata.admin.label.strategy.native]
-#        tags:
-#            - {name: imatic_user.role_translation_strategy}
-
     imatic_user.security.role.translation.hierarchy_strategy:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy
         arguments: [@translator]

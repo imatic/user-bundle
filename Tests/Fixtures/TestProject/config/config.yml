@@ -91,7 +91,7 @@ security:
             anonymous:          false
 
     access_control:
-        - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/admin, role: [ROLE_ADMIN] }
 
 fos_user:
     db_driver: orm
