@@ -11,34 +11,36 @@
             "email": "stepan.koci@imatic.cz"
         },
         {
-            "name":"Imatic Software s.r.o.",
-            "homepage":"http://imatic.cz/"
+            "name": "Imatic Software s.r.o.",
+            "homepage": "http://imatic.cz/"
         }
     ],
     "require": {
-        "php":">=5.4",
-        "symfony/framework-bundle":"~2.4",
+        "php": ">=5.4",
+        "symfony/framework-bundle": "~2.6",
         "friendsofsymfony/user-bundle": "2.0.*",
         "doctrine/orm": ">=2.2.3,<2.5-dev",
         "doctrine/doctrine-bundle": ">=1.2",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "imatic/view-bundle": "*",
+        "symfony/swiftmailer-bundle": "~2.6",
+        "imatic/view-bundle": "~2.6",
         "imatic/controller-bundle": "*",
         "imatic/importexport-bundle": "*",
-        "symfony/assetic-bundle": "~2.3"
+        "symfony/assetic-bundle": "~2.6"
     },
     "require-dev": {
         "imatic/testing-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Imatic\\Bundle\\UserBundle": "" }
+        "psr-0": {
+            "Imatic\\Bundle\\UserBundle": ""
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "target-dir": "Imatic/Bundle/UserBundle",
     "extra": {
-        "branch-alias":{
-            "dev-master":"2.4.x-dev"
+        "branch-alias": {
+            "dev-master": "2.6.x-dev"
         }
     },
     "scripts": {
