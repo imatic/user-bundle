@@ -1095,7 +1095,7 @@
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:imatic/imatic-viewbundle",
-                "reference": "6e0273108f232fded7fb3fa0833b09dc15dae046"
+                "reference": "0dc65ad50504362218cd3426ef706f626b0f8615"
             },
             "require": {
                 "genemu/form-bundle": "2.2.*",
@@ -1136,7 +1136,7 @@
             ],
             "description": "Imatic View Bundle",
             "homepage": "http://imatic.cz",
-            "time": "2015-07-09 14:48:52"
+            "time": "2015-07-09 15:26:12"
         },
         {
             "name": "jdorn/sql-formatter",
