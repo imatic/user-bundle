@@ -1,3 +1,7 @@
+# Object
+Singular:           User
+Plural:             Users
+
 # Properties
 Username:           Username
 Password:           Password
