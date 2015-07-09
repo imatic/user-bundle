@@ -13,10 +13,10 @@
         {% block profile %}
 
             {% set fields = [
-            {name: 'username', label: 'profile.show.username'|trans({}, 'FOSUserBundle')},
-            {name: 'email', label: 'profile.show.email'|trans({}, 'FOSUserBundle')}
+            {name: 'username', label: 'profile.show.username'},
+            {name: 'email', label: 'profile.show.email'}
             ] %}
-            {{ include('ImaticViewBundle:Component:show.html.twig', { item: user, fields: fields }) }}
+            {{ include('ImaticViewBundle:Component:show.html.twig', { item: user, fields: fields, show: {translationDomain: 'FOSUserBundle'} }) }}
 
         {% endblock %}
     {% endembed %}
