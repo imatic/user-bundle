@@ -19,7 +19,7 @@
                         {% block panel_body %}
                             <div class="form-group">
                                 {% if error %}
-                                    {{ message.message('danger', error|trans({}, 'FOSUserBundle')) }}
+                                    {{ message.message('danger', error.messageKey|trans(error.messageData, 'security')) }}
                                 {% endif %}
                                 <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
                                 <input type="text"
