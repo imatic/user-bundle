@@ -71,7 +71,7 @@ class UserController implements ContainerAwareInterface
         return $this
             ->form('imatic_user_user')
             ->commandName('imatic.user.create')
-            ->successRedirect('imatic_user_user_edit', function (CommandResultInterface $result, UserInterface $user) {
+            ->successRedirect('imatic_user_user_show', function (CommandResultInterface $result, UserInterface $user) {
                 return ['id' => $user->getId()];
             })
             ->setTemplateName('ImaticUserBundle:User:edit.html.twig')
