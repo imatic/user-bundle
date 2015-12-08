@@ -30,7 +30,6 @@
         "symfony/swiftmailer-bundle": "~2.3",
         "imatic/view-bundle": "dev-webpack-sf2",
         "imatic/controller-bundle": "*",
-        "imatic/importexport-bundle": "*",
         "symfony/assetic-bundle": "~2.6"
     },
     "require-dev": {
