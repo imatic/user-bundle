@@ -28,7 +28,7 @@
         "doctrine/orm": ">=2.2.3,<2.5-dev",
         "doctrine/doctrine-bundle": ">=1.2",
         "symfony/swiftmailer-bundle": "~2.3",
-        "imatic/view-bundle": "~2.6",
+        "imatic/view-bundle": "dev-webpack",
         "imatic/controller-bundle": "*",
         "imatic/importexport-bundle": "*",
         "symfony/assetic-bundle": "~2.6"
