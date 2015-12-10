@@ -25,7 +25,7 @@
         "php": ">=5.4",
         "symfony/framework-bundle": "~2.6",
         "friendsofsymfony/user-bundle": "2.0.*",
-        "doctrine/orm": ">=2.2.3,<2.5-dev",
+        "doctrine/orm": ">=2.2.3,<2.6-dev",
         "doctrine/doctrine-bundle": ">=1.2",
         "symfony/swiftmailer-bundle": "~2.3",
         "imatic/view-bundle": "dev-webpack-sf2",
