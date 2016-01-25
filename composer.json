@@ -37,7 +37,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Imatic\\Bundle\\UserBundle": ""
+            "Imatic\\Bundle\\UserBundle\\": ""
         }
     },
     "minimum-stability": "dev",
