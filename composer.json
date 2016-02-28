@@ -23,17 +23,16 @@
     ],
     "require": {
         "php": ">=5.4",
-        "symfony/framework-bundle": "~2.6",
-        "friendsofsymfony/user-bundle": "2.0.*",
-        "doctrine/orm": "^2.2.3",
+        "symfony/framework-bundle": "~2.7|~3.0",
+        "friendsofsymfony/user-bundle": "~2.0",
+        "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "symfony/swiftmailer-bundle": "~2.3",
-        "imatic/view-bundle": "dev-webpack-sf2",
-        "imatic/controller-bundle": "*",
-        "symfony/assetic-bundle": "~2.6"
+        "imatic/view-bundle": "~3.0",
+        "imatic/controller-bundle": "~3.0"
     },
     "require-dev": {
-        "imatic/testing-bundle": "dev-master"
+        "imatic/testing-bundle": "~3.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,16 +41,8 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.6.x-dev"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php -r \"if (!file_exists('Tests/Fixtures/TestProject/bower.json')) symlink(__DIR__ . '/vendor/imatic/view-bundle/Imatic/Bundle/ViewBundle/Tests/Fixtures/TestProject/bower.json', 'Tests/Fixtures/TestProject/bower.json');\"",
-            "php -r \"if (!file_exists('Tests/Fixtures/TestProject/.bowerrc')) symlink(__DIR__ . '/vendor/imatic/view-bundle/Imatic/Bundle/ViewBundle/Tests/Fixtures/TestProject/.bowerrc', 'Tests/Fixtures/TestProject/.bowerrc');\""
-        ]
+    "config": {
+        "secure-http": false
     },
     "suggest": {
         "phpoffice/phpexcel": "To create and import role documents."
