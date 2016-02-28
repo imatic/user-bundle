@@ -54,21 +54,21 @@ services:
     imatic_user.twig.extension.security:
         class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
         arguments:
-            - @imatic_user.security.role.provider.model_role_provider
-            - @imatic_user.security.role.translation.role_translator
+            - '@imatic_user.security.role.provider.model_role_provider'
+            - '@imatic_user.security.role.translation.role_translator'
         tags:
             - {name: twig.extension}
 
     # Security
     imatic_user.security.role.metadata_factory:
-        class: Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
+        class: Doctrine\ORM\Mapping\ClassMetadataFactory
         factory_service: doctrine.orm.entity_manager
         factory_method: getMetadataFactory
 
     # Security role provider
     imatic_user.security.role.provider.model_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider
-        arguments: [@imatic_user.security.role.metadata_factory]
+        arguments: ['@imatic_user.security.role.metadata_factory']
         public: false
         tags:
             - {name: imatic_user.role_provider, alias: model}
@@ -88,11 +88,11 @@ services:
     # Security role translation
     imatic_user.security.role.translation.role_translator:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
-        arguments: [@translator]
+        arguments: ['@translator']
 
     imatic_user.security.role.translation.hierarchy_strategy:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy
-        arguments: [@translator]
+        arguments: ['@translator']
         tags:
             - {name: imatic_user.role_translation_strategy}
 
@@ -100,12 +100,12 @@ services:
     imatic_user.user_provider.username:
         class: Imatic\Bundle\UserBundle\Security\UserProvider
         public: false
-        arguments: [@fos_user.user_manager]
+        arguments: ['@fos_user.user_manager']
 
     imatic_user.user_provider.username_email:
         class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
         public: false
-        arguments: [@fos_user.user_manager]
+        arguments: ['@fos_user.user_manager']
 
     imatic_user.user_filter:
         class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
