@@ -3,6 +3,9 @@
 namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,8 +26,8 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('plainPassword', 'repeated', array(
-                'type' => 'password',
+            ->add('plainPassword', RepeatedType::class, array(
+                'type' => PasswordType::class,
                 'options' => array('translation_domain' => 'FOSUserBundle'),
                 'first_options' => array('label' => 'form.new_password'),
                 'second_options' => array('label' => 'form.new_password_confirmation'),
@@ -33,7 +36,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('enabled')
             ->add('groups')
-            ->add('save', 'submit', ['attr' => ['class' => 'btn-primary']]);
+            ->add('save', SubmitType::class, ['attr' => ['class' => 'btn-primary']]);
     }
 
     /**
@@ -56,10 +59,5 @@ class UserType extends AbstractType
                     return new $this->userClass;
                 }
         ));
-    }
-
-    public function getName()
-    {
-        return 'imatic_user_user';
     }
 }

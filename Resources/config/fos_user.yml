@@ -3,10 +3,10 @@ fos_user:
     firewall_name:              main
     profile:
         form:
-            type:               imatic_user_profile
+            type:               Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
     change_password:
         form:
-            type:               imatic_user_change_password
+            type:               Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
 #
 #    from_email:
 #        address:                %app.mailer.from.address%

@@ -8,19 +8,19 @@ services:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
         arguments: [%fos_user.model.user.class%]
         tags:
-            - {name: form.type, alias: imatic_user_profile}
+            - {name: form.type }
 
     imatic_user.form.type.change_password:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
         arguments: [%fos_user.model.user.class%]
         tags:
-            - {name: form.type, alias: imatic_user_change_password}
+            - {name: form.type }
 
     imatic_user.form.type.user:
         class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
         arguments: [%fos_user.model.user.class%]
         tags:
-            - {name: form.type, alias: imatic_user_user}
+            - {name: form.type }
 
     # Command handler
     imatic_user.data.handler.user_edit:
