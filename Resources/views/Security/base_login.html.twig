@@ -5,62 +5,65 @@
 
 {% block action %}
     {% block fos_user_content %}
-        {% set application_name = block('application_name') %}
-        <form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off" role="form">
+        <div class="login">
+            {% set application_name = block('application_name') %}
+            <form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off" role="form">
 
-            {% block login %}
-                {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{login: {size: 4, offset: 4} } }] } %}
-                    {% block login %}
+                {% block login %}
+                    {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{login: {size: 4, offset: 4} } }] } %}
+                        {% block login %}
 
-                        {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
-                            {% set panel = {type: 'app'} %}
-                            {% block panel_header %}
-                                <h1>{{ application_name }}</h1>
-                            {% endblock %}
-                            {% block panel_body %}
-                                <div class="form-group">
-                                    {% if error %}
-                                        {{ message.message('danger', error.messageKey|trans(error.messageData, 'security')) }}
-                                    {% endif %}
-                                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-                                    <input type="text"
-                                           class="input-lg form-control"
-                                           id="username"
-                                           name="_username"
-                                           value="{{ last_username }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-                                    <input type="password" class="input-lg form-control" id="password" name="_password">
-                                </div>
-
-                            {% endblock %}
-                            {% block panel_footer %}
-
-                                <input type="submit" id="_submit" name="_submit"
-                                       class="btn btn-primary btn-lg btn-block"
-                                       value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-
-                                <div class="clearfix">
-                                    <div class="checkbox">
-                                        <label for="remember_me">
-                                            <input type="checkbox" id="remember_me" name="_remember_me"
-                                                   value="on">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-                                        </label>
-                                        <a class="pull-right" href="{{ path('fos_user_resetting_request') }}">
-                                            {{ 'Forgotten password'|trans({}, 'ImaticUserBundle') }}
-                                        </a>
+                            {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                                {% set panel = {type: 'app'} %}
+                                {% block panel_header %}
+                                    <h1>{{ application_name }}</h1>
+                                {% endblock %}
+                                {% block panel_body %}
+                                    <div class="form-group">
+                                        {% if error %}
+                                            {{ message.message('danger', error.messageKey|trans(error.messageData, 'security')) }}
+                                        {% endif %}
+                                        <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                                        <input type="text"
+                                               class="input-lg form-control"
+                                               id="username"
+                                               name="_username"
+                                               value="{{ last_username }}">
                                     </div>
-                                </div>
+                                    <div class="form-group">
+                                        <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                                        <input type="password" class="input-lg form-control" id="password"
+                                               name="_password">
+                                    </div>
 
-                            {% endblock %}
-                        {% endembed %}
+                                {% endblock %}
+                                {% block panel_footer %}
 
-                    {% endblock %}
-                {% endembed %}
-            {% endblock %}
+                                    <input type="submit" id="_submit" name="_submit"
+                                           class="btn btn-primary btn-lg btn-block"
+                                           value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
 
-        </form>
+                                    <div class="clearfix">
+                                        <div class="checkbox">
+                                            <label for="remember_me">
+                                                <input type="checkbox" id="remember_me" name="_remember_me"
+                                                       value="on">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                                            </label>
+                                            <a class="pull-right" href="{{ path('fos_user_resetting_request') }}">
+                                                {{ 'Forgotten password'|trans({}, 'ImaticUserBundle') }}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                {% endblock %}
+                            {% endembed %}
+
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+
+            </form>
+        </div>
     {% endblock fos_user_content %}
 {% endblock action %}

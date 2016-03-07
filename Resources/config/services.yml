@@ -1,7 +1,3 @@
-parameters:
-    imatic_user.controller.user.class: ImaticUserBundle:Crud
-    imatic_user.controller.group.class: ImaticUserBundle:Crud
-
 services:
     # Form
     imatic_user.form.type.profile:

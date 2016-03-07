@@ -1,11 +1,11 @@
 {% extends "ImaticUserBundle::layout.html.twig" %}
 
 {% block headline %}
-    {{ 'Change password'|trans({}, 'ImaticUserBundle') }}
+    {{ 'User Profile Edit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
 {% block fos_user_content %}
-    <div class="change-password">
+    <div class="profile-edit">
         {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, form: {size:9} } }] } %}
             {% block sidebar %}
                 {{ include('ImaticUserBundle:Profile:menu.html.twig') }}
@@ -15,4 +15,4 @@
             {% endblock %}
         {% endembed %}
     </div>
-{% endblock fos_user_content %}
+{% endblock %}

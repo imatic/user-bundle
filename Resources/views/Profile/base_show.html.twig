@@ -1,0 +1,24 @@
+{% extends "ImaticUserBundle::layout.html.twig" %}
+
+{% block headline %}
+    {{ 'User Profile'|trans({}, 'ImaticUserBundle') }}
+{% endblock %}
+
+{% block fos_user_content %}
+    <div class="profile-show">
+        {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, profile: {size:9} } }] } %}
+            {% block sidebar %}
+                {% include 'ImaticUserBundle:Profile:menu.html.twig' %}
+            {% endblock %}
+            {% block profile %}
+
+                {% set fields = [
+                {name: 'username', label: 'profile.show.username'},
+                {name: 'email', label: 'profile.show.email'}
+                ] %}
+                {{ include('ImaticViewBundle:Component:show.html.twig', { item: user, fields: fields, show: {translationDomain: 'FOSUserBundle'} }) }}
+
+            {% endblock %}
+        {% endembed %}
+    </div>
+{% endblock %}
