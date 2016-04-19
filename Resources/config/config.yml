@@ -3,8 +3,8 @@ imports:
 
 imatic_user:
     entities:
-        user: App\Bundle\UserBundle\Entity\User
-        group: App\Bundle\UserBundle\Entity\Group
+        user: AppUserBundle\Entity\User
+        group: AppUserBundle\Entity\Group
 
 security:
     role_hierarchy:

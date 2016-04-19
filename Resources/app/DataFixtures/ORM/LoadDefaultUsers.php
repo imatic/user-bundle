@@ -1,25 +1,19 @@
 <?php
 namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
+use AppUserBundle\Entity\User;
+use AppUserBundle\Entity\Group;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Bundle\UserBundle\Entity\User;
-use App\Bundle\UserBundle\Entity\Group;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 use FOS\UserBundle\Model\UserManagerInterface;
 
 class LoadDefaultUsers extends ContainerAwareFixture
 {
-    /**
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $this->loadDefaultUsersAndGroups($manager);
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
     public function loadDefaultUsersAndGroups(ObjectManager $manager)
     {
         /** @var $roleHierarchy array */
@@ -41,12 +35,12 @@ class LoadDefaultUsers extends ContainerAwareFixture
     }
 
     /**
-     * @param  string $username
-     * @param  string $password
-     * @param  string $email
-     * @param  array  $roles
-     * @param  array  $groups
-     * @param  bool   $enabled
+     * @param string $username
+     * @param string $password
+     * @param string $email
+     * @param array  $groups
+     * @param array  $roles
+     * @param bool   $enabled
      * @return User
      */
     protected function createUser($username, $password, $email, array $groups = array(), array $roles = array(), $enabled = true)
@@ -74,8 +68,8 @@ class LoadDefaultUsers extends ContainerAwareFixture
     }
 
     /**
-     * @param  string $name
-     * @param  array  $roles
+     * @param string $name
+     * @param array  $roles
      * @return Group
      */
     protected function createGroup($name, array $roles = array())
