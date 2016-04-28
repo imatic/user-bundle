@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bundle\UserBundle\Entity;
+namespace AppUserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\Group as BaseGroup;

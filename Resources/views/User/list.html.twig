@@ -13,7 +13,7 @@
     rowActions: [
         {label: 'Show'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_show', routeParams: {id: '#id'}, data: {target: 'modal', 'modal-size': 'large'}, nested:[
             {label: 'Edit'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_edit', routeParams: {id: '#id'}, data: {ajaxify: 'false'} },
-            {label: 'Delete'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_delete', routeParams: {id: '#id'}, data: {method: 'delete', confirm: 'Are you sure?'} },
+            {label: 'Delete'|trans({}, 'ImaticViewBundle'), route: 'imatic_user_user_delete', routeParams: {id: '#id'}, data: {method: 'delete', confirm: 'Confirm'|trans({}, 'ImaticViewBundle')} },
             {label: 'Impersonate'|trans({}, 'ImaticUserBundleUser'), route: 'homepage', routeParams: {_switch_user: '#username'}, condition: 'isGranted("ROLE_ALLOWED_TO_SWITCH") && !isGranted("ROLE_PREVIOUS_ADMIN")', data: {ajaxify: 'false'}}
         ]},
     ]} %}

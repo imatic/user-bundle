@@ -28,8 +28,8 @@ Translation
 
 Global roles are translated using the "roles" domain.
 
-Sonata model and admin roles
-============================
+Model roles
+===========
 
 Configuration
 -------------
@@ -37,16 +37,6 @@ Configuration
 .. sourcecode:: yaml
 
     # app/config/config.yml
-
-    sonata_admin:
-        # ...
-        security:
-            handler: sonata.admin.security.handler.role
-        extensions:
-            imatic_admin.extension.security_extension:
-                admins:
-                    - app_example.admin.foo
-                    # more admins..
 
     # Imatic user
     imatic_user:
@@ -58,56 +48,33 @@ Configuration
                         includes:
                             - App
                         excludes:
-                            - App\Bundle\ExampleBundle\Entity\Example   # exclude single entity
-                            - App\Bundle\FooBundle\Entity               # exclude all entities
-
-Translation
------------
-
-- Admin
-   - "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY+Admin"
-   - example: "AppUserBundleUserAdmin"
-- Admin role
-   - "Plural" in "VENDOR+BUNDLE+Bundle+ENTITY"
-   - example: "AppUserBundleUser"
-
+                            - AppExampleBundle\Entity\Example   # exclude single entity
+                            - AppFooBundle\Entity               # exclude all entities
 
 
 *************
 Installation
 *************
 
-1. Setup dependencies
-=====================
-
-This bundle has the following dependencies whose installation is not covered by this manual.
-
- - SonataAdminBundle
- - ImaticViewBundle
-
-2. Generate AppUserBundle
+1. Generate AppUserBundle
 =========================
 
- - generate AppUserBundle
- - create "src/App/Bundle/UserBundle/Resources/config/config.yml" with the following contents:
+Generate and enable a local bundle called AppUserBundle.
 
-.. sourcecode:: yaml
+This bundle will contain user-related entities and fixtures.
 
-    parameters:
-        imatic_user.entity.user.class:      'App\Bundle\UserBundle\Entity\User'
-        imatic_user.entity.group.class:     'App\Bundle\UserBundle\Entity\Group'
 
-3. Download ImaticUserBundle using composer
+2. Download ImaticUserBundle using composer
 ===========================================
 
 .. sourcecode:: yaml
 
     "require": {
         # ...
-        "imatic/user-bundle": "dev-master"
+        "imatic/user-bundle": "^3.0"
     }
 
-4. Enable the bundle
+3. Enable the bundle
 ====================
 
 .. sourcecode:: php
@@ -124,7 +91,7 @@ This bundle has the following dependencies whose installation is not covered by 
         );
     }
 
-5. Configure the bundles
+4. Configure the bundles
 ========================
 
 .. sourcecode:: yaml
@@ -142,14 +109,14 @@ This bundle has the following dependencies whose installation is not covered by 
             #...
             resolve_target_entities:
                 # UserBundle
-                Imatic\Bundle\UserBundle\Model\UserInterface: App\Bundle\UserBundle\Entity\User
-                Imatic\Bundle\UserBundle\Model\GroupInterface: App\Bundle\UserBundle\Entity\Group
+                Imatic\Bundle\UserBundle\Model\UserInterface: ApUserBundle\Entity\User
+                Imatic\Bundle\UserBundle\Model\GroupInterface: AppUserBundle\Entity\Group
 
     # Imatic user
     imatic_user:
         entities:
-            user: App\Bundle\UserBundle\Entity\User
-            group: App\Bundle\UserBundle\Entity\Group
+            user: AppUserBundle\Entity\User
+            group: AppUserBundle\Entity\Group
         security:
             role:
                 model:
@@ -157,9 +124,8 @@ This bundle has the following dependencies whose installation is not covered by 
                         includes: ~
                         excludes: ~
                 hierarchy: ~
-                sonata: ~
 
-6. Configure the security
+5. Configure the security
 =========================
 
 .. sourcecode:: yaml
@@ -187,7 +153,7 @@ This bundle has the following dependencies whose installation is not covered by 
                 pattern: ^/
                 form_login:
                     provider: imatic_user_provider
-                    csrf_provider: form.csrf_provider
+                    csrf_token_generator: security.csrf.token_manager
                 logout:       true
                 anonymous:    true
                 switch_user:  true
@@ -198,7 +164,7 @@ This bundle has the following dependencies whose installation is not covered by 
             - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/, role: IS_AUTHENTICATED_FULLY }
 
-7. Configure the routing
+6. Configure the routing
 ========================
 
 .. sourcecode:: yaml
