@@ -35,7 +35,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, name="username")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="fos_user.username.blank", groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=255, minMessage="fos_user.username.short", maxMessage="fos_user.username.long", groups={"Registration", "Profile"})
      */
@@ -44,14 +44,14 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true, name="username_canonical")
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     protected $usernameCanonical;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, name="email")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="fos_user.email.blank", groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=254, minMessage="fos_user.email.short", maxMessage="fos_user.email.long", groups={"Registration", "Profile"})
      * @Assert\Email(message="fos_user.email.invalid", groups={"Registration", "Profile"})
@@ -61,7 +61,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true, name="email_canonical")
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     protected $emailCanonical;
 
@@ -69,7 +69,7 @@ class User implements UserInterface
      * Encrypted password
      * @var string
      *
-     * @ORM\Column(type="string", name="password")
+     * @ORM\Column(type="string")
      */
     protected $password;
 
@@ -86,14 +86,14 @@ class User implements UserInterface
      * The salt to use for hashing
      * @var string
      *
-     * @ORM\Column(type="string", name="salt")
+     * @ORM\Column(type="string")
      */
     protected $salt;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="last_login", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastLogin;
 
@@ -101,63 +101,63 @@ class User implements UserInterface
      * Random string sent to the user email address in order to verify it
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, name="confirmation_token")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $confirmationToken;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="password_requested_at", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $passwordRequestedAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="enabled")
+     * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="locked")
+     * @ORM\Column(type="boolean")
      */
     protected $locked;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="expired")
+     * @ORM\Column(type="boolean")
      */
     protected $expired;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="expires_at", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $expiresAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="credentials_expired")
+     * @ORM\Column(type="boolean")
      */
     protected $credentialsExpired;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="credentials_expired_at", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $credentialsExpireAt;
 
     /**
      * @var array
      *
-     * @ORM\Column(type="array", name="roles")
+     * @ORM\Column(type="array")
      */
     protected $roles;
 
@@ -165,7 +165,6 @@ class User implements UserInterface
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Model\GroupInterface", cascade={"persist"})
-     * @ORM\JoinTable(name="user_user_group")
      */
     protected $groups;
 
