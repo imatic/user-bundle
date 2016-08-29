@@ -1,4 +1,3 @@
-{% import "ImaticViewBundle:Component:message.html.twig" as message %}
 {% extends "ImaticUserBundle::layout.html.twig" %}
 
 {% block headline 'layout.login'|trans({}, 'FOSUserBundle') %}
@@ -14,6 +13,8 @@
                         {% block login %}
 
                             {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                                {% import "ImaticViewBundle:Component:message.html.twig" as message %}
+                                
                                 {% set panel = {type: 'app'} %}
                                 {% block panel_header %}
                                     <h1>{{ application_name }}</h1>
