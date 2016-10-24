@@ -18,8 +18,11 @@
                         <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
                     {% endblock %}
                     {% block panel_body %}
+                    <div class="has-error">
                         {{ form_errors(form) }}
-                        {{ form_errors(form.plainPassword) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
                         <div class="form-group">
                             <label for="{{ form.plainPassword.first.vars.id }}">{{ form.plainPassword.first.vars.label | trans({}, 'FOSUserBundle') }}</label>
                             <input id="{{ form.plainPassword.first.vars.id }}"
@@ -27,7 +30,6 @@
                                    type="password"
                                    class="input-lg form-control">
                         </div>
-                        {{ form_errors(form.plainPassword) }}
                         <div class="form-group">
                             <label for="{{ form.plainPassword.second.vars.id }}">{{ form.plainPassword.second.vars.label | trans({}, 'FOSUserBundle') }}</label>
                             <input id="{{ form.plainPassword.second.vars.id }}"
