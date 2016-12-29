@@ -17,7 +17,7 @@
                         <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
                     {% endblock %}
                     {% block panel_body %}
-                        {{ message.message('info', 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle')) }}
+                        {{ message.message('info', 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime}, 'FOSUserBundle')) }}
                     {% endblock %}
                 {% endembed %}
 

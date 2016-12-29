@@ -11,8 +11,8 @@ Roles:              Role
 Groups:             Skupiny
 Last login:         Poslední přihlášení
 Name:               Jméno
-Profile.show.username:  Uživatelské jméno
-Profile.show.email:     E-mail
+profile.show.username:  Uživatelské jméno
+profile.show.email:     E-mail
 
 # Pages
 User list:          Výpis uživatelů

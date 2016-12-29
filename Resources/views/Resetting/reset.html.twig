@@ -1,1 +1,51 @@
-{% extends "ImaticUserBundle:Resetting:base_reset.html.twig" %}
+{% import "ImaticViewBundle:Component:message.html.twig" as message %}
+{% import "ImaticViewBundle:Component:panel.html.twig" as widget %}
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block headline %}
+    {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+{% endblock %}
+
+{% block fos_user_content %}
+    <div class="resetting reset">
+        {{ form_start(form, {action: path('fos_user_resetting_reset', {'token': token}), method: 'post'})|replace({'form-horizontal': ''})|raw }}
+        {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
+            {% block reseting %}
+
+                {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                    {% set panel = {type: 'app'} %}
+                    {% block panel_header %}
+                        <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+                    {% endblock %}
+                    {% block panel_body %}
+                        <div class="has-error">
+                            {{ form_errors(form) }}
+                            {{ form_errors(form.plainPassword.first) }}
+                            {{ form_errors(form.plainPassword.second) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.plainPassword.first.vars.id }}">{{ form.plainPassword.first.vars.label | trans({}, 'FOSUserBundle') }}</label>
+                            <input id="{{ form.plainPassword.first.vars.id }}"
+                                   name="{{ form.plainPassword.first.vars.full_name }}"
+                                   type="password"
+                                   class="input-lg form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.plainPassword.second.vars.id }}">{{ form.plainPassword.second.vars.label | trans({}, 'FOSUserBundle') }}</label>
+                            <input id="{{ form.plainPassword.second.vars.id }}"
+                                   name="{{ form.plainPassword.second.vars.full_name }}"
+                                   type="password"
+                                   class="input-lg form-control">
+                        </div>
+                    {% endblock %}
+                    {% block panel_footer %}
+                        <input type="submit" class="btn btn-primary btn-lg btn-block"
+                               value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+        {% endembed %}
+        {{ form_widget(form._token) }}
+        </form>
+    </div>
+{% endblock fos_user_content %}

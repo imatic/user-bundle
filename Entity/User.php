@@ -348,6 +348,17 @@ class User implements UserInterface
     }
 
     /**
+     * @param string|null $salt
+     * @return $this
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
      * Returns salt.
      *
      * @return string

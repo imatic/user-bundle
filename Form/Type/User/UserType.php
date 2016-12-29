@@ -48,16 +48,16 @@ class UserType extends AbstractType
             'translation_domain' => 'ImaticUserBundleUser',
             'data_class' => $this->userClass,
             'validation_groups' => function (FormInterface $form) {
-                    $user = $form->getData();
-                    if ($user->getId()) {
-                        return array('Profile');
-                    } else {
-                        return array('Profile', 'ChangePassword');
-                    }
-                },
-            'empty_data' => function () {
-                    return new $this->userClass;
+                $user = $form->getData();
+                if ($user->getId()) {
+                    return array('Profile');
+                } else {
+                    return array('Profile', 'ChangePassword');
                 }
+            },
+            'empty_data' => function () {
+                return new $this->userClass;
+            }
         ));
     }
 }

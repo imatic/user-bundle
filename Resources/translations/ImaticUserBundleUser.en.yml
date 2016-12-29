@@ -11,8 +11,8 @@ Roles:              Roles
 Groups:             Groups
 Last login:         Last login
 Name:               Name
-Profile.show.username:  User name
-Profile.show.email:     E-mail
+profile.show.username:  User name
+profile.show.email:     E-mail
 
 # Pages
 User show:          User detail
