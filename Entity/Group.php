@@ -44,7 +44,7 @@ class Group implements GroupInterface
      * Constructor.
      *
      * @param string $name
-     * @param array $roles
+     * @param array  $roles
      */
     public function __construct($name = null, $roles = array())
     {
@@ -62,7 +62,6 @@ class Group implements GroupInterface
     {
         return $this->id;
     }
-
 
     /**
      * Sets name.
@@ -116,7 +115,7 @@ class Group implements GroupInterface
     public function addRole($role)
     {
         $role = (string) $role;
-        $role = strtoupper ($role);
+        $role = strtoupper($role);
 
         if (!$this->hasRole($role)) {
             $this->roles[] = $role;

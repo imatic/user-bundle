@@ -9,5 +9,5 @@ fos_user:
             type:               Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
 #
 #    from_email:
-#        address:                %app.mailer.from.address%
-#        sender_name:            %app.mailer.from.address%
+#        address:                "%app.mailer.from.address%"
+#        sender_name:            "%app.mailer.from.address%"

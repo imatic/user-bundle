@@ -21,7 +21,8 @@ class UserDeleteHandler implements HandlerInterface
     }
 
     /**
-     * @param  CommandInterface $command
+     * @param CommandInterface $command
+     *
      * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command)

@@ -1,10 +1,12 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 interface TranslationStrategyInterface
 {
     /**
      * @param object $role
+     *
      * @return mixed
      */
     public function translate($role);

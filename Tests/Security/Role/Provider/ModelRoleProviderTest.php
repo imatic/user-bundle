@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -12,7 +13,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
     private $roleProvider;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {
@@ -29,7 +30,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'show'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyA', 'edit'),
             ],
             $this->roleProvider->getRoles()
         );
@@ -44,7 +45,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'show'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'edit')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'Bar_ClassB', 'property', 'edit'),
             ],
             $this->roleProvider->getRoles()
         );
@@ -56,7 +57,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->roleProvider->getRoles());
         $this->roleProvider->setConfig(['namespaces' => [
             'includes' => ['Vendor'],
-            'excludes' => ['Vendor\Foo\Entity\Bar']
+            'excludes' => ['Vendor\Foo\Entity\Bar'],
         ]]);
         $this->assertEquals(
             [
@@ -65,7 +66,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'show'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'propertyB', 'edit'),
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'show'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'association', 'edit'),
             ],
             $this->roleProvider->getRoles()
         );
@@ -76,16 +77,16 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $this->roleProvider->setConfig([
             'namespaces' => [
                 'includes' => ['Vendor\Foo\Entity\ClassA'],
-                'excludes'=> [],
+                'excludes' => [],
             ],
             'properties' => [
-                'groups'=> ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]]
-            ]
+                'groups' => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB', 'association']]],
+            ],
         ]);
         $this->assertEquals(
             [
                 new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'show'),
-                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'edit')
+                new ObjectRole('Vendor', 'Foo', 'entity', 'ClassA', 'group', 'edit'),
             ],
             $this->roleProvider->getRoles()
         );
@@ -95,7 +96,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->roleProvider->setConfig([
             'namespaces' => ['includes' => ['Vendor']],
-            'properties' => ['groups' => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]]]
+            'properties' => ['groups' => ['Vendor\Foo\Entity\ClassA' => ['group' => ['propertyA', 'propertyB']]]],
         ]);
         $this->assertNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'list'));
         $this->assertNotNull($this->roleProvider->getRole('Vendor\Foo\Entity\Bar\ClassB', 'property', 'show'));

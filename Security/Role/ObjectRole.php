@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
 class ObjectRole extends Role
@@ -40,7 +41,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRole()
     {
@@ -72,7 +73,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -96,7 +97,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAction()
     {
@@ -104,7 +105,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getLabel()
     {
@@ -112,7 +113,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDomain()
     {
@@ -120,7 +121,7 @@ class ObjectRole extends Role
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __toString()
     {

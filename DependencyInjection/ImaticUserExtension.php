@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class ImaticUserExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -23,12 +24,12 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('imatic_user.entity.user.class', $config['entities']['user']);
         $container->setParameter('imatic_user.entity.group.class', $config['entities']['group']);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
@@ -40,7 +41,7 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
             'user_class' => $config['entities']['user'],
             'group' => array(
                 'group_class' => $config['entities']['group'],
-            )
+            ),
         );
 
         $container->prependExtensionConfig('fos_user', $fosUserConfig);

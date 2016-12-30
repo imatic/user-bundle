@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -9,11 +10,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class AppImaticUserExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         $configuration = new Configuration();

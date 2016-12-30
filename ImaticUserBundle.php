@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle;
 
 use Imatic\Bundle\PlatformBundle\DependencyInjection\Compiler\ResolveTargetEntityPass;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class ImaticUserBundle extends Bundle
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {

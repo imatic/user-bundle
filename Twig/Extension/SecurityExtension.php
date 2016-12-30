@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Twig\Extension;
 
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
@@ -22,7 +23,7 @@ class SecurityExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -30,7 +31,7 @@ class SecurityExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getFilters()
     {
@@ -38,15 +39,7 @@ class SecurityExtension extends \Twig_Extension
             new \Twig_SimpleFilter('trans_role', [$this->roleTranslator, 'translateRole']),
             new \Twig_SimpleFilter('trans_role_type', [$this->roleTranslator, 'translateRoleType']),
             new \Twig_SimpleFilter('trans_role_domain', [$this->roleTranslator, 'translateRoleDomain']),
-            new \Twig_SimpleFilter('trans_role_action', [$this->roleTranslator, 'translateRoleAction'])
+            new \Twig_SimpleFilter('trans_role_action', [$this->roleTranslator, 'translateRoleAction']),
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'imatic_user_security';
     }
 }

@@ -15,7 +15,7 @@ class ProfileType extends AbstractType
         $builder->add('submit', SubmitType::class, [
             'label' => 'profile.edit.submit',
             'translation_domain' => 'FOSUserBundle',
-            'attr' => ['class' => 'btn-primary']
+            'attr' => ['class' => 'btn-primary'],
         ]);
     }
 
@@ -23,7 +23,7 @@ class ProfileType extends AbstractType
      * Builds the embedded form representing the user.
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {

@@ -14,7 +14,7 @@ class ChangePasswordType extends BaseChangePasswordFormType
         $builder->add('submit', SubmitType::class, [
             'label' => 'change_password.submit',
             'translation_domain' => 'FOSUserBundle',
-            'attr' => ['class' => 'btn-primary']
+            'attr' => ['class' => 'btn-primary'],
         ]);
     }
 }

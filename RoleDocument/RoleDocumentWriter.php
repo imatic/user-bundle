@@ -14,7 +14,7 @@ use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
 
 /**
- * Role document writer
+ * Role document writer.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
@@ -28,7 +28,7 @@ class RoleDocumentWriter
     private $defaultRoles;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RoleProviderInterface $roleProvider   role provider
      * @param RoleTranslator        $roleTranslator role translator
@@ -41,7 +41,7 @@ class RoleDocumentWriter
     ) {
         $this->roleProvider = $roleProvider;
         $this->roleTranslator = $roleTranslator;
-        
+
         // set default roles
         if (is_array($defaultRoles)) {
             $defaultRoles = array_flip($defaultRoles);
@@ -55,9 +55,10 @@ class RoleDocumentWriter
     }
 
     /**
-     * Create and save the document
+     * Create and save the document.
      *
      * @param string $savePath
+     *
      * @return string file path
      */
     public function write($savePath)
@@ -66,7 +67,7 @@ class RoleDocumentWriter
 
         $savePathInfo = new SplFileInfo($savePath);
         if (!$savePathInfo->getExtension()) {
-            $filePath = rtrim($savePath, '\\/') . '/role_document.xlsx';
+            $filePath = rtrim($savePath, '\\/').'/role_document.xlsx';
         } else {
             $filePath = $savePath;
         }
@@ -78,7 +79,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Create the document
+     * Create the document.
      *
      * @return PHPExcel
      */
@@ -114,7 +115,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Prepare sheet
+     * Prepare sheet.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param string             $type
@@ -128,7 +129,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Write domain
+     * Write domain.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
@@ -168,7 +169,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Write roles
+     * Write roles.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
@@ -218,7 +219,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Write instruction and data
+     * Write instruction and data.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
@@ -242,7 +243,7 @@ class RoleDocumentWriter
     }
 
     /**
-     * Get role map
+     * Get role map.
      *
      * @return array
      */
@@ -257,9 +258,10 @@ class RoleDocumentWriter
     }
 
     /**
-     * Get maximum number of roles for given domain
+     * Get maximum number of roles for given domain.
      *
      * @param array $domains
+     *
      * @return int
      */
     private function getMaxRoles(array $domains)
@@ -268,9 +270,9 @@ class RoleDocumentWriter
         foreach ($domains as $labels) {
             foreach ($labels as $roles) {
                 if (null === $maxRoles) {
-                    $maxRoles = sizeof($roles);
+                    $maxRoles = count($roles);
                 } else {
-                    $maxRoles = max($maxRoles, sizeof($roles));
+                    $maxRoles = max($maxRoles, count($roles));
                 }
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
 use AppUserBundle\Entity\User;
@@ -41,6 +42,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
      * @param array  $groups
      * @param array  $roles
      * @param bool   $enabled
+     *
      * @return User
      */
     protected function createUser($username, $password, $email, array $groups = array(), array $roles = array(), $enabled = true)
@@ -70,6 +72,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
     /**
      * @param string $name
      * @param array  $roles
+     *
      * @return Group
      */
     protected function createGroup($name, array $roles = array())

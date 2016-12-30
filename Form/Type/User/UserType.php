@@ -56,8 +56,8 @@ class UserType extends AbstractType
                 }
             },
             'empty_data' => function () {
-                return new $this->userClass;
-            }
+                return new $this->userClass();
+            },
         ));
     }
 }

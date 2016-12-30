@@ -9,14 +9,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentReader;
 
 /**
- * Role document import command
+ * Role document import command.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
 class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -30,7 +30,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -39,11 +39,11 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
         $path = $input->getArgument('path');
         $userName = $input->getOption('user');
         $groupName = $input->getOption('group');
-        
+
         $reader = new RoleDocumentReader();
         $reader->open($path);
         $roles = $reader->readEnabledRoles();
-        
+
         if ($input->getOption('list')) {
             // list
             foreach ($roles as $role) {
@@ -56,7 +56,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
 
                 $output->writeln(sprintf(
                     '<info>Set %s roles for user "%s"</info>',
-                    sizeof($roles),
+                    count($roles),
                     $userName
                 ));
             } else {
@@ -64,7 +64,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
 
                 $output->writeln(sprintf(
                     '<info>Set %s roles for group "%s"</info>',
-                    sizeof($roles),
+                    count($roles),
                     $groupName
                 ));
             }
@@ -74,10 +74,11 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * Apply roles to user
+     * Apply roles to user.
      *
      * @param string $userName
      * @param array  $roles
+     *
      * @throws \RuntimeException
      */
     private function applyRolesToUser($userName, array $roles)
@@ -94,10 +95,11 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * Apply roles to group
+     * Apply roles to group.
      *
      * @param string $groupName
      * @param array  $roles
+     *
      * @throws \RuntimeException
      */
     private function applyRolesToGroup($groupName, array $roles)

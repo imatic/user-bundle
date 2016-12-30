@@ -11,7 +11,7 @@ use PHPExcel_IOFactory;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
 
 /**
- * Role document reader
+ * Role document reader.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
@@ -21,9 +21,10 @@ class RoleDocumentReader implements IteratorAggregate
     private $document;
 
     /**
-     * Open document
+     * Open document.
      *
      * @param string $path
+     *
      * @return RoleDocumentReader
      */
     public function open($path)
@@ -42,8 +43,8 @@ class RoleDocumentReader implements IteratorAggregate
     }
 
     /**
-     * Get role iterator
-     * 
+     * Get role iterator.
+     *
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -52,7 +53,7 @@ class RoleDocumentReader implements IteratorAggregate
     }
 
     /**
-     * Read enabled roles
+     * Read enabled roles.
      *
      * @return array
      */
@@ -62,7 +63,7 @@ class RoleDocumentReader implements IteratorAggregate
     }
 
     /**
-     * Read roles
+     * Read roles.
      *
      * @return array
      */
@@ -96,27 +97,28 @@ class RoleDocumentReader implements IteratorAggregate
                 }
 
                 ++$row;
-            } while(!$atEnd);
+            } while (!$atEnd);
         }
 
         return $roles;
     }
 
     /**
-     * Read role row
+     * Read role row.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
+     *
      * @return array
      */
     private function readRoleRow(PHPExcel_Worksheet $sheet, $row)
     {
         $roles = explode(';', D::getCell($sheet, $row, D::COLUMN_DATA)->getValue());
-        $roleCount = sizeof($roles);
+        $roleCount = count($roles);
 
         $column = D::COLUMN_ROLE_STATES_START;
         $states = array();
-        for ($i = 0; $i < $roleCount; ++$i)  {
+        for ($i = 0; $i < $roleCount; ++$i) {
             $states[] = D::stringToState(
                 D::getCell($sheet, $row, $column + 1)->getValue()
             );

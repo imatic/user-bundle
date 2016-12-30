@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DependencyInjection\Compiler;
 
 use Imatic\Bundle\UserBundle\DependencyInjection\Configuration;
@@ -32,7 +33,9 @@ class SecurityPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('imatic_user.role_provider') as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $alias = $attributes['alias'];
-                if (!isset($roleProviders[$alias])) continue;
+                if (!isset($roleProviders[$alias])) {
+                    continue;
+                }
 
                 $definition->addMethodCall('addRoleProvider', array(new Reference($id)));
                 if (is_subclass_of(

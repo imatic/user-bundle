@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -81,8 +82,9 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param object|string $object
-     * @param string $property
-     * @param string $action
+     * @param string        $property
+     * @param string        $action
+     *
      * @return ObjectRole|null
      */
     public function getRole($object, $property, $action)
@@ -101,7 +103,9 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param array $config
+     *
      * @return $this
+     *
      * @throws InvalidConfigurationException
      */
     public function setConfig(array $config = [])
@@ -118,6 +122,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param string[] $actions
+     *
      * @return $this
      */
     public function setActions(array $actions)
@@ -138,12 +143,13 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param string $class
+     *
      * @return bool
      */
     private function isClassIncluded($class)
     {
         foreach ($this->getFilters() as $prefix => $filter) {
-            if (!strncasecmp($class . '\\', $prefix, strlen($prefix))) {
+            if (!strncasecmp($class.'\\', $prefix, strlen($prefix))) {
                 return $filter[0] == 'include';
             }
         }
@@ -153,6 +159,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param ClassMetadata $metadata
+     *
      * @return string[]
      */
     private function getModelProperties(ClassMetadata $metadata)
@@ -183,6 +190,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      * @param string $class
      * @param string $property
      * @param string $action
+     *
      * @return string
      */
     private function getRoleKey($class, $property, $action)
@@ -192,6 +200,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param object|string $object
+     *
      * @return string
      */
     private function getClass($object)
@@ -214,12 +223,12 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
             $this->filters = [];
             $configuration = [
                 'include' => $this->config['namespaces']['includes'],
-                'exclude' => $this->config['namespaces']['excludes']
+                'exclude' => $this->config['namespaces']['excludes'],
             ];
 
             foreach ($configuration as $type => $filter) {
                 foreach ($filter as $prefix) {
-                    $this->filters[ltrim(rtrim($prefix, '\\'), '\\') . '\\'] = [$type, substr_count($prefix, '\\')];
+                    $this->filters[ltrim(rtrim($prefix, '\\'), '\\').'\\'] = [$type, substr_count($prefix, '\\')];
                 }
             }
 
@@ -285,6 +294,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     /**
      * @param string $a
      * @param string $b
+     *
      * @return int
      */
     private function compareFilters($a, $b)

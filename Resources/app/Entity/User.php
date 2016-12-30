@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\User as BaseUser;
 
 /**
- * User
+ * User.
  *
  * @ORM\Entity
  * @ORM\Table()

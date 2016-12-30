@@ -13,5 +13,4 @@ use Imatic\Bundle\UserBundle\Entity\Group as BaseGroup;
  */
 class Group extends BaseGroup
 {
-
 }

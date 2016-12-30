@@ -1,13 +1,16 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
 class ObjectRoleFactory
 {
     /**
      * @param object|string $object
-     * @param string $property
-     * @param string $action
+     * @param string        $property
+     * @param string        $action
+     *
      * @return ObjectRole
+     *
      * @throws \InvalidArgumentException
      */
     public function createRole($object, $property, $action)
@@ -26,10 +29,12 @@ class ObjectRoleFactory
 
     /**
      * @param $object
+     *
      * @return array
+     *
      * @throws \InvalidArgumentException
      */
-    protected  function parseClassName($object)
+    protected function parseClassName($object)
     {
         $class = is_object($object) ? get_class($object) : $object;
         $path = explode('\\', $class);
@@ -54,7 +59,7 @@ class ObjectRoleFactory
             'vendor' => $vendor,
             'bundle' => $bundle,
             'type' => $type,
-            'name' => implode('_', $name)
+            'name' => implode('_', $name),
         ];
     }
 }

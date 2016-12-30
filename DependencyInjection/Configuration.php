@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -81,6 +82,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
+
     /**
      * @param ArrayNodeDefinition $node
      */

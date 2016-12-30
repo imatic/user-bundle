@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRoleFactory;
@@ -10,7 +11,7 @@ class ObjectRoleFactoryTest extends \PHPUnit_Framework_TestCase
     private $roleFactory;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {

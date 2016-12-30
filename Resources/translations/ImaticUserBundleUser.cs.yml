@@ -17,8 +17,8 @@ profile.show.email:     E-mail
 # Pages
 User list:          Výpis uživatelů
 User create:        Nový uživatel
-User show:          Zobrazení uživatele %user%
-User edit:          Úprava uživatele %user%
+User show:          "Zobrazení uživatele %user%"
+User edit:          "Úprava uživatele %user%"
 User roles:         Editace rolí
 
 # Actions

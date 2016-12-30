@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;

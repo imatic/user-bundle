@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Symfony\Component\Translation\TranslatorInterface;
@@ -18,7 +19,9 @@ abstract class TranslationStrategy implements TranslationStrategyInterface
 
     /**
      * @param object $role
+     *
      * @return string
+     *
      * @throws \InvalidArgumentException
      */
     public function translate($role)
@@ -38,6 +41,7 @@ abstract class TranslationStrategy implements TranslationStrategyInterface
 
     /**
      * @param object $role
+     *
      * @return string
      */
     abstract protected function doTranslate($role);
@@ -45,11 +49,12 @@ abstract class TranslationStrategy implements TranslationStrategyInterface
     /**
      * @param $label
      * @param string $domain
+     *
      * @return string
      */
     protected function trans($label, $domain = 'roles')
     {
-        /** @Ignore */
+        /* @Ignore */
         return $this->translator->trans($label, [], $domain);
     }
 }

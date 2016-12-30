@@ -6,7 +6,7 @@ use PHPExcel_Worksheet;
 use PHPExcel_Cell;
 
 /**
- * Role document
+ * Role document.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
@@ -31,12 +31,15 @@ abstract class RoleDocument
     /**
      * This is a static class.
      */
-    private final function __construct() {}
+    final private function __construct()
+    {
+    }
 
     /**
-     * Role state to string
+     * Role state to string.
      *
      * @param bool $state
+     *
      * @return string
      */
     public static function stateToString($state)
@@ -45,9 +48,10 @@ abstract class RoleDocument
     }
 
     /**
-     * Role string to state
+     * Role string to state.
      *
      * @param string $string
+     *
      * @return bool
      */
     public static function stringToState($string)
@@ -56,9 +60,10 @@ abstract class RoleDocument
     }
 
     /**
-     * Get column name
+     * Get column name.
      *
      * @param int $column (0 based)
+     *
      * @return string
      */
     public static function getColumn($column)
@@ -67,11 +72,12 @@ abstract class RoleDocument
     }
 
     /**
-     * Get cell at given row and column offset
+     * Get cell at given row and column offset.
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
      * @param int                $column
+     *
      * @return PHPExcel_Cell
      */
     public static function getCell(PHPExcel_Worksheet $sheet, $row, $column = 0)
@@ -80,10 +86,11 @@ abstract class RoleDocument
     }
 
     /**
-     * Get cell coordinate at given row and column offset
+     * Get cell coordinate at given row and column offset.
      *
      * @param int $row
      * @param int $column
+     *
      * @return string
      */
     public static function getCellCoord($row, $column = 0)
@@ -92,11 +99,12 @@ abstract class RoleDocument
     }
 
     /**
-     * Get column range coordinates
+     * Get column range coordinates.
      *
      * @param int $row
      * @param int $startColumn
      * @param int $endColumn
+     *
      * @return string
      */
     public static function getColumnRange($row, $startColumn, $endColumn)
@@ -109,11 +117,12 @@ abstract class RoleDocument
     }
 
     /**
-     * Get row range coordinates
+     * Get row range coordinates.
      *
      * @param int $column
      * @param int $startRow
      * @param int $endRow
+     *
      * @return string
      */
     public static function getRowRange($column, $startRow, $endRow)

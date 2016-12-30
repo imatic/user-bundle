@@ -66,7 +66,8 @@ class User implements UserInterface
     protected $emailCanonical;
 
     /**
-     * Encrypted password
+     * Encrypted password.
+     *
      * @var string
      *
      * @ORM\Column(type="string")
@@ -74,7 +75,8 @@ class User implements UserInterface
     protected $password;
 
     /**
-     * Plain password, Used for model validation, must not be persisted
+     * Plain password, Used for model validation, must not be persisted.
+     *
      * @var string
      *
      * @Assert\NotBlank(message="fos_user.password.blank", groups={"Registration", "ResetPassword", "ChangePassword"})
@@ -83,7 +85,8 @@ class User implements UserInterface
     protected $plainPassword;
 
     /**
-     * The salt to use for hashing
+     * The salt to use for hashing.
+     *
      * @var string
      *
      * @ORM\Column(type="string")
@@ -98,7 +101,8 @@ class User implements UserInterface
     protected $lastLogin;
 
     /**
-     * Random string sent to the user email address in order to verify it
+     * Random string sent to the user email address in order to verify it.
+     *
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -191,7 +195,6 @@ class User implements UserInterface
     {
         return (string) $this->getUsername();
     }
-
 
     /**
      * Returns id.
@@ -349,6 +352,7 @@ class User implements UserInterface
 
     /**
      * @param string|null $salt
+     *
      * @return $this
      */
     public function setSalt($salt)

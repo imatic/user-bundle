@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;

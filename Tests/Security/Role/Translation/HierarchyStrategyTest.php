@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -11,7 +12,7 @@ class HierarchyStrategyTest extends \PHPUnit_Framework_TestCase
     private $strategy;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {
@@ -23,7 +24,7 @@ class HierarchyStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('ROLE', $this->strategy->translate(new HierarchyRole('ROLE')));
         $hierarchy = new HierarchyRole('ROLE', [
             new HierarchyRole('ROLE_A'),
-            new HierarchyRole('ROLE_B', [new HierarchyRole('ROLE_A')])
+            new HierarchyRole('ROLE_B', [new HierarchyRole('ROLE_A')]),
         ]);
         $this->assertEquals('ROLE (ROLE_A, ROLE_B)', $this->strategy->translate($hierarchy));
     }

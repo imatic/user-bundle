@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\Group as BaseGroup;
 
 /**
- * Group
+ * Group.
  *
  * @ORM\Entity()
  * @ORM\Table()

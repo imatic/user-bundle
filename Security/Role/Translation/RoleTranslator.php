@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;
@@ -25,6 +26,7 @@ class RoleTranslator
 
     /**
      * @param TranslationStrategyInterface $strategy
+     *
      * @return $this
      */
     public function addStrategy(TranslationStrategyInterface $strategy)
@@ -37,6 +39,7 @@ class RoleTranslator
 
     /**
      * @param Role $role
+     *
      * @return string
      */
     public function translateRole(Role $role)
@@ -57,6 +60,7 @@ class RoleTranslator
 
     /**
      * @param string $roleType
+     *
      * @return string
      */
     public function translateRoleType($roleType)
@@ -66,6 +70,7 @@ class RoleTranslator
 
     /**
      * @param string $domain
+     *
      * @return string
      */
     public function translateRoleDomain($domain)
@@ -77,6 +82,7 @@ class RoleTranslator
 
     /**
      * @param $action
+     *
      * @return string
      */
     public function translateRoleAction($action)
@@ -87,17 +93,19 @@ class RoleTranslator
     /**
      * @param $label
      * @param string $domain
+     *
      * @return string
      */
     private function trans($label, $domain = 'roles')
     {
-        /** @Ignore */
+        /* @Ignore */
         return $this->translator->trans($label, [], $domain);
     }
 
     /**
      * @param TranslationStrategyInterface $a
      * @param TranslationStrategyInterface $b
+     *
      * @return int
      */
     private function compareStrategies(TranslationStrategyInterface $a, TranslationStrategyInterface $b)

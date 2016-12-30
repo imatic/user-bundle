@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
@@ -14,7 +15,7 @@ class RoleTranslatorTest extends \PHPUnit_Framework_TestCase
     private $roleTranslator;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {

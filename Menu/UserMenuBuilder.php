@@ -8,13 +8,14 @@ use Imatic\Bundle\ViewBundle\Menu\Helper;
 class UserMenuBuilder
 {
     /**
-     * @param  Factory                 $factory
-     * @param  Helper                  $helper
+     * @param Factory $factory
+     * @param Helper  $helper
+     *
      * @return \Knp\Menu\ItemInterface
      */
     public function getMenu(Factory $factory, Helper $helper)
     {
-        $menu = $factory->createItem((string)$helper->getUser());
+        $menu = $factory->createItem((string) $helper->getUser());
         $helper->setDropdown($menu);
         $menu->addChild($helper->trans('User Profile', [], 'ImaticUserBundle'), ['route' => 'fos_user_profile_show']);
         $menu->addChild($helper->trans('Change password', [], 'ImaticUserBundle'), ['route' => 'fos_user_change_password']);
@@ -28,8 +29,9 @@ class UserMenuBuilder
     }
 
     /**
-     * @param  Factory                 $factory
-     * @param  Helper                  $helper
+     * @param Factory $factory
+     * @param Helper  $helper
+     *
      * @return \Knp\Menu\ItemInterface
      */
     public function getMenuAnon(Factory $factory, Helper $helper)

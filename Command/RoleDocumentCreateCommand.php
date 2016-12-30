@@ -9,14 +9,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentWriter;
 
 /**
- * Role document create command
+ * Role document create command.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
 class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -30,7 +30,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -55,12 +55,14 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * Get default roles
+     * Get default roles.
      *
      * @param string|null $userName
      * @param string|null $groupName
      * @param bool|null   $defaultState
+     *
      * @throws \LogicException
+     *
      * @return array|bool
      */
     private function getDefaultRoles($userName, $groupName, $defaultState)
@@ -83,10 +85,12 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * Get user roles
+     * Get user roles.
      *
      * @param string $userName
+     *
      * @throws \RuntimeException
+     *
      * @return array
      */
     private function getUserRoles($userName)
@@ -102,10 +106,12 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     }
 
     /**
-     * Get group roles
+     * Get group roles.
      *
      * @param string $groupName
+     *
      * @throws \RuntimeException
+     *
      * @return array
      */
     private function getGroupRoles($groupName)

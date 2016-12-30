@@ -21,7 +21,8 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
     }
 
     /**
-     * @param  EntityManager $em
+     * @param EntityManager $em
+     *
      * @return QueryBuilder
      */
     public function build(EntityManager $em)

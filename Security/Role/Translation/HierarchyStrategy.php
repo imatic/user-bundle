@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -7,7 +8,8 @@ class HierarchyStrategy extends TranslationStrategy
 {
     /**
      * @param HierarchyRole $role
-     * @param bool $deep
+     * @param bool          $deep
+     *
      * @return string
      */
     protected function doTranslate($role, $deep = true)
@@ -23,7 +25,7 @@ class HierarchyStrategy extends TranslationStrategy
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSupportedClass()
     {

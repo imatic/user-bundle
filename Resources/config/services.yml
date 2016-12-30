@@ -2,19 +2,19 @@ services:
     # Form
     imatic_user.form.type.profile:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
-        arguments: [%fos_user.model.user.class%]
+        arguments: ["%fos_user.model.user.class%"]
         tags:
             - {name: form.type }
 
     imatic_user.form.type.change_password:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
-        arguments: [%fos_user.model.user.class%]
+        arguments: ["%fos_user.model.user.class%"]
         tags:
             - {name: form.type }
 
     imatic_user.form.type.user:
         class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
-        arguments: [%fos_user.model.user.class%]
+        arguments: ["%fos_user.model.user.class%"]
         tags:
             - {name: form.type }
 
@@ -58,8 +58,7 @@ services:
     # Security
     imatic_user.security.role.metadata_factory:
         class: Doctrine\ORM\Mapping\ClassMetadataFactory
-        factory_service: doctrine.orm.entity_manager
-        factory_method: getMetadataFactory
+        factory: 'doctrine.orm.entity_manager:getMetadataFactory'
 
     # Security role provider
     imatic_user.security.role.provider.model_role_provider:
@@ -71,7 +70,7 @@ services:
 
     imatic_user.security.role.provider.hierarchy_role_provider:
         class: Imatic\Bundle\UserBundle\Security\Role\Provider\HierarchyRoleProvider
-        arguments: [%security.role_hierarchy.roles%]
+        arguments: ['%security.role_hierarchy.roles%']
         tags:
             - {name: imatic_user.role_provider, alias: hierarchy}
 

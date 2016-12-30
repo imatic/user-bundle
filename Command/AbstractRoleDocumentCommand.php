@@ -6,23 +6,24 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Abstract role document command
+ * Abstract role document command.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
 abstract class AbstractRoleDocumentCommand extends ContainerAwareCommand
 {
     /**
-     * Ensure that PHPExcel is available
+     * Ensure that PHPExcel is available.
      *
      * @param OutputInterface $output
+     *
      * @throws \RuntimeException
      */
     protected function checkPhpExcel(OutputInterface $output)
     {
         if (!class_exists('PHPExcel')) {
             $output->writeln("\n<error>PHPExcel is not available.</error>\n");
-            $output->writeln(<<<COMMENT
+            $output->writeln(<<<'COMMENT'
 <comment>
 composer.json:
 

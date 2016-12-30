@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use FOS\UserBundle\Model\GroupInterface;
@@ -26,6 +27,7 @@ class RoleController extends Controller
     /**
      * @param $type
      * @param int $id
+     *
      * @return array
      * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
      *     path="/display/{type}/{id}",
@@ -44,16 +46,18 @@ class RoleController extends Controller
         return [
             'object' => $this->findObject($type, $id),
             'objectType' => $type,
-            'roleMap' => $roleMap
+            'roleMap' => $roleMap,
         ];
     }
 
     /**
      * @param Request $request
-     * @param string $type
-     * @param int $id
-     * @param string $role
+     * @param string  $type
+     * @param int     $id
+     * @param string  $role
+     *
      * @return Response
+     *
      * @throws AccessDeniedException
      * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
      *     path="/switch/{type}/{id}/{role}",
@@ -92,6 +96,7 @@ class RoleController extends Controller
 
     /**
      * @param string $type
+     *
      * @return UserManagerInterface|GroupManagerInterface
      */
     private function getManager($type)
@@ -109,7 +114,8 @@ class RoleController extends Controller
 
     /**
      * @param string $type
-     * @param int $id
+     * @param int    $id
+     *
      * @return UserInterface|GroupInterface
      */
     private function findObject($type, $id)

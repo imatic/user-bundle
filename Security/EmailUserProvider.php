@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class EmailUserProvider extends BaseEmailUserProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function refreshUser(SecurityUserInterface $user)
     {
