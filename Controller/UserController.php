@@ -7,7 +7,6 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserListQuery;
 use Imatic\Bundle\UserBundle\Data\Query\User\UserQuery;
 use Imatic\Bundle\UserBundle\Model\UserInterface;
-use Imatic\Bundle\UserBundle\Form\Type\User\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -54,7 +53,7 @@ class UserController implements ContainerAwareInterface
     public function editAction($id)
     {
         return $this
-            ->form(UserType::class)
+            ->form($this->container->getParameter('imatic_user.admin.form.user'))
             ->commandName('imatic.user.edit')
             ->edit(new UserQuery($id, $this->container->getParameter('imatic_user.entity.user.class')))
             ->successRedirect('imatic_user_user_show', ['id' => $id])
@@ -69,7 +68,7 @@ class UserController implements ContainerAwareInterface
     public function createAction()
     {
         return $this
-            ->form(UserType::class)
+            ->form($this->container->getParameter('imatic_user.admin.form.user'))
             ->commandName('imatic.user.create')
             ->successRedirect('imatic_user_user_show', function (CommandResultInterface $result, UserInterface $user) {
                 return ['id' => $user->getId()];

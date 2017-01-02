@@ -26,13 +26,13 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => array('translation_domain' => 'FOSUserBundle'),
-                'first_options' => array('label' => 'form.new_password'),
-                'second_options' => array('label' => 'form.new_password_confirmation'),
+                'options' => ['translation_domain' => 'FOSUserBundle'],
+                'first_options' => ['label' => 'form.new_password'],
+                'second_options' => ['label' => 'form.new_password_confirmation'],
                 'invalid_message' => 'fos_user.password.mismatch',
-            ))
+            ])
             ->add('email')
             ->add('enabled')
             ->add('groups')
@@ -44,20 +44,20 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'translation_domain' => 'ImaticUserBundleUser',
             'data_class' => $this->userClass,
             'validation_groups' => function (FormInterface $form) {
                 $user = $form->getData();
                 if ($user->getId()) {
-                    return array('Profile');
+                    return ['Profile'];
                 } else {
-                    return array('Profile', 'ChangePassword');
+                    return ['Profile', 'ChangePassword'];
                 }
             },
             'empty_data' => function () {
                 return new $this->userClass();
             },
-        ));
+        ]);
     }
 }

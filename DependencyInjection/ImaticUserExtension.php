@@ -24,6 +24,8 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('imatic_user.entity.user.class', $config['entities']['user']);
         $container->setParameter('imatic_user.entity.group.class', $config['entities']['group']);
 
+        $container->setParameter('imatic_user.admin.form.user', $config['admin']['form']['user']);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

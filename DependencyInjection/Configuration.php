@@ -2,6 +2,7 @@
 
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
+use Imatic\Bundle\UserBundle\Form\Type\User\UserType;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -20,6 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $builder->root('imatic_user');
         $this->addEntitiesSection($rootNode);
         $this->addSecuritySection($rootNode);
+        $this->addAdminSection($rootNode);
 
         return $builder;
     }
@@ -62,21 +64,21 @@ class Configuration implements ConfigurationInterface
     private function addAdminSection($node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('admin')
-                    ->canBeDisabled()
+                    ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('user')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\UserInterface')
-                            ->example('AppUserBundle\Entity\User')
-                        ->end()
-                        ->scalarNode('group')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                            ->info('Entity class which implements Imatic\Bundle\UserBundle\Model\GroupInterface')
-                            ->example('AppUserBundle\Entity\Group')
+                        ->arrayNode('form')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('user')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->info('User form type')
+                                ->example(UserType::class)
+                                ->defaultValue(UserType::class)
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
