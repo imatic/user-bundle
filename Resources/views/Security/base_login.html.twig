@@ -10,6 +10,14 @@
 
                 {% block login %}
                     {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{login: {size: 4, offset: 4} } }] } %}
+                        {% block layout %}
+                            <div class="container">
+                                {% for row_options in rows %}
+                                    {{ block('row') }}
+                                {% endfor %}
+                            </div>
+                        {% endblock %}
+
                         {% block login %}
 
                             {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
