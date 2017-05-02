@@ -5,7 +5,7 @@
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ parent() }}
     {% else %}
-        <div style="margin-top: 50px;">
+        <div>
             {{ block('action') }}
         </div>
     {% endif %}
