@@ -106,3 +106,10 @@ services:
         class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
         tags:
             - { name: imatic_data.filter, alias: imatic_user.user }
+
+    imatic_user.monolog.logged_in_user_processor:
+        class: Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: 'monolog.processor', method: processRecord }
