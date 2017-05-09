@@ -21,7 +21,7 @@ class UserController implements ContainerAwareInterface
     use ApiTrait;
 
     /**
-     * @Config\Route("")
+     * @Config\Route("", name="imatic_user_user_list")
      * @Config\Method("GET")
      */
     public function listAction()
@@ -34,7 +34,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}", requirements={"id"="\d+"})
+     * @Config\Route("/{id}", requirements={"id"="\d+"}, name="imatic_user_user_show")
      * @Config\Method("GET")
      * @Config\Template()
      */
@@ -47,7 +47,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}/edit", requirements={"id"="\d+"})
+     * @Config\Route("/{id}/edit", requirements={"id"="\d+"}, name="imatic_user_user_edit")
      * @Config\Method({"GET", "PUT"})
      */
     public function editAction($id)
@@ -62,7 +62,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/create")
+     * @Config\Route("/create", name="imatic_user_user_create")
      * @Config\Method({"GET", "POST"})
      */
     public function createAction()
@@ -78,7 +78,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}/delete", requirements={"id"="\d+"})
+     * @Config\Route("/{id}/delete", requirements={"id"="\d+"}, name="imatic_user_user_delete")
      * @Config\Method("DELETE")
      */
     public function deleteAction($id)
