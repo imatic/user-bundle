@@ -28,14 +28,6 @@ twig:
     debug:                      '%kernel.debug%'
     strict_variables:           '%kernel.debug%'
 
-assetic:
-    read_from: '%kernel.root_dir%/web'
-    filters:
-        cssrewrite:
-            apply_to: "\.css$"
-        less:
-            apply_to: "\.less$"
-
 doctrine:
     dbal:
         connections:
