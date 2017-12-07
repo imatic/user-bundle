@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -34,12 +33,11 @@ class HierarchyStrategyTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatorMock()
     {
-        $translatorMock = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translatorMock = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $translatorMock
             ->expects($this->any())
             ->method('trans')
-            ->will($this->returnArgument(0))
-        ;
+            ->will($this->returnArgument(0));
 
         return $translatorMock;
     }

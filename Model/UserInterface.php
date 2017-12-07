@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Model;
 
 use FOS\UserBundle\Model\UserInterface as BaseUserInterface;

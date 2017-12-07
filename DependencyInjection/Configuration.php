@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Imatic\Bundle\UserBundle\Form\Type\User\UserType;

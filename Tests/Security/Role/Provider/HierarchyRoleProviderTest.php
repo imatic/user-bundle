@@ -1,9 +1,8 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
-use Imatic\Bundle\UserBundle\Security\Role\Provider\HierarchyRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\HierarchyRoleProvider;
 
 class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +34,7 @@ class HierarchyRoleProviderTest extends \PHPUnit_Framework_TestCase
                 ]),
                 new HierarchyRole('ROLE_ALLOWED_TO_SWITCH'),
             ],
-            array_values($this->roleProvider->getRoles())
+            \array_values($this->roleProvider->getRoles())
         );
     }
 }

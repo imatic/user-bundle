@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * @author Marek Stipek <marek.stipek@imatic.cz>
@@ -26,7 +25,7 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('imatic_user.admin.form.user', $config['admin']['form']['user']);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }
 
@@ -39,12 +38,12 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $fosUserConfig = array(
+        $fosUserConfig = [
             'user_class' => $config['entities']['user'],
-            'group' => array(
+            'group' => [
                 'group_class' => $config['entities']['group'],
-            ),
-        );
+            ],
+        ];
 
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
     }

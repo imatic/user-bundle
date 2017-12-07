@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;
@@ -29,7 +28,7 @@ class ChainRoleProvider implements RoleProviderInterface
             $this->roles = [];
 
             foreach ($this->roleProviders as $roleProvider) {
-                $this->roles = array_merge($this->roles, $roleProvider->getRoles());
+                $this->roles = \array_merge($this->roles, $roleProvider->getRoles());
             }
         }
 

@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
+use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentReader;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentReader;
 
 /**
  * Role document import command.
@@ -54,17 +53,17 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
             if ($userName) {
                 $this->applyRolesToUser($userName, $roles);
 
-                $output->writeln(sprintf(
+                $output->writeln(\sprintf(
                     '<info>Set %s roles for user "%s"</info>',
-                    count($roles),
+                    \count($roles),
                     $userName
                 ));
             } else {
                 $this->applyRolesToGroup($groupName, $roles);
 
-                $output->writeln(sprintf(
+                $output->writeln(\sprintf(
                     '<info>Set %s roles for group "%s"</info>',
-                    count($roles),
+                    \count($roles),
                     $groupName
                 ));
             }
@@ -85,7 +84,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     {
         $userManager = $this->getContainer()->get('fos_user.user_manager');
 
-        $user = $userManager->findUserBy(array('username' => $userName));
+        $user = $userManager->findUserBy(['username' => $userName]);
         if (!$user) {
             throw new \RuntimeException('User not found');
         }
@@ -106,7 +105,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     {
         $groupManager = $this->getContainer()->get('fos_user.group_manager');
 
-        $group = $groupManager->findGroupBy(array('name' => $groupName));
+        $group = $groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {
             throw new \RuntimeException('Group not found');
         }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use Imatic\Bundle\ControllerBundle\Controller\Api\ApiTrait;
@@ -64,6 +63,7 @@ class UserController implements ContainerAwareInterface
     /**
      * @Config\Route("/create", name="imatic_user_user_create")
      * @Config\Method({"GET", "POST"})
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function createAction()
     {

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Menu;
 
 use Imatic\Bundle\ViewBundle\Menu\Factory;

@@ -134,7 +134,7 @@ This bundle will contain user-related entities and fixtures.
 
     security:
         encoders:
-            Symfony\Component\Security\Core\User\UserInterface: sha512
+            Symfony\Component\Security\Core\User\UserInterface: bcrypt
 
         role_hierarchy:
             ROLE_ADMIN:       ROLE_USER

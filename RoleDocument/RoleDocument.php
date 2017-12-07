@@ -1,9 +1,8 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\RoleDocument;
 
-use PHPExcel_Worksheet;
 use PHPExcel_Cell;
+use PHPExcel_Worksheet;
 
 /**
  * Role document.
@@ -56,7 +55,7 @@ abstract class RoleDocument
      */
     public static function stringToState($string)
     {
-        return 'x' === strtolower(trim($string));
+        return 'x' === \strtolower(\trim($string));
     }
 
     /**
@@ -95,7 +94,7 @@ abstract class RoleDocument
      */
     public static function getCellCoord($row, $column = 0)
     {
-        return sprintf('%s%s', self::getColumn($column), $row);
+        return \sprintf('%s%s', self::getColumn($column), $row);
     }
 
     /**
@@ -109,7 +108,7 @@ abstract class RoleDocument
      */
     public static function getColumnRange($row, $startColumn, $endColumn)
     {
-        return sprintf(
+        return \sprintf(
             '%s:%s',
             self::getCellCoord($row, $startColumn),
             self::getCellCoord($row, $endColumn)
@@ -127,7 +126,7 @@ abstract class RoleDocument
      */
     public static function getRowRange($column, $startRow, $endRow)
     {
-        return sprintf(
+        return \sprintf(
             '%s:%s',
             self::getCellCoord($startRow, $column),
             self::getCellCoord($endRow, $column)

@@ -1,11 +1,10 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
-use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
 
 class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -111,7 +110,7 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataFactoryMock()
     {
-        $metadataFactoryMock = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadataFactory');
+        $metadataFactoryMock = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadataFactory');
         $aMetadata = new ClassMetadata('Vendor\Foo\Entity\ClassA');
         $aMetadata->mapField(['fieldName' => 'propertyA']);
         $aMetadata->mapField(['fieldName' => 'propertyB']);
@@ -121,13 +120,11 @@ class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
         $metadataFactoryMock
             ->expects($this->any())
             ->method('getAllMetadata')
-            ->will($this->returnValue([$aMetadata, $bMetadata]))
-        ;
+            ->will($this->returnValue([$aMetadata, $bMetadata]));
         $metadataFactoryMock
             ->expects($this->any())
             ->method('getMetadataFor')
-            ->will($this->returnValue($aMetadata))
-        ;
+            ->will($this->returnValue($aMetadata));
 
         return $metadataFactoryMock;
     }

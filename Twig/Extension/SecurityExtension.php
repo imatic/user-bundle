@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Twig\Extension;
 
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;

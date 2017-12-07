@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
@@ -22,8 +21,7 @@ class RoleTranslatorTest extends \PHPUnit_Framework_TestCase
         $this->roleTranslator = new RoleTranslator($this->createTranslatorMock());
         $this->roleTranslator
             ->addStrategy(new ChildStrategy())
-            ->addStrategy(new ParentStrategy())
-        ;
+            ->addStrategy(new ParentStrategy());
     }
 
     public function testTranslateRole()
@@ -52,12 +50,11 @@ class RoleTranslatorTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatorMock()
     {
-        $translatorMock = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translatorMock = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $translatorMock
             ->expects($this->any())
             ->method('trans')
-            ->will($this->returnArgument(0))
-        ;
+            ->will($this->returnArgument(0));
 
         return $translatorMock;
     }

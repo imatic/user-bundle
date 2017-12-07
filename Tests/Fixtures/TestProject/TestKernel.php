@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject;
 
 use Imatic\Bundle\TestingBundle\Test\TestKernel as BaseTestKernel;
@@ -25,6 +24,6 @@ class TestKernel extends BaseTestKernel
             new \Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\AppImaticUserBundle(),
         ];
 
-        return array_merge($parentBundles, $bundles);
+        return \array_merge($parentBundles, $bundles);
     }
 }

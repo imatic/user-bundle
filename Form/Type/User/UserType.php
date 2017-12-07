@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
@@ -51,9 +50,8 @@ class UserType extends AbstractType
                 $user = $form->getData();
                 if ($user->getId()) {
                     return ['Profile'];
-                } else {
-                    return ['Profile', 'ChangePassword'];
                 }
+                return ['Profile', 'ChangePassword'];
             },
             'empty_data' => function () {
                 return new $this->userClass();

@@ -5,6 +5,8 @@
 /nbproject/
 .DS_Store
 Thumbs.db
+/.php_cs.cache
+/phpda.svg
 Tests/Fixtures/TestProject/bower.json
 Tests/Fixtures/TestProject/.bowerrc
 Tests/Fixtures/TestProject/web/bundles

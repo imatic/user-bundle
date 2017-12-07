@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Unit\Monolog;
 
 use Imatic\Bundle\UserBundle\Entity\Group;

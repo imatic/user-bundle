@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Data\Handler\User;
 
 use FOS\UserBundle\Model\UserManagerInterface;

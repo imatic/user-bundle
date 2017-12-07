@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Data\Filter\User;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -77,7 +76,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
             }
         }
 
-        return $this->roles ? array_values(call_user_func_array('array_merge', $this->roles)) : [];
+        return $this->roles ? \array_values(\call_user_func_array('array_merge', $this->roles)) : [];
     }
 
     /**
@@ -149,8 +148,8 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     private function isClassIncluded($class)
     {
         foreach ($this->getFilters() as $prefix => $filter) {
-            if (!strncasecmp($class.'\\', $prefix, strlen($prefix))) {
-                return $filter[0] == 'include';
+            if (!\strncasecmp($class . '\\', $prefix, \strlen($prefix))) {
+                return $filter[0] === 'include';
             }
         }
 
@@ -169,18 +168,17 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         $propertyGroups = $this->getPropertyGroups();
         $properties = isset($propertyIncludes[$metadata->name])
             ? $propertyIncludes[$metadata->name]
-            : array_merge($metadata->getFieldNames(), $metadata->getAssociationNames())
-        ;
+            : \array_merge($metadata->getFieldNames(), $metadata->getAssociationNames());
 
         if (isset($propertyGroups[$metadata->name])) {
-            $properties = array_merge(
-                array_diff($properties, array_keys($propertyGroups[$metadata->name])),
+            $properties = \array_merge(
+                \array_diff($properties, \array_keys($propertyGroups[$metadata->name])),
                 $propertyGroups[$metadata->name]
             );
         }
 
         if (isset($propertyExcludes[$metadata->name])) {
-            $properties = array_diff($properties, $propertyExcludes[$metadata->name]);
+            $properties = \array_diff($properties, $propertyExcludes[$metadata->name]);
         }
 
         return $properties;
@@ -195,7 +193,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      */
     private function getRoleKey($class, $property, $action)
     {
-        return sprintf('%s-%s-%s', $class, $property, $action);
+        return \sprintf('%s-%s-%s', $class, $property, $action);
     }
 
     /**
@@ -205,10 +203,10 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      */
     private function getClass($object)
     {
-        $class = is_object($object) ? get_class($object) : $object;
+        $class = \is_object($object) ? \get_class($object) : $object;
 
-        if (is_subclass_of($class, 'Doctrine\Common\Proxy\Proxy')) {
-            $class = get_parent_class($class);
+        if (\is_subclass_of($class, 'Doctrine\Common\Proxy\Proxy')) {
+            $class = \get_parent_class($class);
         }
 
         return $class;
@@ -228,11 +226,13 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
             foreach ($configuration as $type => $filter) {
                 foreach ($filter as $prefix) {
-                    $this->filters[ltrim(rtrim($prefix, '\\'), '\\').'\\'] = [$type, substr_count($prefix, '\\')];
+                    $this->filters[\ltrim(\rtrim($prefix, '\\'), '\\') . '\\'] = [$type, \substr_count($prefix, '\\')];
                 }
             }
 
-            uasort($this->filters, [$this, 'compareFilters']);
+            \uasort($this->filters, function ($a, $b) {
+                return $this->compareFilters($a, $b);
+            });
         }
 
         return $this->filters;
@@ -283,7 +283,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
                 $this->propertyGroups[$class] = [];
 
                 foreach ($group as $name => $properties) {
-                    $this->propertyGroups[$class] += array_fill_keys($properties, $name);
+                    $this->propertyGroups[$class] += \array_fill_keys($properties, $name);
                 }
             }
         }
@@ -299,7 +299,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      */
     private function compareFilters($a, $b)
     {
-        if ($a[1] == $b[1]) {
+        if ($a[1] === $b[1]) {
             return 0;
         }
 
@@ -348,8 +348,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $builder->buildTree();
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use DateTime;
@@ -177,12 +176,12 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
         $this->enabled = false;
         $this->locked = false;
         $this->expired = false;
         $this->credentialsExpired = false;
-        $this->roles = array();
+        $this->roles = [];
         $this->groups = new ArrayCollection();
     }
 
@@ -567,7 +566,7 @@ class User implements UserInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -586,12 +585,12 @@ class User implements UserInterface
     public function addRole($role)
     {
         $role = (string) $role;
-        $role = strtoupper($role);
+        $role = \strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
             return $this;
         }
 
-        if (!in_array($role, $this->roles, true)) {
+        if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 
@@ -609,9 +608,9 @@ class User implements UserInterface
     {
         $role = (string) $role;
 
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = \array_search(\strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
+            $this->roles = \array_values($this->roles);
         }
 
         return $this;
@@ -627,13 +626,13 @@ class User implements UserInterface
         $roles = $this->roles;
 
         foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
+            $roles = \array_merge($roles, $group->getRoles());
         }
 
         // we need to make sure to have at least one role
         $roles[] = static::ROLE_DEFAULT;
 
-        return array_unique($roles);
+        return \array_unique($roles);
     }
 
     /**
@@ -653,7 +652,7 @@ class User implements UserInterface
     {
         $role = (string) $role;
 
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return \in_array(\strtoupper($role), $this->getRoles(), true);
     }
 
     /**
@@ -705,7 +704,7 @@ class User implements UserInterface
      */
     public function getGroupNames()
     {
-        $names = array();
+        $names = [];
         foreach ($this->getGroups() as $group) {
             $names[] = $group->getName();
         }
@@ -722,7 +721,7 @@ class User implements UserInterface
      */
     public function hasGroup($name)
     {
-        return in_array($name, $this->getGroupNames());
+        return \in_array($name, $this->getGroupNames(), true);
     }
 
     /**
@@ -766,7 +765,7 @@ class User implements UserInterface
             return false;
         }
 
-        if (null !== $this->expiresAt && $this->expiresAt->getTimestamp() < time()) {
+        if (null !== $this->expiresAt && $this->expiresAt->getTimestamp() < \time()) {
             return false;
         }
 
@@ -794,7 +793,7 @@ class User implements UserInterface
             return false;
         }
 
-        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < time()) {
+        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < \time()) {
             return false;
         }
 
@@ -821,7 +820,7 @@ class User implements UserInterface
     public function isPasswordRequestNonExpired($ttl)
     {
         return $this->getPasswordRequestedAt() instanceof DateTime &&
-        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
     }
 
     /**
@@ -853,7 +852,7 @@ class User implements UserInterface
      */
     public function serialize()
     {
-        return serialize(array(
+        return \serialize([
                 $this->password,
                 $this->salt,
                 $this->usernameCanonical,
@@ -863,7 +862,7 @@ class User implements UserInterface
                 $this->credentialsExpired,
                 $this->enabled,
                 $this->id,
-            ));
+            ]);
     }
 
     /**
@@ -873,10 +872,10 @@ class User implements UserInterface
      */
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
+        $data = \unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when unserializing
         // older data which does not include all properties.
-        $data = array_merge($data, array_fill(0, 2, null));
+        $data = \array_merge($data, \array_fill(0, 2, null));
 
         list(
             $this->password,

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Translation\TranslationStrategyInterface;

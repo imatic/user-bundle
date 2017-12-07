@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
+use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentWriter;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentWriter;
 
 /**
  * Role document create command.
@@ -48,10 +47,10 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
         $defaultRoles = $this->getDefaultRoles($userName, $groupName, $defaultState);
 
         $documentWriter = new RoleDocumentWriter($roleProvider, $roleTranslator, $defaultRoles);
-        $filePath = $documentWriter->write($input->getArgument('path') ?: getcwd());
+        $filePath = $documentWriter->write($input->getArgument('path') ?: \getcwd());
 
         $output->writeln('<info>Success!</info>');
-        $output->writeln(sprintf('Saved to <comment>%s</comment>', $filePath));
+        $output->writeln(\sprintf('Saved to <comment>%s</comment>', $filePath));
     }
 
     /**
@@ -74,14 +73,12 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
 
             if ($userName) {
                 return $this->getUserRoles($userName);
-            } else {
-                return $this->getGroupRoles($groupName);
             }
+            return $this->getGroupRoles($groupName);
         } elseif ($userName && $groupName) {
             throw new \LogicException('You must specify either user or group');
-        } else {
-            return (bool) $defaultState;
         }
+        return (bool) $defaultState;
     }
 
     /**
@@ -97,7 +94,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     {
         $userManager = $this->getContainer()->get('fos_user.user_manager');
 
-        $user = $userManager->findUserBy(array('username' => $userName));
+        $user = $userManager->findUserBy(['username' => $userName]);
         if (!$user) {
             throw new \RuntimeException('User not found');
         }
@@ -118,7 +115,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     {
         $groupManager = $this->getContainer()->get('fos_user.group_manager');
 
-        $group = $groupManager->findGroupBy(array('name' => $groupName));
+        $group = $groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {
             throw new \RuntimeException('Group not found');
         }

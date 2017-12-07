@@ -1,17 +1,16 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\RoleDocument;
 
-use SplFileInfo;
+use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
+use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
 use PHPExcel;
-use PHPExcel_Worksheet;
 use PHPExcel_Cell_DataType;
 use PHPExcel_IOFactory;
 use PHPExcel_Style_Fill;
+use PHPExcel_Worksheet;
+use SplFileInfo;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
-use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
-use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
 
 /**
  * Role document writer.
@@ -43,12 +42,12 @@ class RoleDocumentWriter
         $this->roleTranslator = $roleTranslator;
 
         // set default roles
-        if (is_array($defaultRoles)) {
-            $defaultRoles = array_flip($defaultRoles);
-        } elseif (!is_bool($defaultRoles)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (\is_array($defaultRoles)) {
+            $defaultRoles = \array_flip($defaultRoles);
+        } elseif (!\is_bool($defaultRoles)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Invalid default roles. Expected array or boolean, got %s',
-                gettype($defaultRoles)
+                \gettype($defaultRoles)
             ));
         }
         $this->defaultRoles = $defaultRoles;
@@ -67,7 +66,7 @@ class RoleDocumentWriter
 
         $savePathInfo = new SplFileInfo($savePath);
         if (!$savePathInfo->getExtension()) {
-            $filePath = rtrim($savePath, '\\/').'/role_document.xlsx';
+            $filePath = \rtrim($savePath, '\\/') . '/role_document.xlsx';
         } else {
             $filePath = $savePath;
         }
@@ -155,17 +154,17 @@ class RoleDocumentWriter
             $this->roleTranslator->translateRoleDomain($domain)
         );
 
-        $sheet->getStyle($cellCoord)->applyFromArray(array(
-            'font' => array(
+        $sheet->getStyle($cellCoord)->applyFromArray([
+            'font' => [
                 'size' => 20,
                 'bold' => true,
-                'color' => array('rgb' => 'FFFFFF'),
-            ),
-            'fill' => array(
+                'color' => ['rgb' => 'FFFFFF'],
+            ],
+            'fill' => [
                 'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                'color' => array('rgb' => '004593'),
-            ),
-        ));
+                'color' => ['rgb' => '004593'],
+            ],
+        ]);
     }
 
     /**
@@ -184,22 +183,19 @@ class RoleDocumentWriter
         }
 
         // iterate roles
-        $roleNames = array();
+        $roleNames = [];
         $roleColumn = D::COLUMN_ROLE_STATES_START;
         foreach ($roles as $role) {
             $roleNames[] = $roleName = $role->getRole();
-            $roleState = is_bool($this->defaultRoles)
+            $roleState = \is_bool($this->defaultRoles)
                 ? $this->defaultRoles
-                : isset($this->defaultRoles[$roleName])
-            ;
+                : isset($this->defaultRoles[$roleName]);
 
             // write action and state
             D::getCell($sheet, $row, $roleColumn)
-                ->setValue($this->roleTranslator->translateRoleAction($role->getAction()))
-            ;
+                ->setValue($this->roleTranslator->translateRoleAction($role->getAction()));
             D::getCell($sheet, $row, $roleColumn + 1)
-                ->setValue(D::stateToString($roleState))
-            ;
+                ->setValue(D::stateToString($roleState));
 
             $roleColumn += 2;
         }
@@ -209,13 +205,12 @@ class RoleDocumentWriter
             $sheet,
             $row,
             D::INSTRUCTION_ROLES,
-            implode(';', $roleNames)
+            \implode(';', $roleNames)
         );
 
         // write label
         D::getCell($sheet, $row, D::COLUMN_ROLE_LABEL)
-            ->setValue($this->roleTranslator->translateRole(current($roles)))
-        ;
+            ->setValue($this->roleTranslator->translateRole(\current($roles)));
     }
 
     /**
@@ -229,16 +224,14 @@ class RoleDocumentWriter
     private function writeInstruction(PHPExcel_Worksheet $sheet, $row, $instruction, $data = null)
     {
         D::getCell($sheet, $row, D::COLUMN_INSTRUCTION)
-            ->setValue($instruction)
-        ;
+            ->setValue($instruction);
 
         if (null !== $data) {
             D::getCell($sheet, $row, D::COLUMN_DATA)
                 ->setValueExplicit(
                     (string) $data,
                     PHPExcel_Cell_DataType::TYPE_STRING
-                )
-            ;
+                );
         }
     }
 
@@ -249,7 +242,7 @@ class RoleDocumentWriter
      */
     private function getRoleMap()
     {
-        $roleMap = array();
+        $roleMap = [];
         foreach ($this->roleProvider->getRoles() as $role) {
             $roleMap[$role->getType()][$role->getDomain()][$role->getLabel()][] = $role;
         }
@@ -270,9 +263,9 @@ class RoleDocumentWriter
         foreach ($domains as $labels) {
             foreach ($labels as $roles) {
                 if (null === $maxRoles) {
-                    $maxRoles = count($roles);
+                    $maxRoles = \count($roles);
                 } else {
-                    $maxRoles = max($maxRoles, count($roles));
+                    $maxRoles = \max($maxRoles, \count($roles));
                 }
             }
         }

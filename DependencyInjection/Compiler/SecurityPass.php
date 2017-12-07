@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DependencyInjection\Compiler;
 
 use Imatic\Bundle\UserBundle\DependencyInjection\Configuration;
@@ -37,10 +36,11 @@ class SecurityPass implements CompilerPassInterface
                     continue;
                 }
 
-                $definition->addMethodCall('addRoleProvider', array(new Reference($id)));
-                if (is_subclass_of(
+                $definition->addMethodCall('addRoleProvider', [new Reference($id)]);
+                if (\is_subclass_of(
                     $container->getDefinition($id)->getClass(),
-                    'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface')
+                    'Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface'
+                )
                 ) {
                     $container->getDefinition($id)->addMethodCall('setConfig', [$roleProviders[$alias]]);
                     break;
@@ -56,7 +56,7 @@ class SecurityPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('imatic_user.security.role.translation.role_translator');
 
-        foreach (array_keys($container->findTaggedServiceIds('imatic_user.role_translation_strategy')) as $id) {
+        foreach (\array_keys($container->findTaggedServiceIds('imatic_user.role_translation_strategy')) as $id) {
             $definition->addMethodCall('addStrategy', [new Reference($id)]);
         }
     }

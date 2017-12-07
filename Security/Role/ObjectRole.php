@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role;
 
 class ObjectRole extends Role
@@ -45,7 +44,7 @@ class ObjectRole extends Role
      */
     public function getRole()
     {
-        return strtoupper(sprintf(
+        return \strtoupper(\sprintf(
             'ROLE_%s_%s_%s_%s.%s_%s',
             $this->vendor,
             $this->bundle,
@@ -117,7 +116,7 @@ class ObjectRole extends Role
      */
     public function getDomain()
     {
-        return sprintf('%s%sBundle%s', $this->vendor, $this->bundle, $this->name);
+        return \sprintf('%s%sBundle%s', $this->vendor, $this->bundle, $this->name);
     }
 
     /**

@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
-use AppUserBundle\Entity\User;
 use AppUserBundle\Entity\Group;
+use AppUserBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 
 class LoadDefaultUsers extends ContainerAwareFixture
 {
@@ -20,16 +19,16 @@ class LoadDefaultUsers extends ContainerAwareFixture
         /** @var $roleHierarchy array */
         $roleHierarchy = $this->container->getParameter('security.role_hierarchy.roles');
 
-        $adminRoles = array_keys($roleHierarchy);
-        $userRoles = array(User::ROLE_DEFAULT);
+        $adminRoles = \array_keys($roleHierarchy);
+        $userRoles = [User::ROLE_DEFAULT];
 
         $adminGroup = $this->createGroup('Administrators', $adminRoles);
         $userGroup = $this->createGroup('Users', $userRoles);
 
-        $adminUser = $this->createUser('admin', 'adminpass123', 'admin@example.com', array($adminGroup));
+        $adminUser = $this->createUser('admin', 'adminpass123', 'admin@example.com', [$adminGroup]);
         $manager->persist($adminUser);
 
-        $userUser = $this->createUser('user', 'userpass123', 'user@example.com', array($userGroup));
+        $userUser = $this->createUser('user', 'userpass123', 'user@example.com', [$userGroup]);
         $manager->persist($userUser);
 
         $manager->flush();
@@ -45,7 +44,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
      *
      * @return User
      */
-    protected function createUser($username, $password, $email, array $groups = array(), array $roles = array(), $enabled = true)
+    protected function createUser($username, $password, $email, array $groups = [], array $roles = [], $enabled = true)
     {
         $user = new User();
         $user->setUsername($username);
@@ -75,7 +74,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
      *
      * @return Group
      */
-    protected function createGroup($name, array $roles = array())
+    protected function createGroup($name, array $roles = [])
     {
         $group = new Group();
         $group->setName($name);

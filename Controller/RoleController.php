@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use FOS\UserBundle\Model\GroupInterface;
@@ -67,7 +66,7 @@ class RoleController extends Controller
     public function switchAction(Request $request, $type, $id, $role)
     {
         if (
-            !$this->getSecurityContext()->isGranted(sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', strtoupper($type)))
+            !$this->getSecurityContext()->isGranted(\sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', \strtoupper($type)))
             && !$this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN')
         ) {
             throw new AccessDeniedException();
@@ -101,7 +100,7 @@ class RoleController extends Controller
      */
     private function getManager($type)
     {
-        return $this->get(sprintf('fos_user.%s_manager', $type));
+        return $this->get(\sprintf('fos_user.%s_manager', $type));
     }
 
     /**
@@ -121,12 +120,12 @@ class RoleController extends Controller
     private function findObject($type, $id)
     {
         $manager = $this->getManager($type);
-        $object = $type == static::TYPE_USER
+        $object = $type === static::TYPE_USER
             ? $manager->findUserBy(['id' => $id])
             : $manager->findGroupBy(['id' => $id]);
 
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('The %s with ID "%d" was not found.', $type, $id));
+            throw $this->createNotFoundException(\sprintf('The %s with ID "%d" was not found.', $type, $id));
         }
 
         return $object;

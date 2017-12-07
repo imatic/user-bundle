@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Symfony\Component\Translation\TranslatorInterface;
@@ -29,10 +28,10 @@ abstract class TranslationStrategy implements TranslationStrategyInterface
         $supportedClass = $this->getSupportedClass();
 
         if (!$role instanceof $supportedClass) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Expected argument of type "%s", "%s" given.',
                 $supportedClass,
-                is_object($role) ? get_class($role) : gettype($role)
+                \is_object($role) ? \get_class($role) : \gettype($role)
             ));
         }
 

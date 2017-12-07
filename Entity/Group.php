@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -46,7 +45,7 @@ class Group implements GroupInterface
      * @param string $name
      * @param array  $roles
      */
-    public function __construct($name = null, $roles = array())
+    public function __construct($name = null, $roles = [])
     {
         $this
             ->setName($name)
@@ -96,7 +95,7 @@ class Group implements GroupInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -115,7 +114,7 @@ class Group implements GroupInterface
     public function addRole($role)
     {
         $role = (string) $role;
-        $role = strtoupper($role);
+        $role = \strtoupper($role);
 
         if (!$this->hasRole($role)) {
             $this->roles[] = $role;
@@ -135,9 +134,9 @@ class Group implements GroupInterface
     {
         $role = (string) $role;
 
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = \array_search(\strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
+            $this->roles = \array_values($this->roles);
         }
 
         return $this;
@@ -164,7 +163,7 @@ class Group implements GroupInterface
     {
         $role = (string) $role;
 
-        return in_array(strtoupper($role), $this->roles, true);
+        return \in_array(\strtoupper($role), $this->roles, true);
     }
 
     public function __toString()

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle;
 
 use Imatic\Bundle\PlatformBundle\DependencyInjection\Compiler\ResolveTargetEntityPass;

@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Data\Query\User;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 
 class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterface, FilterableQueryObjectInterface
 {

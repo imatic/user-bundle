@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -18,7 +17,7 @@ class HierarchyStrategy extends TranslationStrategy
         $children = $role->getChildren();
 
         if ($deep && $children) {
-            $translation .= sprintf(' (%s)', implode(', ', array_map([$this, 'doTranslate'], $children, [false])));
+            $translation .= \sprintf(' (%s)', \implode(', ', \array_map([$this, 'doTranslate'], $children, [false])));
         }
 
         return $translation;

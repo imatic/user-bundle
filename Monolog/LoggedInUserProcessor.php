@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Monolog;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;
@@ -45,7 +44,9 @@ class RoleTranslator
     public function translateRole(Role $role)
     {
         if (!$this->sorted) {
-            uasort($this->strategies, [$this, 'compareStrategies']);
+            \uasort($this->strategies, function ($a, $b) {
+                return $this->compareStrategies($a, $b);
+            });
             $this->sorted = true;
         }
 
@@ -77,7 +78,7 @@ class RoleTranslator
     {
         $translation = $this->trans('Plural', $domain);
 
-        return $translation == 'Plural' ? $domain : $translation;
+        return $translation === 'Plural' ? $domain : $translation;
     }
 
     /**
@@ -113,9 +114,9 @@ class RoleTranslator
         $aClass = $a->getSupportedClass();
         $bClass = $b->getSupportedClass();
 
-        if (is_subclass_of($aClass, $bClass)) {
+        if (\is_subclass_of($aClass, $bClass)) {
             return -1;
-        } elseif (is_subclass_of($bClass, $aClass)) {
+        } elseif (\is_subclass_of($bClass, $aClass)) {
             return 1;
         }
 
