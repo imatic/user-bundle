@@ -26,7 +26,7 @@
         "imatic/controller-bundle": "~3.0"
     },
     "require-dev": {
-        "imatic/testing-bundle": "~3.0",
+        "imatic/testing": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.8",
         "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
         "phpmd/phpmd": "^2.6",

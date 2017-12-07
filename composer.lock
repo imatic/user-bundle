@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "937e9ab73c7be809f13f16d5eecb2dc8",
+    "content-hash": "23dc685f0c8b85088d088b20a214975e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2713,12 +2713,18 @@
             "time": "2015-03-08T10:30:28+00:00"
         },
         {
-            "name": "imatic/testing-bundle",
+            "name": "imatic/testing",
             "version": "3.0",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:imatic/imatic-testingbundle.git",
-                "reference": "07cbdf5fc0384bde2c1b65e10b7a72ac7d882fe3"
+                "url": "https://github.com/imatic/testing.git",
+                "reference": "e1fa6cb1ac6abec0173639816b5ea7e39636bd4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imatic/testing/zipball/e1fa6cb1ac6abec0173639816b5ea7e39636bd4e",
+                "reference": "e1fa6cb1ac6abec0173639816b5ea7e39636bd4e",
+                "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.2",
@@ -2738,6 +2744,7 @@
                     "Imatic\\Bundle\\TestingBundle\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Imatic"
             ],

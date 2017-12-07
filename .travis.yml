@@ -1,0 +1,15 @@
+language: php
+
+php: 7.1
+
+addons:
+    apt:
+        packages:
+            - graphviz
+
+before_script:
+    - phpenv config-rm xdebug.ini
+    - composer install
+
+script:
+    - make test

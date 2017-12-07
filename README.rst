@@ -1,3 +1,11 @@
+.. image:: https://secure.travis-ci.org/imatic/user-bundle.png?branch=master
+   :alt: Build Status
+   :target: http://travis-ci.org/imatic/user-bundle
+|
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+   :alt: License: MIT
+   :target: LICENSE
+
 ================
 ImaticUserBundle
 ================
