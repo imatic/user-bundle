@@ -10,7 +10,7 @@ use PHPExcel_IOFactory;
 use PHPExcel_Style_Fill;
 use PHPExcel_Worksheet;
 use SplFileInfo;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  * Role document writer.
@@ -172,7 +172,7 @@ class RoleDocumentWriter
      *
      * @param PHPExcel_Worksheet $sheet
      * @param int                $row
-     * @param RoleInterface[]    $roles
+     * @param Role[]    $roles
      */
     private function writeRoles(PHPExcel_Worksheet $sheet, $row, array $roles)
     {

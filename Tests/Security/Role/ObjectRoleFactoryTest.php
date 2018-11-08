@@ -3,8 +3,9 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRoleFactory;
+use PHPUnit\Framework\TestCase;
 
-class ObjectRoleFactoryTest extends \PHPUnit_Framework_TestCase
+class ObjectRoleFactoryTest extends TestCase
 {
     /** @var ObjectRoleFactory */
     private $roleFactory;

@@ -16,21 +16,20 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "symfony/framework-bundle": "~3.0",
-        "friendsofsymfony/user-bundle": "~2.0",
-        "doctrine/orm": "~2.3",
-        "doctrine/doctrine-bundle": "~1.2",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "imatic/view-bundle": "~3.0",
-        "imatic/controller-bundle": "~3.0"
+        "php": ">=7.1",
+        "symfony/framework-bundle": "^4.0",
+        "friendsofsymfony/user-bundle": "^2.1.2",
+        "doctrine/orm": "^2.6.2",
+        "doctrine/doctrine-bundle": "^1.9.1",
+        "symfony/swiftmailer-bundle": "^3.2.4",
+        "imatic/view-bundle": "dev-parklane",
+        "imatic/controller-bundle": "dev-resources"
     },
     "require-dev": {
-        "imatic/testing": "^3.0",
+        "imatic/testing": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.8",
         "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
-        "phpmd/phpmd": "^2.6",
-        "mamuz/php-dependency-analysis": "^1.3"
+        "phpmd/phpmd": "^2.6"
     },
     "autoload": {
         "psr-4": {

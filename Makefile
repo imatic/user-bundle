@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 .PHONY: test
-test: phpunit phpmd phpcs phpda
+test: phpunit phpmd phpcs
 
 .PHONY: phpcs
 phpcs:
@@ -18,8 +18,3 @@ phpmd:
 .PHONY: phpunit
 phpunit:
 	./vendor/bin/phpunit
-
-.PHONY: phpda
-phpda:
-	./vendor/bin/phpda analyze phpda.yml
-

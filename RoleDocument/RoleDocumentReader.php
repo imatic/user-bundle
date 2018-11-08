@@ -6,7 +6,6 @@ use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
 use IteratorAggregate;
 use PHPExcel;
 use PHPExcel_IOFactory;
-//use Symfony\Component\Security\Core\Role\RoleInterface;
 use PHPExcel_Worksheet;
 
 /**

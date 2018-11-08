@@ -1,6 +1,8 @@
 parameters:
     application.name: AppUserBundle
     imatic_view.layout.grid_columns: 5
+    testing.data_init: 1
+    container.dumper.inline_class_loader: true
 
 framework:
     secret:                     test
