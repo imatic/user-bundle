@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

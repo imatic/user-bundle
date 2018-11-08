@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -18,7 +18,7 @@ abstract class AbstractRoleDocumentCommand extends ContainerAwareCommand
      *
      * @throws \RuntimeException
      */
-    protected function checkPhpExcel(OutputInterface $output)
+    protected function checkPhpExcel(OutputInterface $output): void
     {
         if (!\class_exists('PHPExcel')) {
             $output->writeln("\n<error>PHPExcel is not available.</error>\n");

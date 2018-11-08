@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use FOS\UserBundle\Model\GroupInterface;
@@ -134,7 +134,7 @@ class RoleController extends Controller
     /**
      * @param UserInterface|GroupInterface $object
      */
-    private function updateObject($object)
+    private function updateObject($object): void
     {
         if ($object instanceof UserInterface) {
             $this->getManager(static::TYPE_USER)->updateUser($object);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;
@@ -38,7 +38,7 @@ class ChainRoleProvider implements RoleProviderInterface
     /**
      * @param RoleProviderInterface $roleProvider
      */
-    public function addRoleProvider(RoleProviderInterface $roleProvider)
+    public function addRoleProvider(RoleProviderInterface $roleProvider): void
     {
         $this->roleProviders[] = $roleProvider;
     }

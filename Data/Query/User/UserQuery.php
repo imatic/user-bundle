@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Data\Query\User;
 
 use Doctrine\ORM\EntityManager;

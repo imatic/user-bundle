@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Command;
 
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentWriter;
@@ -17,7 +17,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('imatic:user:role-document:create')
@@ -31,7 +31,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->checkPhpExcel($output);
 

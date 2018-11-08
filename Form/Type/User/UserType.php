@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +21,7 @@ class UserType extends AbstractType
         $this->userClass = $userClass;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username')
@@ -41,7 +41,7 @@ class UserType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'translation_domain' => 'ImaticUserBundleUser',

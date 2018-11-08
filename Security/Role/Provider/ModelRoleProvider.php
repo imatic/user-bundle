@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -10,7 +10,7 @@ use Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\
  */
 class LoadUserData extends AbstractFixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $adam = new User();
         $adam->setUsername('adam');

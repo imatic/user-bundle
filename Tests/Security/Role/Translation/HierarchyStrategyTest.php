@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -14,12 +14,12 @@ class HierarchyStrategyTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->strategy = new HierarchyStrategy($this->createTranslatorMock());
     }
 
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $this->assertEquals('ROLE', $this->strategy->translate(new HierarchyRole('ROLE')));
         $hierarchy = new HierarchyRole('ROLE', [

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Unit\Monolog;
 
 use Imatic\Bundle\UserBundle\Entity\Group;
@@ -14,7 +14,7 @@ class LoggedInUserProcessorTest extends TestCase
     /**
      * @dataProvider processRecordDataProvider
      */
-    public function testProcessRecord(TokenStorageInterface $tokenStorage, array $record, array $expectedRecord)
+    public function testProcessRecord(TokenStorageInterface $tokenStorage, array $record, array $expectedRecord): void
     {
         $this->assertEquals(
             $expectedRecord,

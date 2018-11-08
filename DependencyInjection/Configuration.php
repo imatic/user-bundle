@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Imatic\Bundle\UserBundle\Form\Type\User\UserType;
@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addEntitiesSection($node)
+    private function addEntitiesSection($node): void
     {
         $node
             ->children()
@@ -60,7 +60,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addAdminSection($node)
+    private function addAdminSection($node): void
     {
         $node
             ->addDefaultsIfNotSet()
@@ -87,7 +87,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addSecuritySection(ArrayNodeDefinition $node)
+    private function addSecuritySection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()

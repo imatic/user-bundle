@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Twig\Extension;
 
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;

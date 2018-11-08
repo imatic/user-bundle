@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -15,7 +15,7 @@ class ChainRoleProviderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->roleProvider = new ChainRoleProvider([
             $this->createRoleProviderMock([
@@ -29,7 +29,7 @@ class ChainRoleProviderTest extends TestCase
         ]);
     }
 
-    public function testGetRoles()
+    public function testGetRoles(): void
     {
         $this->assertEquals(
             [

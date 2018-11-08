@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security;
 
 use FOS\UserBundle\Security\UserProvider as BaseUserProvider;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
@@ -13,7 +13,7 @@ class HierarchyRoleProviderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->roleProvider = new HierarchyRoleProvider([
             'ROLE_ADMIN' => ['ROLE_USER'],
@@ -21,7 +21,7 @@ class HierarchyRoleProviderTest extends TestCase
         ]);
     }
 
-    public function testGetRoles()
+    public function testGetRoles(): void
     {
         $this->assertEquals([], (new HierarchyRoleProvider([]))->getRoles());
         $this->assertEquals(

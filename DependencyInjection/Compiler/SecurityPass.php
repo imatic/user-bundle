@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\DependencyInjection\Compiler;
 
 use Imatic\Bundle\UserBundle\DependencyInjection\Configuration;
@@ -12,7 +12,7 @@ class SecurityPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->processRoleProviders($container);
         $this->processTranslationStrategies($container);
@@ -21,7 +21,7 @@ class SecurityPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    protected function processRoleProviders(ContainerBuilder $container)
+    protected function processRoleProviders(ContainerBuilder $container): void
     {
         $config = $container->getExtensionConfig('imatic_user');
         $processor = new Processor();
@@ -52,7 +52,7 @@ class SecurityPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    protected function processTranslationStrategies(ContainerBuilder $container)
+    protected function processTranslationStrategies(ContainerBuilder $container): void
     {
         $definition = $container->getDefinition('imatic_user.security.role.translation.role_translator');
 
