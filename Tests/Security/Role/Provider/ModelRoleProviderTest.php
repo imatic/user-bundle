@@ -5,8 +5,9 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
+use PHPUnit\Framework\TestCase;
 
-class ModelRoleProviderTest extends \PHPUnit_Framework_TestCase
+class ModelRoleProviderTest extends TestCase
 {
     /** @var ModelRoleProvider */
     private $roleProvider;

@@ -5,8 +5,9 @@ use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
 use Imatic\Bundle\UserBundle\Security\Role\Role;
+use PHPUnit\Framework\TestCase;
 
-class ChainRoleProviderTest extends \PHPUnit_Framework_TestCase
+class ChainRoleProviderTest extends TestCase
 {
     /** @var ChainRoleProvider */
     private $roleProvider;

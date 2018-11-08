@@ -6,9 +6,10 @@ use Imatic\Bundle\UserBundle\Tests\Fixtures\Role\ChildRole;
 use Imatic\Bundle\UserBundle\Tests\Fixtures\Role\ParentRole;
 use Imatic\Bundle\UserBundle\Tests\Fixtures\Role\Translation\ChildStrategy;
 use Imatic\Bundle\UserBundle\Tests\Fixtures\Role\Translation\ParentStrategy;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class RoleTranslatorTest extends \PHPUnit_Framework_TestCase
+class RoleTranslatorTest extends TestCase
 {
     /** @var RoleTranslator */
     private $roleTranslator;

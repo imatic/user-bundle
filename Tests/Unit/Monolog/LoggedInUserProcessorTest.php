@@ -4,11 +4,12 @@ namespace Imatic\Bundle\UserBundle\Tests\Unit\Monolog;
 use Imatic\Bundle\UserBundle\Entity\Group;
 use Imatic\Bundle\UserBundle\Entity\User;
 use Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class LoggedInUserProcessorTest extends \PHPUnit_Framework_TestCase
+class LoggedInUserProcessorTest extends TestCase
 {
     /**
      * @dataProvider processRecordDataProvider

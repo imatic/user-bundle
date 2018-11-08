@@ -3,9 +3,10 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 use Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class HierarchyStrategyTest extends \PHPUnit_Framework_TestCase
+class HierarchyStrategyTest extends TestCase
 {
     /** @var HierarchyStrategy */
     private $strategy;
