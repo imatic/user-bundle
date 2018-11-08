@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
@@ -17,7 +17,7 @@ class RoleTranslatorTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->roleTranslator = new RoleTranslator($this->createTranslatorMock());
         $this->roleTranslator
@@ -25,23 +25,23 @@ class RoleTranslatorTest extends TestCase
             ->addStrategy(new ParentStrategy());
     }
 
-    public function testTranslateRole()
+    public function testTranslateRole(): void
     {
         $this->assertEquals('child', $this->roleTranslator->translateRole(new ChildRole('ROLE')));
         $this->assertEquals('parent', $this->roleTranslator->translateRole(new ParentRole('ROLE')));
     }
 
-    public function testTranslateRoleType()
+    public function testTranslateRoleType(): void
     {
         $this->assertEquals('type', $this->roleTranslator->translateRoleType('type'));
     }
 
-    public function testTranslateRoleDomain()
+    public function testTranslateRoleDomain(): void
     {
         $this->assertEquals('domain', $this->roleTranslator->translateRoleDomain('domain'));
     }
 
-    public function testTranslateRoleAction()
+    public function testTranslateRoleAction(): void
     {
         $this->assertEquals('action', $this->roleTranslator->translateRoleDomain('action'));
     }

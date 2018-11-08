@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\RoleDocument;
 
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocument as D;
@@ -119,7 +119,7 @@ class RoleDocumentWriter
      * @param PHPExcel_Worksheet $sheet
      * @param string             $type
      */
-    private function prepareSheet(PHPExcel_Worksheet $sheet, $type)
+    private function prepareSheet(PHPExcel_Worksheet $sheet, $type): void
     {
         $sheet->setTitle($type);
         $sheet->getColumnDimension(D::getColumn(D::COLUMN_INSTRUCTION))->setVisible(false);
@@ -135,7 +135,7 @@ class RoleDocumentWriter
      * @param string             $domain
      * @param int                $maxRoles
      */
-    private function writeDomain(PHPExcel_Worksheet $sheet, $row, $domain, $maxRoles)
+    private function writeDomain(PHPExcel_Worksheet $sheet, $row, $domain, $maxRoles): void
     {
         $this->writeInstruction($sheet, $row, D::INSTRUCTION_IGNORE);
 
@@ -174,7 +174,7 @@ class RoleDocumentWriter
      * @param int                $row
      * @param Role[]    $roles
      */
-    private function writeRoles(PHPExcel_Worksheet $sheet, $row, array $roles)
+    private function writeRoles(PHPExcel_Worksheet $sheet, $row, array $roles): void
     {
         if (empty($roles)) {
             $this->writeInstruction($sheet, $row, D::INSTRUCTION_IGNORE);
@@ -221,7 +221,7 @@ class RoleDocumentWriter
      * @param int                $instruction
      * @param mixed              $data
      */
-    private function writeInstruction(PHPExcel_Worksheet $sheet, $row, $instruction, $data = null)
+    private function writeInstruction(PHPExcel_Worksheet $sheet, $row, $instruction, $data = null): void
     {
         D::getCell($sheet, $row, D::COLUMN_INSTRUCTION)
             ->setValue($instruction);

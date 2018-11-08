@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use DateTime;
@@ -176,7 +176,7 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid((string) \mt_rand(), true)), 16, 36);
         $this->enabled = false;
         $this->locked = false;
         $this->expired = false;
@@ -838,7 +838,7 @@ class User implements UserInterface
     /**
      * Removes sensitive data from the user.
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
@@ -870,7 +870,7 @@ class User implements UserInterface
      *
      * @param string $serialized
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $data = \unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when unserializing

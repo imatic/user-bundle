@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
 use AppUserBundle\Entity\Group;
@@ -9,12 +9,12 @@ use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 
 class LoadDefaultUsers extends ContainerAwareFixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->loadDefaultUsersAndGroups($manager);
     }
 
-    public function loadDefaultUsersAndGroups(ObjectManager $manager)
+    public function loadDefaultUsersAndGroups(ObjectManager $manager): void
     {
         /** @var $roleHierarchy array */
         $roleHierarchy = $this->container->getParameter('security.role_hierarchy.roles');

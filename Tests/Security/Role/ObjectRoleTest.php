@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
@@ -12,17 +12,17 @@ class ObjectRoleTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->role = new ObjectRole('Vendor', 'Bundle', 'type', 'Name', 'property', 'action');
     }
 
-    public function testGetDomain()
+    public function testGetDomain(): void
     {
         $this->assertEquals('VendorBundleBundleName', $this->role->getDomain());
     }
 
-    public function testGetRole()
+    public function testGetRole(): void
     {
         $this->assertEquals('ROLE_VENDOR_BUNDLE_TYPE_NAME.PROPERTY_ACTION', $this->role->getRole());
     }

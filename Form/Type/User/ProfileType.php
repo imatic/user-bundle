@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Form\Type\User;
 
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseProfileFormType;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ProfileType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder->add('submit', SubmitType::class, [
@@ -24,7 +24,7 @@ class ProfileType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    protected function buildUserForm(FormBuilderInterface $builder, array $options)
+    protected function buildUserForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildUserForm($builder, $options);
     }

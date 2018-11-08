@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role;
 
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
@@ -13,12 +13,12 @@ class ObjectRoleFactoryTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->roleFactory = new ObjectRoleFactory();
     }
 
-    public function testCreateRole()
+    public function testCreateRole(): void
     {
         $role = new ObjectRole('Vendor', 'Foo', 'entity', 'Class', 'property', 'action');
         $this->assertEquals(
@@ -43,7 +43,7 @@ class ObjectRoleFactoryTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The class name "class" is missing either a vendor, bundle or a type name.
      */
-    public function testCreateRoleShouldThrowException()
+    public function testCreateRoleShouldThrowException(): void
     {
         $this->roleFactory->createRole('class', 'name', 'action');
     }

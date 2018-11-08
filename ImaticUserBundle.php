@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle;
 
 use Imatic\Bundle\PlatformBundle\DependencyInjection\Compiler\ResolveTargetEntityPass;
@@ -19,7 +19,7 @@ class ImaticUserBundle extends Bundle
     /**
      * @param ContainerBuilder $container
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new SecurityPass());
 //        $container->addCompilerPass(

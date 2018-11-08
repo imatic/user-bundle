@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Command;
 
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentReader;
@@ -17,7 +17,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('imatic:user:role-document:import')
@@ -31,7 +31,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->checkPhpExcel($output);
 
@@ -80,7 +80,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      *
      * @throws \RuntimeException
      */
-    private function applyRolesToUser($userName, array $roles)
+    private function applyRolesToUser($userName, array $roles): void
     {
         $userManager = $this->getContainer()->get('fos_user.user_manager');
 
@@ -101,7 +101,7 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      *
      * @throws \RuntimeException
      */
-    private function applyRolesToGroup($groupName, array $roles)
+    private function applyRolesToGroup($groupName, array $roles): void
     {
         $groupManager = $this->getContainer()->get('fos_user.group_manager');
 

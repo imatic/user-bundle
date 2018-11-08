@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -15,12 +15,12 @@ class ModelRoleProviderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->roleProvider = new ModelRoleProvider($this->createClassMetadataFactoryMock());
     }
 
-    public function testGetRoles()
+    public function testGetRoles(): void
     {
         $this->assertEmpty($this->roleProvider->getRoles());
         $this->roleProvider->setConfig([
@@ -51,7 +51,7 @@ class ModelRoleProviderTest extends TestCase
         );
     }
 
-    public function testGetRolesShouldBeFiltered()
+    public function testGetRolesShouldBeFiltered(): void
     {
         $this->roleProvider->setConfig(['namespaces' => ['includes' => ['Foo']]]);
         $this->assertEmpty($this->roleProvider->getRoles());
@@ -72,7 +72,7 @@ class ModelRoleProviderTest extends TestCase
         );
     }
 
-    public function testGetRolesShouldContainGroupsOnly()
+    public function testGetRolesShouldContainGroupsOnly(): void
     {
         $this->roleProvider->setConfig([
             'namespaces' => [
@@ -92,7 +92,7 @@ class ModelRoleProviderTest extends TestCase
         );
     }
 
-    public function testGetRole()
+    public function testGetRole(): void
     {
         $this->roleProvider->setConfig([
             'namespaces' => ['includes' => ['Vendor']],
