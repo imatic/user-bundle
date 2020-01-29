@@ -3,3 +3,7 @@ services:
         class: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Security\Role\Provider\RoleProvider
         tags:
             - { name: imatic_user.role_provider, alias: dumm_role_provider }
+
+    Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\DataFixtures\ORM\LoadUserData:
+        autowire: true
+        autoconfigure: true

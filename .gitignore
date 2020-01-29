@@ -13,6 +13,7 @@ Tests/Fixtures/TestProject/web/vendor
 Tests/Fixtures/TestProject/web/js
 Tests/Fixtures/TestProject/web/css
 Tests/Fixtures/TestProject/cache
+Tests/Fixtures/TestProject/var/
 Tests/Fixtures/TestProject/logs
 Tests/Fixtures/TestProject/ProjectBundle/DataFixtures
 Tests/Fixtures/TestProject/ProjectBundle/Entity

@@ -29,7 +29,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
      *
      * @return QueryBuilder
      */
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
             ->select('u')
