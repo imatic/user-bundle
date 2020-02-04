@@ -311,8 +311,8 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
      */
     private function getConfigurationTree()
     {
-        $builder = new TreeBuilder();
-        $root = $builder->root('config');
+        $builder = new TreeBuilder('config');
+        $root = $builder->getRootNode();
         $root
             ->children()
                 ->arrayNode('namespaces')

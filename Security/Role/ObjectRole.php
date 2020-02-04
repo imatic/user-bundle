@@ -122,7 +122,7 @@ class ObjectRole extends Role
     /**
      * {@inheritdoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getRole();
     }

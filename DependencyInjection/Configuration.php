@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Imatic\Bundle\UserBundle\Form\Type\User\UserType;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -16,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $builder = new TreeBuilder();
-        $rootNode = $builder->root('imatic_user');
+        $builder = new TreeBuilder('imatic_user');
+        $rootNode = $builder->getRootNode();
         $this->addEntitiesSection($rootNode);
         $this->addSecuritySection($rootNode);
         $this->addAdminSection($rootNode);
@@ -36,9 +37,9 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('em')
                             ->cannotBeEmpty()
-                            ->defaultValue('doctrine.orm.entity_manager')
+                            ->defaultValue(EntityManagerInterface::class)
                             ->info('Entity manager service name')
-                            ->example('doctrine.orm.entity_manager')
+                            ->example(EntityManagerInterface::class)
                         ->end()
                         ->scalarNode('user')
                             ->isRequired()

@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class LoadUserData extends AbstractFixture
+class LoadUserData extends Fixture
 {
     public function load(ObjectManager $manager): void
     {

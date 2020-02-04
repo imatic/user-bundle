@@ -43,6 +43,7 @@ services:
     # Menu
     imatic_user.menu.user_menu:
         class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
+        public: true
         tags:
             - {name: imatic_view.menu, alias: imatic.user}
             - {name: imatic_view.menu, alias: imatic.user_anon, method: getMenuAnon}
@@ -58,7 +59,7 @@ services:
     # Security
     imatic_user.security.role.metadata_factory:
         class: Doctrine\ORM\Mapping\ClassMetadataFactory
-        factory: 'doctrine.orm.entity_manager:getMetadataFactory'
+        factory: ['@Doctrine\ORM\EntityManagerInterface', 'getMetadataFactory']
 
     # Security role provider
     imatic_user.security.role.provider.model_role_provider:
@@ -105,7 +106,7 @@ services:
     imatic_user.user_filter:
         class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
         tags:
-            - { name: imatic_data.filter, alias: imatic_user.user }
+            - { name: imatic_data.filter }
 
     imatic_user.monolog.logged_in_user_processor:
         class: Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor
