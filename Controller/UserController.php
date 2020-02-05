@@ -53,7 +53,7 @@ class UserController implements ContainerAwareInterface
     {
         return $this
             ->form($this->container->getParameter('imatic_user.admin.form.user'))
-            ->commandName('imatic.user.edit')
+            ->commandName('imatic_user.data.handler.user_edit')
             ->edit(new UserQuery($id, $this->container->getParameter('imatic_user.entity.user.class')))
             ->successRedirect('imatic_user_user_show', ['id' => $id])
             ->setTemplateName('ImaticUserBundle:User:edit.html.twig')
@@ -69,7 +69,7 @@ class UserController implements ContainerAwareInterface
     {
         return $this
             ->form($this->container->getParameter('imatic_user.admin.form.user'))
-            ->commandName('imatic.user.create')
+            ->commandName('imatic_user.data.handler.user_create')
             ->successRedirect('imatic_user_user_show', function (CommandResultInterface $result, UserInterface $user) {
                 return ['id' => $user->getId()];
             })
@@ -84,7 +84,7 @@ class UserController implements ContainerAwareInterface
     public function deleteAction($id)
     {
         return $this
-            ->command('imatic.user.delete', ['user' => $id])
+            ->command('imatic_user.data.handler.user_delete', ['user' => $id])
             ->redirect('imatic_user_user_list')
             ->getResponse();
     }
