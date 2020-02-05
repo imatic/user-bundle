@@ -30,7 +30,12 @@
         "imatic/testing": "^5.0.2",
         "friendsofphp/php-cs-fixer": "^2.8",
         "phpmd/phpmd": "^2.6",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "symfony/web-profiler-bundle": "^4.4",
+        "imatic/form-bundle": "^4.0.1",
+        "symfony/yaml": "^4.4",
+        "symfony/expression-language": "^4.4",
+        "symfony/asset": "^4.4"
     },
     "autoload": {
         "psr-4": {
