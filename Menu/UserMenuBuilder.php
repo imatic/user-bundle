@@ -17,8 +17,8 @@ class UserMenuBuilder
         $menu = $factory->createItem((string) $helper->getUser());
         $helper->setDropdown($menu);
         $menu->addChild($helper->trans('User Profile', [], 'ImaticUserBundle'), ['route' => 'fos_user_profile_show']);
-        $menu->addChild($helper->trans('Change password', [], 'ImaticUserBundle'), ['route' => 'fos_user_change_password']);
-        $helper->addDivider($menu);
+        $menu->addChild($helper->trans('Change password', [], 'ImaticUserBundle'), ['route' => 'fos_user_change_password'])
+            ->setAttribute('divider', true);
         if ($helper->isUserGranted('ROLE_PREVIOUS_ADMIN')) {
             $menu->addChild($helper->trans('Switch user exit', [], 'ImaticUserBundleUser'), ['route' => 'homepage', 'routeParameters' => ['_switch_user' => '_exit']]);
         }

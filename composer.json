@@ -17,14 +17,15 @@
     ],
     "require": {
         "php": ">=7.1",
-        "symfony/framework-bundle": "^4.0",
+        "symfony/framework-bundle": "^4.4.16",
         "friendsofsymfony/user-bundle": "^2.1.2",
-        "doctrine/orm": "^2.6.2",
-        "doctrine/doctrine-bundle": "^2.0",
-        "symfony/swiftmailer-bundle": "^3.2.4",
-        "imatic/view-bundle": "^4.0.1",
-        "imatic/controller-bundle": "^4.0.1",
-        "sensio/framework-extra-bundle": "^5.5"
+        "doctrine/persistence": "^1.3.8",
+        "doctrine/orm": "^2.7.4",
+        "doctrine/doctrine-bundle": "^2.1.2",
+        "symfony/swiftmailer-bundle": "^3.5.1",
+        "imatic/view-bundle": "^5.0.4",
+        "imatic/controller-bundle": "^5.0.0",
+        "sensio/framework-extra-bundle": "^5.6.1"
     },
     "require-dev": {
         "imatic/testing": "^5.0.2",
