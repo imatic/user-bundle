@@ -5,7 +5,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 abstract class TranslationStrategy implements TranslationStrategyInterface
 {
-    /** @var TranslatorInterface $translator */
+    /** @var TranslatorInterface */
     protected $translator;
 
     /**
