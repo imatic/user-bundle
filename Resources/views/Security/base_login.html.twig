@@ -25,7 +25,9 @@
                                 
                                 {% set panel = {type: 'app'} %}
                                 {% block panel_header %}
-                                    <h1>{{ application_name }}</h1>
+                                    {%- if application_name is not empty -%}
+                                        <h1>{{ application_name }}</h1>
+                                    {%- endif -%}
                                 {% endblock %}
                                 {% block panel_body %}
                                     <div class="form-group">
