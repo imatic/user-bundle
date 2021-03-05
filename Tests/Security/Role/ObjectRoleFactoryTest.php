@@ -39,12 +39,11 @@ class ObjectRoleFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The class name "class" is missing either a vendor, bundle or a type name.
-     */
     public function testCreateRoleShouldThrowException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The class name "class" is missing either a vendor, bundle or a type name.');
+
         $this->roleFactory->createRole('class', 'name', 'action');
     }
 }

@@ -2,7 +2,7 @@
 namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Provider;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
 use PHPUnit\Framework\TestCase;
@@ -111,7 +111,7 @@ class ModelRoleProviderTest extends TestCase
      */
     private function createClassMetadataFactoryMock()
     {
-        $metadataFactoryMock = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadataFactory');
+        $metadataFactoryMock = $this->createMock(ClassMetadataFactory::class);
         $aMetadata = new ClassMetadata('Vendor\Foo\Entity\ClassA');
         $aMetadata->mapField(['fieldName' => 'propertyA']);
         $aMetadata->mapField(['fieldName' => 'propertyB']);
