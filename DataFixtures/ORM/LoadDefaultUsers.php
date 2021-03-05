@@ -3,7 +3,7 @@ namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
 use AppUserBundle\Entity\Group;
 use AppUserBundle\Entity\User;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 

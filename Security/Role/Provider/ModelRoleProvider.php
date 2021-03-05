@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security\Role\Provider;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ConfigAwareInterface;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRoleFactory;
@@ -76,7 +76,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
             }
         }
 
-        return $this->roles ? \array_values(\call_user_func_array('array_merge', $this->roles)) : [];
+        return $this->roles ? \array_values(\call_user_func_array('array_merge', \array_values($this->roles))) : [];
     }
 
     /**
