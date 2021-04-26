@@ -28,7 +28,7 @@ class UserController implements ContainerAwareInterface
         return $this
             ->listing(new UserListQuery($this->container->getParameter('imatic_user.entity.user.class')))
             ->filter('imatic_user.user_filter')
-            ->setTemplateName('ImaticUserBundle:User:list.html.twig')
+            ->setTemplateName('@ImaticUser/User/list.html.twig')
             ->getResponse();
     }
 
@@ -41,7 +41,7 @@ class UserController implements ContainerAwareInterface
     {
         return $this
             ->show(new UserQuery($id, $this->container->getParameter('imatic_user.entity.user.class')))
-            ->setTemplateName('ImaticUserBundle:User:show.html.twig')
+            ->setTemplateName('@ImaticUser/User/show.html.twig')
             ->getResponse();
     }
 
@@ -56,7 +56,7 @@ class UserController implements ContainerAwareInterface
             ->commandName('imatic_user.data.handler.user_edit')
             ->edit(new UserQuery($id, $this->container->getParameter('imatic_user.entity.user.class')))
             ->successRedirect('imatic_user_user_show', ['id' => $id])
-            ->setTemplateName('ImaticUserBundle:User:edit.html.twig')
+            ->setTemplateName('@ImaticUser/User/edit.html.twig')
             ->getResponse();
     }
 
@@ -73,7 +73,7 @@ class UserController implements ContainerAwareInterface
             ->successRedirect('imatic_user_user_show', function (CommandResultInterface $result, UserInterface $user) {
                 return ['id' => $user->getId()];
             })
-            ->setTemplateName('ImaticUserBundle:User:edit.html.twig')
+            ->setTemplateName('@ImaticUser/User/edit.html.twig')
             ->getResponse();
     }
 
