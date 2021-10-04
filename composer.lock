@@ -5272,16 +5272,16 @@
         },
         {
             "name": "symfony/security-guard",
-            "version": "v4.4.20",
+            "version": "v4.4.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-guard.git",
-                "reference": "20f522ada1eefb7c2f90cb83dcc76abb160c782f"
+                "reference": "68d4be4fe90f4eccbbf379d478f2067550a25469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-guard/zipball/20f522ada1eefb7c2f90cb83dcc76abb160c782f",
-                "reference": "20f522ada1eefb7c2f90cb83dcc76abb160c782f",
+                "url": "https://api.github.com/repos/symfony/security-guard/zipball/68d4be4fe90f4eccbbf379d478f2067550a25469",
+                "reference": "68d4be4fe90f4eccbbf379d478f2067550a25469",
                 "shasum": ""
             },
             "require": {
@@ -5290,7 +5290,7 @@
                 "symfony/security-http": "^4.4.1"
             },
             "require-dev": {
-                "psr/log": "~1.0"
+                "psr/log": "^1|^2|^3"
             },
             "type": "library",
             "autoload": {
@@ -5318,7 +5318,7 @@
             "description": "Symfony Security Component - Guard",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-guard/tree/v4.4.20"
+                "source": "https://github.com/symfony/security-guard/tree/v4.4.27"
             },
             "funding": [
                 {
@@ -5334,7 +5334,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T09:09:26+00:00"
+            "time": "2021-07-18T14:08:08+00:00"
         },
         {
             "name": "symfony/security-http",
