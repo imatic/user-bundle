@@ -3,14 +3,13 @@ namespace Imatic\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * @author Marek Stipek <marek.stipek@imatic.cz>
  */
-class ImaticUserExtension extends Extension implements PrependExtensionInterface
+class ImaticUserExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -25,26 +24,9 @@ class ImaticUserExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('imatic_user.admin.form.user', $config['admin']['form']['user']);
 
+        $container->setParameter('imatic.user.email.resseting_from', [$config['email']['address'] => $config['email']['sender_name']]);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container): void
-    {
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
-        $fosUserConfig = [
-            'user_class' => $config['entities']['user'],
-            'group' => [
-                'group_class' => $config['entities']['group'],
-            ],
-        ];
-
-        $container->prependExtensionConfig('fos_user', $fosUserConfig);
     }
 }

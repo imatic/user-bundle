@@ -1,22 +1,28 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security;
 
-use FOS\UserBundle\Security\UserProvider as BaseUserProvider;
 use Imatic\Bundle\UserBundle\Entity\User;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Provides user by username.
  *
  * @author Viliam Husár <viliam.husar@imatic.cz>
  */
-class UserProvider extends BaseUserProvider
+class UserProvider implements UserProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    private UserManager $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
     public function refreshUser(SecurityUserInterface $user)
     {
         if (!$user instanceof User) {
@@ -32,5 +38,23 @@ class UserProvider extends BaseUserProvider
         }
 
         return $reloadedUser;
+    }
+
+    public function loadUserByUsername($username): UserInterface
+    {
+        $user = $this->userManager->findUserByUsername($username);
+
+        if (!$user) {
+            throw new UsernameNotFoundException(\sprintf('Username "%s" does not exist.', $username));
+        }
+
+        return $user;
+    }
+
+    public function supportsClass($class): bool
+    {
+        $userClass = $this->userManager->getClass();
+
+        return $userClass === $class || \is_subclass_of($class, $userClass);
     }
 }

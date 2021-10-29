@@ -6,17 +6,18 @@ imatic_user_role:
     resource: '@ImaticUserBundle/Controller/RoleController.php'
     type: annotation
 
-fos_user_security:
-    resource: '@FOSUserBundle/Resources/config/routing/security.xml'
+imatic_user_profile:
+    resource: '@ImaticUserBundle/Controller/ProfileController.php'
+    type: annotation
 
-fos_user_profile:
-    resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
-    prefix: /profile
+imatic_user_change_password:
+    resource: '@ImaticUserBundle/Controller/ChangePasswordController.php'
+    type: annotation
 
-fos_user_resetting:
-    resource: '@FOSUserBundle/Resources/config/routing/resetting.xml'
-    prefix: /resetting
+imatic_user_resetting:
+    resource: '@ImaticUserBundle/Controller/ResettingController.php'
+    type: annotation
 
-fos_user_change_password:
-    resource: '@FOSUserBundle/Resources/config/routing/change_password.xml'
-    prefix: /profile
+imatic_user_security:
+    resource: '@ImaticUserBundle/Controller/SecurityController.php'
+    type: annotation

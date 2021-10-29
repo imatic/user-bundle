@@ -27,10 +27,10 @@ class UserType extends AbstractType
             ->add('username')
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => ['translation_domain' => 'FOSUserBundle'],
+                'options' => ['translation_domain' => 'ImaticUserBundle'],
                 'first_options' => ['label' => 'form.new_password'],
                 'second_options' => ['label' => 'form.new_password_confirmation'],
-                'invalid_message' => 'fos_user.password.mismatch',
+                'invalid_message' => 'imatic_user.password.mismatch',
             ])
             ->add('email')
             ->add('enabled')

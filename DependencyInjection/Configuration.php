@@ -19,11 +19,32 @@ class Configuration implements ConfigurationInterface
     {
         $builder = new TreeBuilder('imatic_user');
         $rootNode = $builder->getRootNode();
+        $this->addEmailsSection($rootNode);
         $this->addEntitiesSection($rootNode);
         $this->addSecuritySection($rootNode);
         $this->addAdminSection($rootNode);
 
         return $builder;
+    }
+
+    public function addEmailsSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('email')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('address')
+                            ->cannotBeEmpty()
+                            ->defaultValue('from@example.com')
+                        ->end()
+                        ->scalarNode('sender_name')
+                            ->cannotBeEmpty()
+                            ->defaultValue('From')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 
     /**

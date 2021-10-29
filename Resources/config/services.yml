@@ -1,42 +1,49 @@
 services:
+    _defaults:
+        bind:
+            $userClass: '%imatic_user.entity.user.class%'
+            $groupClass: '%imatic_user.entity.group.class%'
+            $resettingFromEmail: '%imatic.user.email.resseting_from%'
+
     # Form
     imatic_user.form.type.profile:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
-        arguments: ["%fos_user.model.user.class%"]
+        autowire: true
         tags:
             - {name: form.type }
 
     imatic_user.form.type.change_password:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
-        arguments: ["%fos_user.model.user.class%"]
+        autowire: true
         tags:
             - {name: form.type }
 
     imatic_user.form.type.user:
         class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
-        arguments: ["%fos_user.model.user.class%"]
+        autowire: true
         tags:
             - {name: form.type }
+
+    Imatic\Bundle\UserBundle\Form\Type\User\ResettingFormType:
+        autowire: true
+        autoconfigure: true
 
     # Command handler
     imatic_user.data.handler.user_edit:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserEditHandler
-        arguments:
-            - '@fos_user.user_manager'
+        autowire: true
         tags:
             - { name: imatic_data.handler }
 
     imatic_user.data.handler.user_create:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserCreateHandler
-        arguments:
-            - '@fos_user.user_manager'
+        autowire: true
         tags:
             - { name: imatic_data.handler }
 
     imatic_user.data.handler.user_delete:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserDeleteHandler
-        arguments:
-            - '@fos_user.user_manager'
+        autowire: true
         tags:
             - { name: imatic_data.handler }
 
@@ -81,6 +88,9 @@ services:
     imatic_user.role_provider:
         alias: imatic_user.security.role.provider.chain_role_provider
 
+    Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface:
+        alias: imatic_user.role_provider
+
     # Security role translation
     imatic_user.security.role.translation.role_translator:
         class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
@@ -96,12 +106,12 @@ services:
     imatic_user.user_provider.username:
         class: Imatic\Bundle\UserBundle\Security\UserProvider
         public: false
-        arguments: ['@fos_user.user_manager']
+        autowire: true
 
     imatic_user.user_provider.username_email:
         class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
         public: false
-        arguments: ['@fos_user.user_manager']
+        autowire: true
 
     imatic_user.user_filter:
         class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
@@ -114,3 +124,32 @@ services:
             - '@security.token_storage'
         tags:
             - { name: 'monolog.processor', method: processRecord }
+
+    Imatic\Bundle\UserBundle\Manager\UserManager:
+        autowire: true
+
+    Imatic\Bundle\UserBundle\Manager\GroupManager:
+        autowire: true
+
+    Imatic\Bundle\UserBundle\Mailer\Mailer:
+        autowire: true
+
+    Imatic\Bundle\UserBundle\Controller\ResettingController:
+        autowire: true
+        autoconfigure: true
+
+    Imatic\Bundle\UserBundle\Controller\ProfileController:
+        autowire: true
+        autoconfigure: true
+        
+    Imatic\Bundle\UserBundle\Controller\ChangePasswordController:
+        autowire: true
+        autoconfigure: true
+
+    Imatic\Bundle\UserBundle\EventListener\LastLoginListener:
+        autowire: true
+        autoconfigure: true
+
+    Imatic\Bundle\UserBundle\Controller\RoleController:
+        autowire: true
+        autoconfigure: true

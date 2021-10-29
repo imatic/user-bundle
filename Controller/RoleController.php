@@ -1,23 +1,22 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Controller;
 
-use FOS\UserBundle\Model\GroupInterface;
-use FOS\UserBundle\Model\GroupManagerInterface;
-use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider;
+use Imatic\Bundle\UserBundle\Manager\GroupManager;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
+use Imatic\Bundle\UserBundle\Model\GroupInterface;
+use Imatic\Bundle\UserBundle\Model\UserInterface;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * @Config\Route("/imatic/user/role")
  * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
-class RoleController extends Controller
+class RoleController extends AbstractController
 {
     const TYPE_USER = 'user';
 
@@ -27,18 +26,17 @@ class RoleController extends Controller
      * @param $type
      * @param int $id
      *
-     * @return array
-     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
+     * @Config\Route(
      *     path="/display/{type}/{id}",
      *     requirements={"type"="user|group", "id"="\d+"}
      * )
-     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Template
+     * @Config\Template("@ImaticUser/Role/display.html.twig")
      */
-    public function displayAction($type, $id)
+    public function displayAction($type, $id, RoleProviderInterface $roleProvider)
     {
         $roleMap = [];
 
-        foreach ($this->getRoleProvider()->getRoles() as $role) {
+        foreach ($roleProvider->getRoles() as $role) {
             $roleMap[$role->getType()][$role->getDomain()][$role->getLabel()][] = $role;
         }
 
@@ -58,7 +56,7 @@ class RoleController extends Controller
      * @return Response
      *
      * @throws AccessDeniedException
-     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Route(
+     * @Config\Route(
      *     path="/switch/{type}/{id}/{role}",
      *     requirements={"type"="user|group", "id"="\d+"}
      * )
@@ -66,8 +64,8 @@ class RoleController extends Controller
     public function switchAction(Request $request, $type, $id, $role)
     {
         if (
-            !$this->getSecurityContext()->isGranted(\sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', \strtoupper($type)))
-            && !$this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN')
+            !$this->isGranted(\sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', \strtoupper($type)))
+            && !$this->isGranted('ROLE_SUPER_ADMIN')
         ) {
             throw new AccessDeniedException();
         }
@@ -86,29 +84,13 @@ class RoleController extends Controller
     }
 
     /**
-     * @return ChainRoleProvider
-     */
-    private function getRoleProvider()
-    {
-        return $this->get('imatic_user.role_provider');
-    }
-
-    /**
      * @param string $type
      *
-     * @return UserManagerInterface|GroupManagerInterface
+     * @return UserManager|GroupManager
      */
     private function getManager($type)
     {
-        return $this->get(\sprintf('fos_user.%s_manager', $type));
-    }
-
-    /**
-     * @return SecurityContext
-     */
-    private function getSecurityContext()
-    {
-        return $this->get('security.context');
+        return $this->get(\sprintf('imatic_user.manager.%s', $type));
     }
 
     /**
@@ -141,5 +123,16 @@ class RoleController extends Controller
         } else {
             $this->getManager(static::TYPE_GROUP)->updateGroup($object);
         }
+    }
+
+    public static function getSubscribedServices()
+    {
+        return \array_merge(
+            [
+                'imatic_user.manager.user' => UserManager::class,
+                'imatic_user.manager.group' => GroupManager::class,
+            ],
+            parent::getSubscribedServices(),
+        );
     }
 }

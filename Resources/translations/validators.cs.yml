@@ -1,0 +1,3 @@
+imatic_user:
+    password:
+        mismatch: 'Hesla nejsou stejná.'

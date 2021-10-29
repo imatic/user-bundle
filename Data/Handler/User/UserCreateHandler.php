@@ -1,19 +1,16 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Data\Handler\User;
 
-use FOS\UserBundle\Model\UserManagerInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 
 class UserCreateHandler implements HandlerInterface
 {
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
+    private UserManager $userManager;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
     }

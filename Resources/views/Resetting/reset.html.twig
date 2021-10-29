@@ -3,7 +3,7 @@
 {% extends "ImaticUserBundle::layout.html.twig" %}
 
 {% block headline %}
-    {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+    {{ 'resetting.request.submit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
 {% block fos_user_content %}
@@ -15,7 +15,7 @@
                 {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
                     {% set panel = {type: 'app'} %}
                     {% block panel_header %}
-                        <h1>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</h1>
+                        <h1>{{ 'resetting.request.submit'|trans({}, 'ImaticUserBundle') }}</h1>
                     {% endblock %}
                     {% block panel_body %}
                         <div class="has-error">
@@ -24,14 +24,14 @@
                             {{ form_errors(form.plainPassword.second) }}
                         </div>
                         <div class="form-group">
-                            <label for="{{ form.plainPassword.first.vars.id }}">{{ form.plainPassword.first.vars.label | trans({}, 'FOSUserBundle') }}</label>
+                            <label for="{{ form.plainPassword.first.vars.id }}">{{ form.plainPassword.first.vars.label | trans({}, 'ImaticUserBundle') }}</label>
                             <input id="{{ form.plainPassword.first.vars.id }}"
                                    name="{{ form.plainPassword.first.vars.full_name }}"
                                    type="password"
                                    class="input-lg form-control">
                         </div>
                         <div class="form-group">
-                            <label for="{{ form.plainPassword.second.vars.id }}">{{ form.plainPassword.second.vars.label | trans({}, 'FOSUserBundle') }}</label>
+                            <label for="{{ form.plainPassword.second.vars.id }}">{{ form.plainPassword.second.vars.label | trans({}, 'ImaticUserBundle') }}</label>
                             <input id="{{ form.plainPassword.second.vars.id }}"
                                    name="{{ form.plainPassword.second.vars.full_name }}"
                                    type="password"
@@ -40,7 +40,7 @@
                     {% endblock %}
                     {% block panel_footer %}
                         <input type="submit" class="btn btn-primary btn-lg btn-block"
-                               value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}"/>
+                               value="{{ 'resetting.reset.submit'|trans({}, 'ImaticUserBundle') }}"/>
                     {% endblock %}
                 {% endembed %}
             {% endblock %}

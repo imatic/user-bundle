@@ -89,6 +89,7 @@ security:
                 provider:       chain_provider
             form_login:
                 provider:       chain_provider
+                default_target_path: /profile
             logout:
                 target:         /login
             anonymous:          true
