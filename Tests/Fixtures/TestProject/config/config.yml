@@ -87,11 +87,15 @@ security:
             pattern:            ^.*
             http_basic:
                 provider:       chain_provider
+            form_login:
+                provider:       chain_provider
             logout:
-                target:         /editor
-            anonymous:          false
+                target:         /login
+            anonymous:          true
 
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: [ROLE_ADMIN] }
 
 fos_user:
