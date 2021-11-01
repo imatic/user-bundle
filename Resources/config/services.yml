@@ -131,6 +131,9 @@ services:
     Imatic\Bundle\UserBundle\Manager\GroupManager:
         autowire: true
 
+    Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
+        class: Imatic\Bundle\UserBundle\Mailer\NoopHtmlEmailBuilder
+
     Imatic\Bundle\UserBundle\Mailer\Mailer:
         autowire: true
 

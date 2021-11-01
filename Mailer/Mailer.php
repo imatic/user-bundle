@@ -10,17 +10,20 @@ class Mailer
     private \Swift_Mailer $mailer;
     private UrlGeneratorInterface $router;
     private Environment $twig;
+    private HtmlEmailBuilder $htmlEmailBuilder;
     private array $resettingFromEmail;
 
     public function __construct(
         \Swift_Mailer $mailer,
         UrlGeneratorInterface $router,
         Environment $twig,
+        HtmlEmailBuilder $htmlEmailBuilder,
         array $resettingFromEmail
     ) {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->twig = $twig;
+        $this->htmlEmailBuilder = $htmlEmailBuilder;
         $this->resettingFromEmail = $resettingFromEmail;
     }
 
@@ -50,7 +53,7 @@ class Mailer
             ->setTo($toEmail);
 
         if (!empty($htmlBody)) {
-            $htmlBody = (new EmailBuilder())->build($htmlBody);
+            $htmlBody = $this->htmlEmailBuilder->build($htmlBody);
             $message
                 ->setBody($htmlBody, 'text/html')
                 ->addPart($textBody, 'text/plain');
