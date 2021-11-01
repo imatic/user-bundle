@@ -1,3 +1,5 @@
 imatic_user:
     password:
         mismatch: 'The entered passwords don''t match.'
+    current_password:
+        invalid: 'The entered password is invalid.'

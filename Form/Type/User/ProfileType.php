@@ -24,7 +24,7 @@ class ProfileType extends AbstractType
         $this->buildUserForm($builder, $options);
 
         $constraintsOptions = [
-            'message' => 'fos_user.current_password.invalid',
+            'message' => 'imatic_user.current_password.invalid',
         ];
 
         if (!empty($options['validation_groups'])) {

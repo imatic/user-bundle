@@ -1,3 +1,5 @@
 imatic_user:
     password:
         mismatch: 'Hesla nejsou stejná.'
+    current_password:
+        invalid: 'Nesprávné heslo.'

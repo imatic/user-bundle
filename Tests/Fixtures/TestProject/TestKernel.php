@@ -15,7 +15,6 @@ class TestKernel extends BaseTestKernel
         $bundles = [
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
-            new \FOS\UserBundle\FOSUserBundle(),
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
