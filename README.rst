@@ -10,27 +10,6 @@
 ImaticUserBundle
 ================
 
-Since `FOSUserBundle <https://github.com/FriendsOfSymfony/FOSUserBundle>`_ is not much maintained anymore, it is advised to add our fork into composer.json of your project:
-
-.. sourcecode:: yaml
-   
-    {
-      "repositories": [
-        {
-          "type": "vcs",
-          "url": "https://github.com/imatic/FOSUserBundle"
-        },
-        {
-            "type": "composer",
-            "url": "https://composer.imatic.cz"
-        }
-      ]
-    }
-
-which has some additional fixes (works with php8 and doctrine/persistence v2).
-
-In case you're on php7, you'll want to make sure that you have doctrine/persistence < 2 as FOSUserBundle doesn't support v2.
-
 *****
 Roles
 *****
