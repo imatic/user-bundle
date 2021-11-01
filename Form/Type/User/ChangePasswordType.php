@@ -64,6 +64,7 @@ class ChangePasswordType extends AbstractType
         $resolver->setDefaults([
             'data_class' => $this->userClass,
             'csrf_token_id' => 'change_password',
+            'validation_groups' => ['ChangePassword', 'Default'],
         ]);
     }
 

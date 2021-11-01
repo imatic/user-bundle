@@ -37,6 +37,7 @@ class ResettingFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => $this->userClass,
             'csrf_token_id' => 'resetting',
+            'validation_groups' => ['ResetPassword', 'Default'],
         ]);
     }
 
