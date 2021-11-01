@@ -6,6 +6,7 @@ use Doctrine\Persistence\ObjectRepository;
 use Imatic\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 
 class UserManager
@@ -90,7 +91,7 @@ class UserManager
 
         if ($encoder instanceof BCryptPasswordEncoder || $encoder instanceof SelfSaltingEncoderInterface) {
             $user->setSalt(null);
-        } else {
+        } elseif (!$encoder instanceof PlaintextPasswordEncoder) {
             $salt = \rtrim(\str_replace('+', '.', \base64_encode(\random_bytes(32))), '=');
             $user->setSalt($salt);
         }
