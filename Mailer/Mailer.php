@@ -2,25 +2,25 @@
 namespace Imatic\Bundle\UserBundle\Mailer;
 
 use Imatic\Bundle\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 class Mailer
 {
     private \Swift_Mailer $mailer;
     private UrlGeneratorInterface $router;
-    private EngineInterface $templating;
+    private Environment $twig;
     private array $resettingFromEmail;
 
     public function __construct(
         \Swift_Mailer $mailer,
         UrlGeneratorInterface $router,
-        EngineInterface $templating,
+        Environment $twig,
         array $resettingFromEmail
     ) {
         $this->mailer = $mailer;
         $this->router = $router;
-        $this->templating = $templating;
+        $this->twig = $twig;
         $this->resettingFromEmail = $resettingFromEmail;
     }
 
@@ -28,30 +28,35 @@ class Mailer
     {
         $template = '@ImaticUser/Resetting/email.txt.twig';
         $url = $this->router->generate('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $rendered = $this->templating->render($template, [
+        $context = [
             'user' => $user,
             'confirmationUrl' => $url,
-        ]);
-        $this->sendEmailMessage($rendered, $this->resettingFromEmail, (string) $user->getEmail());
+        ];
+
+        $this->sendMessage($template, $context, $this->resettingFromEmail, (string) $user->getEmail());
     }
 
-    /**
-     * @param string       $renderedTemplate
-     * @param array|string $fromEmail
-     * @param array|string $toEmail
-     */
-    protected function sendEmailMessage(string $renderedTemplate, $fromEmail, $toEmail): void
+    private function sendMessage(string $templateName, array $context, $fromEmail, $toEmail): void
     {
-        // Render the email, use the first line as the subject, and the rest as the body
-        $renderedLines = \explode("\n", \trim($renderedTemplate));
-        $subject = \array_shift($renderedLines);
-        $body = \implode("\n", $renderedLines);
+        $context = $this->twig->mergeGlobals($context);
+        $template = $this->twig->loadTemplate($this->twig->getTemplateClass($templateName), $templateName);
+        $subject = $template->renderBlock('subject', $context);
+        $textBody = $template->renderBlock('body_text', $context);
+        $htmlBody = $template->renderBlock('body_html', $context);
 
         $message = (new \Swift_Message())
             ->setSubject($subject)
             ->setFrom($fromEmail)
-            ->setTo($toEmail)
-            ->setBody($body);
+            ->setTo($toEmail);
+
+        if (!empty($htmlBody)) {
+            $htmlBody = (new EmailBuilder())->build($htmlBody);
+            $message
+                ->setBody($htmlBody, 'text/html')
+                ->addPart($textBody, 'text/plain');
+        } else {
+            $message->setBody($textBody);
+        }
 
         $this->mailer->send($message);
     }
