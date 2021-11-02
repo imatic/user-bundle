@@ -41,7 +41,7 @@ class ResettingController extends AbstractController
 
         if (null !== $user && !$user->isPasswordRequestNonExpired($this->retryTtl)) {
             if (!$user->isAccountNonLocked()) {
-                new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
+                return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
             }
 
             if (null === $user->getConfirmationToken()) {
