@@ -10,10 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * @Config\Route("/imatic/user/role")
+ * @Route("/imatic/user/role")
  * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
 class RoleController extends AbstractController
@@ -26,7 +27,7 @@ class RoleController extends AbstractController
      * @param $type
      * @param int $id
      *
-     * @Config\Route(
+     * @Route(
      *     path="/display/{type}/{id}",
      *     requirements={"type"="user|group", "id"="\d+"}
      * )
@@ -56,7 +57,7 @@ class RoleController extends AbstractController
      * @return Response
      *
      * @throws AccessDeniedException
-     * @Config\Route(
+     * @Route(
      *     path="/switch/{type}/{id}/{role}",
      *     requirements={"type"="user|group", "id"="\d+"}
      * )
