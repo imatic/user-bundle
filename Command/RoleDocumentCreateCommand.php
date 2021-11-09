@@ -54,7 +54,7 @@ class RoleDocumentCreateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         CommandUtil::checkPhpExcel($output);
 
@@ -72,6 +72,8 @@ class RoleDocumentCreateCommand extends Command
 
         $output->writeln('<info>Success!</info>');
         $output->writeln(\sprintf('Saved to <comment>%s</comment>', $filePath));
+
+        return 0;
     }
 
     /**

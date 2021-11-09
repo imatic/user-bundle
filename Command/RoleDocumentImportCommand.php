@@ -46,7 +46,7 @@ class RoleDocumentImportCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         CommandUtil::checkPhpExcel($output);
 
@@ -85,6 +85,8 @@ class RoleDocumentImportCommand extends Command
         } else {
             throw new \LogicException('You must specify either user or group');
         }
+
+        return 0;
     }
 
     /**
