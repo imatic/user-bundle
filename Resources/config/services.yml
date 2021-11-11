@@ -1,49 +1,51 @@
 services:
-    _defaults:
-        bind:
-            $userClass: '%imatic_user.entity.user.class%'
-            $groupClass: '%imatic_user.entity.group.class%'
-            $resettingFromEmail: '%imatic.user.email.resseting_from%'
-
     # Form
     imatic_user.form.type.profile:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
-        autowire: true
+        arguments:
+            - '%imatic_user.entity.user.class%'
         tags:
             - {name: form.type }
 
     imatic_user.form.type.change_password:
         class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
-        autowire: true
+        arguments:
+            - '%imatic_user.entity.user.class%'
         tags:
             - {name: form.type }
 
     imatic_user.form.type.user:
         class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
-        autowire: true
+        arguments:
+            - '%imatic_user.entity.user.class%'
         tags:
             - {name: form.type }
 
     Imatic\Bundle\UserBundle\Form\Type\User\ResettingFormType:
-        autowire: true
-        autoconfigure: true
+        arguments:
+            - '%imatic_user.entity.user.class%'
+        tags:
+            - { name: form.type }
 
     # Command handler
     imatic_user.data.handler.user_edit:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserEditHandler
-        autowire: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
         tags:
             - { name: imatic_data.handler }
 
     imatic_user.data.handler.user_create:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserCreateHandler
-        autowire: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
         tags:
             - { name: imatic_data.handler }
 
     imatic_user.data.handler.user_delete:
         class: Imatic\Bundle\UserBundle\Data\Handler\User\UserDeleteHandler
-        autowire: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
         tags:
             - { name: imatic_data.handler }
 
@@ -106,12 +108,14 @@ services:
     imatic_user.user_provider.username:
         class: Imatic\Bundle\UserBundle\Security\UserProvider
         public: false
-        autowire: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
 
     imatic_user.user_provider.username_email:
         class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
         public: false
-        autowire: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
 
     imatic_user.user_filter:
         class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
@@ -126,33 +130,45 @@ services:
             - { name: 'monolog.processor', method: processRecord }
 
     Imatic\Bundle\UserBundle\Manager\UserManager:
-        autowire: true
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface'
+            - '%imatic_user.entity.user.class%'
 
     Imatic\Bundle\UserBundle\Manager\GroupManager:
-        autowire: true
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '%imatic_user.entity.group.class%'
 
     Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
         class: Imatic\Bundle\UserBundle\Mailer\NoopHtmlEmailBuilder
 
     Imatic\Bundle\UserBundle\Mailer\Mailer:
-        autowire: true
+        arguments:
+            - '@Swift_Mailer'
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
+            - '@Twig\Environment'
+            - '@Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder'
+            - '%imatic.user.email.resseting_from%'
 
     Imatic\Bundle\UserBundle\Controller\ResettingController:
-        autowire: true
-        autoconfigure: true
+        tags:
+            - { name: controller.service_arguments }
 
     Imatic\Bundle\UserBundle\Controller\ProfileController:
-        autowire: true
-        autoconfigure: true
+        tags:
+            - { name: controller.service_arguments }
         
     Imatic\Bundle\UserBundle\Controller\ChangePasswordController:
-        autowire: true
-        autoconfigure: true
+        tags:
+            - { name: controller.service_arguments }
 
     Imatic\Bundle\UserBundle\EventListener\LastLoginListener:
-        autowire: true
-        autoconfigure: true
+        arguments:
+            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
+        tags:
+            - { name: kernel.event_subscriber }
 
     Imatic\Bundle\UserBundle\Controller\RoleController:
-        autowire: true
-        autoconfigure: true
+        tags:
+            - { name: controller.service_arguments }
