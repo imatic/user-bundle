@@ -3,12 +3,21 @@ namespace Imatic\Bundle\UserBundle\DataFixtures\ORM;
 
 use AppUserBundle\Entity\Group;
 use AppUserBundle\Entity\User;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 
-class LoadDefaultUsers extends ContainerAwareFixture
+class LoadDefaultUsers extends Fixture
 {
+    private UserManager $userManager;
+    private array $roleHierarchy;
+
+    public function __construct(UserManager $userManager, array $roleHierarchy)
+    {
+        $this->userManager = $userManager;
+        $this->roleHierarchy = $roleHierarchy;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $this->loadDefaultUsersAndGroups($manager);
@@ -16,10 +25,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
 
     public function loadDefaultUsersAndGroups(ObjectManager $manager): void
     {
-        /** @var $roleHierarchy array */
-        $roleHierarchy = $this->container->getParameter('security.role_hierarchy.roles');
-
-        $adminRoles = \array_keys($roleHierarchy);
+        $adminRoles = \array_keys($this->roleHierarchy);
         $userRoles = [User::ROLE_DEFAULT];
 
         $adminGroup = $this->createGroup('Administrators', $adminRoles);
@@ -60,10 +66,7 @@ class LoadDefaultUsers extends ContainerAwareFixture
             $user->addGroup($group);
         }
 
-        // Encode user password
-        /** @var $userManager UserManagerInterface */
-        $userManager = $this->container->get('fos_user.user_manager');
-        $userManager->updatePassword($user);
+        $this->userManager->updatePassword($user);
 
         return $user;
     }

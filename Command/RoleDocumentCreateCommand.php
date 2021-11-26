@@ -1,7 +1,12 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Command;
 
+use Imatic\Bundle\UserBundle\Manager\GroupManager;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentWriter;
+use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
+use Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,8 +17,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
-class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
+class RoleDocumentCreateCommand extends Command
 {
+    private UserManager $userManager;
+    private GroupManager $groupManager;
+    private RoleProviderInterface $roleProvider;
+    private RoleTranslator $roleTranslator;
+
+    public function __construct(
+        UserManager $userManager,
+        GroupManager $groupManager,
+        RoleProviderInterface $roleProvider,
+        RoleTranslator $roleTranslator
+    ) {
+        parent::__construct();
+        $this->userManager = $userManager;
+        $this->groupManager = $groupManager;
+        $this->roleProvider = $roleProvider;
+        $this->roleTranslator = $roleTranslator;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -31,9 +54,9 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->checkPhpExcel($output);
+        CommandUtil::checkPhpExcel($output);
 
         $userName = $input->getOption('user');
         $groupName = $input->getOption('group');
@@ -42,15 +65,15 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
             $defaultState = (bool) $defaultState;
         }
 
-        $roleProvider = $this->getContainer()->get('imatic_user.role_provider');
-        $roleTranslator = $this->getContainer()->get('imatic_user.security.role.translation.role_translator');
         $defaultRoles = $this->getDefaultRoles($userName, $groupName, $defaultState);
 
-        $documentWriter = new RoleDocumentWriter($roleProvider, $roleTranslator, $defaultRoles);
+        $documentWriter = new RoleDocumentWriter($this->roleProvider, $this->roleTranslator, $defaultRoles);
         $filePath = $documentWriter->write($input->getArgument('path') ?: \getcwd());
 
         $output->writeln('<info>Success!</info>');
         $output->writeln(\sprintf('Saved to <comment>%s</comment>', $filePath));
+
+        return 0;
     }
 
     /**
@@ -92,9 +115,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
      */
     private function getUserRoles($userName)
     {
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-
-        $user = $userManager->findUserBy(['username' => $userName]);
+        $user = $this->userManager->findUserBy(['username' => $userName]);
         if (!$user) {
             throw new \RuntimeException('User not found');
         }
@@ -113,9 +134,7 @@ class RoleDocumentCreateCommand extends AbstractRoleDocumentCommand
      */
     private function getGroupRoles($groupName)
     {
-        $groupManager = $this->getContainer()->get('fos_user.group_manager');
-
-        $group = $groupManager->findGroupBy(['name' => $groupName]);
+        $group = $this->groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {
             throw new \RuntimeException('Group not found');
         }

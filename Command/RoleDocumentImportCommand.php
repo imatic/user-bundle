@@ -1,7 +1,10 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Command;
 
+use Imatic\Bundle\UserBundle\Manager\GroupManager;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 use Imatic\Bundle\UserBundle\RoleDocument\RoleDocumentReader;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,8 +15,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */
-class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
+class RoleDocumentImportCommand extends Command
 {
+    private UserManager $userManager;
+    private GroupManager $groupManager;
+
+    public function __construct(
+        UserManager $userManager,
+        GroupManager $groupManager
+    ) {
+        parent::__construct();
+        $this->userManager = $userManager;
+        $this->groupManager = $groupManager;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -31,9 +46,9 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->checkPhpExcel($output);
+        CommandUtil::checkPhpExcel($output);
 
         $path = $input->getArgument('path');
         $userName = $input->getOption('user');
@@ -70,6 +85,8 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
         } else {
             throw new \LogicException('You must specify either user or group');
         }
+
+        return 0;
     }
 
     /**
@@ -82,15 +99,13 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      */
     private function applyRolesToUser($userName, array $roles): void
     {
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-
-        $user = $userManager->findUserBy(['username' => $userName]);
+        $user = $this->userManager->findUserBy(['username' => $userName]);
         if (!$user) {
             throw new \RuntimeException('User not found');
         }
 
         $user->setRoles($roles);
-        $userManager->updateUser($user);
+        $this->userManager->updateUser($user);
     }
 
     /**
@@ -103,14 +118,12 @@ class RoleDocumentImportCommand extends AbstractRoleDocumentCommand
      */
     private function applyRolesToGroup($groupName, array $roles): void
     {
-        $groupManager = $this->getContainer()->get('fos_user.group_manager');
-
-        $group = $groupManager->findGroupBy(['name' => $groupName]);
+        $group = $this->groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {
             throw new \RuntimeException('Group not found');
         }
 
         $group->setRoles($roles);
-        $groupManager->updateGroup($group);
+        $this->groupManager->updateGroup($group);
     }
 }

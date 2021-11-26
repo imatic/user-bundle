@@ -87,20 +87,17 @@ security:
             pattern:            ^.*
             http_basic:
                 provider:       chain_provider
+            form_login:
+                provider:       chain_provider
+                default_target_path: /profile
             logout:
-                target:         /editor
-            anonymous:          false
+                target:         /login
+            anonymous:          true
 
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: [ROLE_ADMIN] }
-
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Entity\User
-    from_email:
-        address: 'from@example.com'
-        sender_name: From
 
 imatic_user:
     entities:
@@ -109,3 +106,6 @@ imatic_user:
     security:
         role:
             dumm_role_provider: ~
+    email:
+        address: 'from@example.com'
+        sender_name: From

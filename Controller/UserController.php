@@ -9,9 +9,10 @@ use Imatic\Bundle\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Config\Route("/user")
+ * @Route("/user")
  * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
 class UserController implements ContainerAwareInterface
@@ -20,8 +21,7 @@ class UserController implements ContainerAwareInterface
     use ApiTrait;
 
     /**
-     * @Config\Route("", name="imatic_user_user_list")
-     * @Config\Method("GET")
+     * @Route("", methods={"GET"}, name="imatic_user_user_list")
      */
     public function listAction()
     {
@@ -33,8 +33,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}", requirements={"id"="\d+"}, name="imatic_user_user_show")
-     * @Config\Method("GET")
+     * @Route("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="imatic_user_user_show")
      * @Config\Template()
      */
     public function showAction($id)
@@ -46,8 +45,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}/edit", requirements={"id"="\d+"}, name="imatic_user_user_edit")
-     * @Config\Method({"GET", "PUT"})
+     * @Route("/{id}/edit", requirements={"id"="\d+"}, methods={"GET", "PUT"}, name="imatic_user_user_edit")
      */
     public function editAction($id)
     {
@@ -61,8 +59,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/create", name="imatic_user_user_create")
-     * @Config\Method({"GET", "POST"})
+     * @Route("/create", methods={"GET", "POST"}, name="imatic_user_user_create")
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function createAction()
@@ -78,8 +75,7 @@ class UserController implements ContainerAwareInterface
     }
 
     /**
-     * @Config\Route("/{id}/delete", requirements={"id"="\d+"}, name="imatic_user_user_delete")
-     * @Config\Method("DELETE")
+     * @Route("/{id}/delete", requirements={"id"="\d+"}, methods={"DELETE"}, name="imatic_user_user_delete")
      */
     public function deleteAction($id)
     {

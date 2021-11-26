@@ -5,7 +5,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
 use Imatic\Bundle\UserBundle\Model\GroupInterface;
 use Imatic\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
@@ -17,8 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Viliam Husár <viliam.husar@imatic.cz>
  *
  * @ORM\MappedSuperclass()
- * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used",  groups={"Registration", "Profile"})
- * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", message="fos_user.email.already_used",  groups={"Registration", "Profile"})
+ * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", groups={"Registration", "Profile"})
+ * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", groups={"Registration", "Profile"})
  */
 class User implements UserInterface
 {
@@ -35,8 +34,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="fos_user.username.blank", groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=255, minMessage="fos_user.username.short", maxMessage="fos_user.username.long", groups={"Registration", "Profile"})
+     * @Assert\NotBlank(groups={"Registration", "Profile"})
+     * @Assert\Length(min=2, max=255, groups={"Registration", "Profile"})
      */
     protected $username;
 
@@ -51,9 +50,9 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="fos_user.email.blank", groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=254, minMessage="fos_user.email.short", maxMessage="fos_user.email.long", groups={"Registration", "Profile"})
-     * @Assert\Email(message="fos_user.email.invalid", groups={"Registration", "Profile"})
+     * @Assert\NotBlank(groups={"Registration", "Profile"})
+     * @Assert\Length(min=2, max=254, groups={"Registration", "Profile"})
+     * @Assert\Email(groups={"Registration", "Profile"})
      */
     protected $email;
 
@@ -78,8 +77,8 @@ class User implements UserInterface
      *
      * @var string
      *
-     * @Assert\NotBlank(message="fos_user.password.blank", groups={"Registration", "ResetPassword", "ChangePassword"})
-     * @Assert\Length(min=2, minMessage="fos_user.password.short", groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
+     * @Assert\NotBlank(groups={"Registration", "ResetPassword", "ChangePassword"})
+     * @Assert\Length(min=2, groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
      */
     protected $plainPassword;
 
@@ -826,11 +825,9 @@ class User implements UserInterface
     /**
      * Returns true if same user, false otherwise.
      *
-     * @param BaseUserInterface $user
-     *
      * @return bool
      */
-    public function isUser(BaseUserInterface $user = null)
+    public function isUser(UserInterface $user = null)
     {
         return null !== $user && $this->getId() === $user->getId();
     }

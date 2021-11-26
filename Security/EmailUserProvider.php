@@ -1,23 +1,28 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security;
 
-use FOS\UserBundle\Security\EmailUserProvider as BaseEmailUserProvider;
 use Imatic\Bundle\UserBundle\Entity\User;
+use Imatic\Bundle\UserBundle\Manager\UserManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Provides user by email or username.
  *
  * @author Viliam Husár <viliam.husar@imatic.cz>
  */
-class EmailUserProvider extends BaseEmailUserProvider
+class EmailUserProvider implements UserProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshUser(SecurityUserInterface $user)
+    private UserManager $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+    public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(\sprintf('Expected an instance of Imatic\Bundle\UserBundle\Entity\User, but got "%s".', \get_class($user)));
@@ -32,5 +37,23 @@ class EmailUserProvider extends BaseEmailUserProvider
         }
 
         return $reloadedUser;
+    }
+
+    public function loadUserByUsername($username): UserInterface
+    {
+        $user = $this->userManager->findUserByUsernameOrEmail($username);
+
+        if (!$user) {
+            throw new UsernameNotFoundException(\sprintf('Username "%s" does not exist.', $username));
+        }
+
+        return $user;
+    }
+
+    public function supportsClass($class): bool
+    {
+        $userClass = $this->userManager->getClass();
+
+        return $userClass === $class || \is_subclass_of($class, $userClass);
     }
 }
