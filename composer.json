@@ -23,7 +23,7 @@
         "symfony/swiftmailer-bundle": "^3.5.1",
         "imatic/view-bundle": "^5.0.4",
         "imatic/controller-bundle": "^5.0.0",
-        "sensio/framework-extra-bundle": "^5.6.1"
+        "sensio/framework-extra-bundle": "^6.2"
     },
     "require-dev": {
         "imatic/testing": "^6.0.2",
