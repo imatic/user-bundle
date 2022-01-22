@@ -7,14 +7,14 @@ use Twig\Environment;
 
 class Mailer
 {
-    private \Swift_Mailer $mailer;
+    private \Symfony\Component\Mailer\MailerInterface $mailer;
     private UrlGeneratorInterface $router;
     private Environment $twig;
     private HtmlEmailBuilder $htmlEmailBuilder;
     private array $resettingFromEmail;
 
     public function __construct(
-        \Swift_Mailer $mailer,
+        \Symfony\Component\Mailer\MailerInterface $mailer,
         UrlGeneratorInterface $router,
         Environment $twig,
         HtmlEmailBuilder $htmlEmailBuilder,
