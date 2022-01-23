@@ -1,174 +1,18 @@
 services:
-    # Form
-    imatic_user.form.type.profile:
-        class: Imatic\Bundle\UserBundle\Form\Type\User\ProfileType
-        arguments:
-            - '%imatic_user.entity.user.class%'
-        tags:
-            - {name: form.type }
+    _defaults:
+        autowire: true      
+        autoconfigure: true 
 
-    imatic_user.form.type.change_password:
-        class: Imatic\Bundle\UserBundle\Form\Type\User\ChangePasswordType
-        arguments:
-            - '%imatic_user.entity.user.class%'
-        tags:
-            - {name: form.type }
-
-    imatic_user.form.type.user:
-        class: Imatic\Bundle\UserBundle\Form\Type\User\UserType
-        arguments:
-            - '%imatic_user.entity.user.class%'
-        tags:
-            - {name: form.type }
-
-    Imatic\Bundle\UserBundle\Form\Type\User\ResettingFormType:
-        arguments:
-            - '%imatic_user.entity.user.class%'
-        tags:
-            - { name: form.type }
-
-    # Command handler
-    imatic_user.data.handler.user_edit:
-        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserEditHandler
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
-        tags:
-            - { name: imatic_data.handler }
-
-    imatic_user.data.handler.user_create:
-        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserCreateHandler
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
-        tags:
-            - { name: imatic_data.handler }
-
-    imatic_user.data.handler.user_delete:
-        class: Imatic\Bundle\UserBundle\Data\Handler\User\UserDeleteHandler
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
-        tags:
-            - { name: imatic_data.handler }
-
-    # Menu
-    imatic_user.menu.user_menu:
-        class: Imatic\Bundle\UserBundle\Menu\UserMenuBuilder
-        public: true
-        tags:
-            - {name: imatic_view.menu, alias: imatic.user}
-            - {name: imatic_view.menu, alias: imatic.user_anon, method: getMenuAnon}
-
-    imatic_user.twig.extension.security:
-        class: Imatic\Bundle\UserBundle\Twig\Extension\SecurityExtension
-        arguments:
-            - '@imatic_user.security.role.provider.model_role_provider'
-            - '@imatic_user.security.role.translation.role_translator'
-        tags:
-            - {name: twig.extension}
-
-    # Security
-    imatic_user.security.role.metadata_factory:
-        class: Doctrine\ORM\Mapping\ClassMetadataFactory
-        factory: ['@Doctrine\ORM\EntityManagerInterface', 'getMetadataFactory']
-
-    # Security role provider
-    imatic_user.security.role.provider.model_role_provider:
-        class: Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider
-        arguments: ['@imatic_user.security.role.metadata_factory']
-        public: false
-        tags:
-            - {name: imatic_user.role_provider, alias: model}
-
-    imatic_user.security.role.provider.hierarchy_role_provider:
-        class: Imatic\Bundle\UserBundle\Security\Role\Provider\HierarchyRoleProvider
-        arguments: ['%security.role_hierarchy.roles%']
-        tags:
-            - {name: imatic_user.role_provider, alias: hierarchy}
-
-    imatic_user.security.role.provider.chain_role_provider:
-        class: Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider
-
-    imatic_user.role_provider:
-        alias: imatic_user.security.role.provider.chain_role_provider
-
-    Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface:
-        alias: imatic_user.role_provider
-
-    # Security role translation
-    imatic_user.security.role.translation.role_translator:
-        class: Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator
-        arguments: ['@translator']
-
-    imatic_user.security.role.translation.hierarchy_strategy:
-        class: Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy
-        arguments: ['@translator']
-        tags:
-            - {name: imatic_user.role_translation_strategy}
-
-    # User providers
-    imatic_user.user_provider.username:
-        class: Imatic\Bundle\UserBundle\Security\UserProvider
-        public: false
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
+    Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider:
+    Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
 
     imatic_user.user_provider.username_email:
         class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
-        public: false
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
-
-    imatic_user.user_filter:
-        class: Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter
-        tags:
-            - { name: imatic_data.filter }
-
-    imatic_user.monolog.logged_in_user_processor:
-        class: Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor
-        arguments:
-            - '@security.token_storage'
-        tags:
-            - { name: 'monolog.processor', method: processRecord }
 
     Imatic\Bundle\UserBundle\Manager\UserManager:
         arguments:
-            - '@Doctrine\ORM\EntityManagerInterface'
-            - '@Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface'
-            - '%imatic_user.entity.user.class%'
+            $userClass: '%imatic_user.entity.user.class%'
 
     Imatic\Bundle\UserBundle\Manager\GroupManager:
         arguments:
-            - '@Doctrine\ORM\EntityManagerInterface'
-            - '%imatic_user.entity.group.class%'
-
-    Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
-        class: Imatic\Bundle\UserBundle\Mailer\NoopHtmlEmailBuilder
-
-    Imatic\Bundle\UserBundle\Mailer\Mailer:
-        arguments:
-            - '@Swift_Mailer'
-            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
-            - '@Twig\Environment'
-            - '@Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder'
-            - '%imatic.user.email.resseting_from%'
-
-    Imatic\Bundle\UserBundle\Controller\ResettingController:
-        tags:
-            - { name: controller.service_arguments }
-
-    Imatic\Bundle\UserBundle\Controller\ProfileController:
-        tags:
-            - { name: controller.service_arguments }
-        
-    Imatic\Bundle\UserBundle\Controller\ChangePasswordController:
-        tags:
-            - { name: controller.service_arguments }
-
-    Imatic\Bundle\UserBundle\EventListener\LastLoginListener:
-        arguments:
-            - '@Imatic\Bundle\UserBundle\Manager\UserManager'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    Imatic\Bundle\UserBundle\Controller\RoleController:
-        tags:
-            - { name: controller.service_arguments }
+            $groupClass: '%imatic_user.entity.group.class%'
