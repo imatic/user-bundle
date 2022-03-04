@@ -2,6 +2,10 @@ services:
     _defaults:
         autowire: true      
         autoconfigure: true 
+        
+    Imatic\Bundle\UserBundle\Controller\:
+        resource: '../../Controller/'
+        tags: [ 'controller.service_arguments' ]
 
     Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider:
     Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
