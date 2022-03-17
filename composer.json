@@ -4,6 +4,7 @@
     "description": "Imatic User Bundle",
     "keywords": [],
     "homepage": "http://imatic.cz",
+    "version": "1.0.0",
     "license": "MIT",
     "authors": [
         {
