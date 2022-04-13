@@ -22,7 +22,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return mixed
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * Sets the username.
@@ -31,14 +31,14 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setUsername($username);
+    public function setUsername(string $username): UserInterface;
 
     /**
      * Gets the canonical username in search and sort queries.
      *
      * @return string
      */
-    public function getUsernameCanonical();
+    public function getUsernameCanonical(): string;
 
     /**
      * Sets the canonical username.
@@ -47,21 +47,16 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setUsernameCanonical($usernameCanonical);
+    public function setUsernameCanonical(string $usernameCanonical): UserInterface;
 
-    /**
-     * @param string|null $salt
-     *
-     * @return static
-     */
-    public function setSalt($salt);
+    public function setSalt(?string $salt): UserInterface;
 
     /**
      * Gets email.
      *
      * @return string
      */
-    public function getEmail();
+    public function getEmail(): string;
 
     /**
      * Sets the email.
@@ -70,14 +65,14 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setEmail($email);
+    public function setEmail(string $email): UserInterface;
 
     /**
      * Gets the canonical email in search and sort queries.
      *
      * @return string
      */
-    public function getEmailCanonical();
+    public function getEmailCanonical(): string;
 
     /**
      * Sets the canonical email.
@@ -86,14 +81,12 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setEmailCanonical($emailCanonical);
+    public function setEmailCanonical(string $emailCanonical): UserInterface;
 
     /**
      * Gets the plain password.
-     *
-     * @return string
      */
-    public function getPlainPassword();
+    public function getPlainPassword():?string;
 
     /**
      * Sets the plain password.
@@ -102,7 +95,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setPlainPassword($password);
+    public function setPlainPassword(string $password): UserInterface;
 
     /**
      * Sets the hashed password.
@@ -111,21 +104,21 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setPassword($password);
+    public function setPassword(string $password): UserInterface;
 
     /**
      * Tells if the the given user has the super admin role.
      *
      * @return bool
      */
-    public function isSuperAdmin();
+    public function isSuperAdmin(): bool;
 
     /**
      * @param bool $boolean
      *
      * @return static
      */
-    public function setEnabled($boolean);
+    public function setEnabled(bool $boolean): UserInterface;
 
     /**
      * Sets the super admin status.
@@ -134,14 +127,14 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setSuperAdmin($boolean);
+    public function setSuperAdmin(bool $boolean): UserInterface;
 
     /**
      * Gets the confirmation token.
      *
      * @return string|null
      */
-    public function getConfirmationToken();
+    public function getConfirmationToken():?string;
 
     /**
      * Sets the confirmation token.
@@ -150,14 +143,14 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function setConfirmationToken($confirmationToken);
+    public function setConfirmationToken(?string $confirmationToken): UserInterface;
 
     /**
      * Sets the timestamp that the user requested a password reset.
      *
      * @return static
      */
-    public function setPasswordRequestedAt(\DateTime $date = null);
+    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface;
 
     /**
      * Checks whether the password reset request has expired.
@@ -166,14 +159,14 @@ interface UserInterface extends BaseUserInterface
      *
      * @return bool
      */
-    public function isPasswordRequestNonExpired($ttl);
+    public function isPasswordRequestNonExpired(int $ttl): bool;
 
     /**
      * Sets the last login time.
      *
      * @return static
      */
-    public function setLastLogin(\DateTime $time = null);
+    public function setLastLogin(\DateTime $time = null): UserInterface;
 
     /**
      * Never use this to check if this user has access to anything!
@@ -187,16 +180,15 @@ interface UserInterface extends BaseUserInterface
      *
      * @return bool
      */
-    public function hasRole($role);
+    public function hasRole(string $role):bool;
 
     /**
      * Sets the roles of the user.
      *
      * This overwrites any previous roles.
      *
-     * @return static
      */
-    public function setRoles(array $roles);
+    public function setRoles(array $roles): UserInterface;
 
     /**
      * Adds a role to the user.
@@ -205,7 +197,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function addRole($role);
+    public function addRole(string $role): UserInterface;
 
     /**
      * Removes a role to the user.
@@ -214,7 +206,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return static
      */
-    public function removeRole($role);
+    public function removeRole(string $role): UserInterface;
 
     /**
      * Checks whether the user's account has expired.
@@ -226,7 +218,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see AccountExpiredException
      */
-    public function isAccountNonExpired();
+    public function isAccountNonExpired(): bool;
 
     /**
      * Checks whether the user is locked.
@@ -238,7 +230,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see LockedException
      */
-    public function isAccountNonLocked();
+    public function isAccountNonLocked(): bool;
 
     /**
      * Checks whether the user's credentials (password) has expired.
@@ -250,7 +242,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see CredentialsExpiredException
      */
-    public function isCredentialsNonExpired();
+    public function isCredentialsNonExpired(): bool;
 
     /**
      * Checks whether the user is enabled.
@@ -262,5 +254,5 @@ interface UserInterface extends BaseUserInterface
      *
      * @see DisabledException
      */
-    public function isEnabled();
+    public function isEnabled(): bool;
 }

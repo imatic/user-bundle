@@ -80,16 +80,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      * @Assert\NotBlank(groups={"Registration", "ResetPassword", "ChangePassword"})
      * @Assert\Length(min=2, groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
      */
-    protected string $plainPassword;
+    protected ?string $plainPassword;
 
     /**
      * The salt to use for hashing.
      *
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    protected string $salt;
+    protected ?string $salt;
 
     /**
      * @var DateTime|null
@@ -101,11 +99,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     /**
      * Random string sent to the user email address in order to verify it.
      *
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected string $confirmationToken;
+    protected ?string $confirmationToken;
 
     /**
      * @var DateTime|null
@@ -206,7 +202,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setUsername($username):User
+    public function setUsername(string $username): UserInterface
     {
         $this->username = (string) $username;
 
@@ -230,7 +226,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setUsernameCanonical($usernameCanonical): User
+    public function setUsernameCanonical(string $usernameCanonical): UserInterface
     {
         $this->usernameCanonical = (string) $usernameCanonical;
 
@@ -254,7 +250,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setEmail($email): User
+    public function setEmail(string $email): UserInterface
     {
         $this->email = (string) $email;
 
@@ -278,7 +274,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setEmailCanonical($emailCanonical): User
+    public function setEmailCanonical(string $emailCanonical): UserInterface
     {
         $this->emailCanonical = (string) $emailCanonical;
 
@@ -302,7 +298,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setPassword($password): User
+    public function setPassword(string $password): UserInterface
     {
         $this->password = (string) $password;
 
@@ -317,60 +313,32 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->password;
     }
 
-    /**
-     * Sets plain password.
-     *
-     * @param string $password
-     *
-     * @return $this
-     */
-    public function setPlainPassword($password): User
+
+    public function setPlainPassword(string $password): UserInterface
     {
         $this->plainPassword = (string) $password;
 
         return $this;
     }
 
-    /**
-     * Returns plain password.
-     *
-     * @return string
-     */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param string|null $salt
-     *
-     * @return $this
-     */
-    public function setSalt($salt): User
+    public function setSalt(?string $salt): UserInterface
     {
         $this->salt = $salt;
 
         return $this;
     }
 
-    /**
-     * Returns salt.
-     *
-     * @return string
-     */
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
 
-    /**
-     * Sets last login.
-     *
-     * @param DateTime $time
-     *
-     * @return $this
-     */
-    public function setLastLogin(DateTime $time = null): User
+    public function setLastLogin(DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
 
@@ -387,14 +355,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->lastLogin;
     }
 
-    /**
-     * Sets confirmation token.
-     *
-     * @param string $confirmationToken
-     *
-     * @return $this
-     */
-    public function setConfirmationToken($confirmationToken): User
+    public function setConfirmationToken(?string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -411,14 +372,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->confirmationToken;
     }
 
-    /**
-     * Sets password request at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setPasswordRequestedAt(DateTime $date = null): User
+    public function setPasswordRequestedAt(DateTime $date = null): UserInterface
     {
         $this->passwordRequestedAt = $date;
 
@@ -435,16 +389,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->passwordRequestedAt;
     }
 
-    /**
-     * Sets enabled.
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setEnabled($bool): User
+    public function setEnabled(bool $boolean): UserInterface
     {
-        $this->enabled = (bool) $bool;
+        $this->enabled = (bool) $boolean;
 
         return $this;
     }
@@ -466,7 +413,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setLocked($bool): User
+    public function setLocked(bool $bool): UserInterface
     {
         $this->locked = (bool) $bool;
 
@@ -490,7 +437,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return User
      */
-    public function setExpired($bool): User
+    public function setExpired(bool $bool): UserInterface
     {
         $this->expired = (bool) $bool;
 
@@ -507,28 +454,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return !$this->isAccountNonExpired();
     }
 
-    /**
-     * Sets expired at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setExpiresAt(DateTime $date = null): User
+    public function setExpiresAt(DateTime $date = null): UserInterface
     {
         $this->expiresAt = $date;
 
         return $this;
     }
 
-    /**
-     * Sets credential expired at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setCredentialsExpireAt(DateTime $date = null): User
+    public function setCredentialsExpireAt(DateTime $date = null): UserInterface
     {
         $this->credentialsExpireAt = $date;
 
@@ -542,7 +475,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setCredentialsExpired($bool): User
+    public function setCredentialsExpired(bool $bool): UserInterface
     {
         $this->credentialsExpired = (bool) $bool;
 
@@ -556,7 +489,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setRoles(array $roles): User
+    public function setRoles(array $roles): UserInterface
     {
         $this->roles = [];
 
@@ -574,7 +507,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function addRole($role): User
+    public function addRole(string $role): UserInterface
     {
         $role = (string) $role;
         $role = \strtoupper($role);
@@ -596,7 +529,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function removeRole($role): User
+    public function removeRole(string $role): UserInterface
     {
         $role = (string) $role;
 
@@ -640,7 +573,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return bool
      */
-    public function hasRole($role): bool
+    public function hasRole(string $role): bool
     {
         $role = (string) $role;
 
@@ -654,7 +587,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function addGroup(GroupInterface $group): User
+    public function addGroup(GroupInterface $group): UserInterface
     {
         if (!$this->getGroups()->contains($group)) {
             $this->getGroups()->add($group);
@@ -670,7 +603,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function removeGroup(GroupInterface $group): User
+    public function removeGroup(GroupInterface $group): UserInterface
     {
         if ($this->getGroups()->contains($group)) {
             $this->getGroups()->removeElement($group);
@@ -711,7 +644,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return bool
      */
-    public function hasGroup($name): bool
+    public function hasGroup(bool $name): bool
     {
         return \in_array($name, $this->getGroupNames(), true);
     }
@@ -723,7 +656,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return $this
      */
-    public function setSuperAdmin($bool): User
+    public function setSuperAdmin(bool $bool): UserInterface
     {
         $bool = (bool) $bool;
 
@@ -809,7 +742,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @return bool
      */
-    public function isPasswordRequestNonExpired($ttl):bool
+    public function isPasswordRequestNonExpired(int $ttl):bool
     {
         return $this->getPasswordRequestedAt() instanceof DateTime &&
         $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
@@ -860,7 +793,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @param string $serialized
      */
-    public function unserialize($serialized): void
+    public function unserialize(string $serialized): void
     {
         $data = \unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when unserializing
