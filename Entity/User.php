@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", groups={"Registration", "Profile"})
  * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", groups={"Registration", "Profile"})
  */
-class User implements UserInterface, Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
