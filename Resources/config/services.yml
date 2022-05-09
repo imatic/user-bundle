@@ -9,6 +9,7 @@ services:
 
     Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider:
     Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
+    Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
     Imatic\Bundle\UserBundle\Mailer\Mailer:
 
     imatic_user.user_provider.username_email:
