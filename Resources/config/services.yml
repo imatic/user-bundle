@@ -11,6 +11,9 @@ services:
     Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
     Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
     Imatic\Bundle\UserBundle\Mailer\Mailer:
+        arguments:
+            $resettingFromEmail: '%imatic.user.email.resseting_from%'
+
 
     imatic_user.user_provider.username_email:
         class: Imatic\Bundle\UserBundle\Security\EmailUserProvider
