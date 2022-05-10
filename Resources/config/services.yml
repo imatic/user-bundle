@@ -10,6 +10,7 @@ services:
     Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider:
     Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
     Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
+        class: Imatic\Bundle\UserBundle\Mailer\NoopHtmlEmailBuilder
     Imatic\Bundle\UserBundle\Mailer\Mailer:
         arguments:
             $resettingFromEmail: '%imatic.user.email.resseting_from%'
