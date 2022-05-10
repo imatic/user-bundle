@@ -12,7 +12,7 @@ services:
     Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:
     Imatic\Bundle\UserBundle\Mailer\Mailer:
         arguments:
-            $resettingFromEmail: '%imatic.user.email.resseting_from%'
+            $resettingFromEmail: '%imatic_user.email.resseting_from%'
 
 
     imatic_user.user_provider.username_email:
