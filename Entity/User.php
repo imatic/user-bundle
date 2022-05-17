@@ -365,9 +365,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     /**
      * Returns confirmation token.
      *
-     * @return string
+     * @return string|null
      */
-    public function getConfirmationToken(): string
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
