@@ -1,8 +1,8 @@
 services:
     _defaults:
-        autowire: true      
-        autoconfigure: true 
-        
+        autowire: true
+        autoconfigure: true
+
     Imatic\Bundle\UserBundle\Controller\:
         resource: '../../Controller/'
         tags: [ 'controller.service_arguments' ]
@@ -13,7 +13,8 @@ services:
         class: Imatic\Bundle\UserBundle\Mailer\NoopHtmlEmailBuilder
     Imatic\Bundle\UserBundle\Mailer\Mailer:
         arguments:
-            $resettingFromEmail: '%imatic.user.email.resseting_from%'
+            $resettingFromEmail: '%imatic.user.email.resseting_from_address%'
+            $resettingFromSenderName: '%imatic.user.email.resseting_from_sender_name%'
 
 
     imatic_user.user_provider.username_email:

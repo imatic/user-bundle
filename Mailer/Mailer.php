@@ -11,20 +11,24 @@ class Mailer
     private UrlGeneratorInterface $router;
     private Environment $twig;
     private HtmlEmailBuilder $htmlEmailBuilder;
-    private array $resettingFromEmail;
+    private string $resettingFromEmail;
+    private string $resettingFromSenderName;
 
     public function __construct(
         \Symfony\Component\Mailer\MailerInterface $mailer,
-        UrlGeneratorInterface $router,
-        Environment $twig,
-        HtmlEmailBuilder $htmlEmailBuilder,
-        array $resettingFromEmail
-    ) {
+        UrlGeneratorInterface                     $router,
+        Environment                               $twig,
+        HtmlEmailBuilder                          $htmlEmailBuilder,
+        string                                    $resettingFromEmail,
+        string                                    $resettingFromSenderName
+    )
+    {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->twig = $twig;
         $this->htmlEmailBuilder = $htmlEmailBuilder;
         $this->resettingFromEmail = $resettingFromEmail;
+        $this->resettingFromSenderName = $resettingFromSenderName;
     }
 
     public function sendResettingEmailMessage(UserInterface $user): void
@@ -36,31 +40,33 @@ class Mailer
             'confirmationUrl' => $url,
         ];
 
-        $this->sendMessage($template, $context, $this->resettingFromEmail, (string) $user->getEmail());
+        $this->sendMessage($template, $context, $this->resettingFromEmail, (string)$user->getEmail(), $this->resettingFromSenderName);
     }
 
-    private function sendMessage(string $templateName, array $context, $fromEmail, $toEmail): void
+    private function sendMessage(string $templateName, array $context, string $fromEmail, string $toEmail, string $senderName): void
     {
         $context = $this->twig->mergeGlobals($context);
         $template = $this->twig->loadTemplate($this->twig->getTemplateClass($templateName), $templateName);
         $subject = $template->renderBlock('subject', $context);
         $textBody = $template->renderBlock('body_text', $context);
         $htmlBody = $template->renderBlock('body_html', $context);
+        $address = new \Symfony\Component\Mime\Address($fromEmail, $senderName);
 
-        $message = (new \Swift_Message())
-            ->setSubject($subject)
-            ->setFrom($fromEmail)
-            ->setTo($toEmail);
+        $message = new \Symfony\Component\Mime\Email();
+        $message
+            ->subject($subject)
+            ->from($address)
+            ->to($toEmail);
+
 
         if (!empty($htmlBody)) {
             $htmlBody = $this->htmlEmailBuilder->build($htmlBody);
             $message
-                ->setBody($htmlBody, 'text/html')
-                ->addPart($textBody, 'text/plain');
+                ->text($htmlBody, 'text/html')
+                ->html($textBody, 'text/plain');
         } else {
-            $message->setBody($textBody);
+            $message->text($textBody);
         }
-
         $this->mailer->send($message);
     }
 }
