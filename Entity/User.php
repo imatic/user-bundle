@@ -80,7 +80,8 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      * @Assert\NotBlank(groups={"Registration", "ResetPassword", "ChangePassword"})
      * @Assert\Length(min=2, groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
      */
-    protected ?string $plainPassword;
+    protected ?string $plainPassword = null;
+
 
     /**
      * The salt to use for hashing.
