@@ -24,7 +24,7 @@ class ChangePasswordController extends AbstractController
             return $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(ChangePasswordType::class, $user);
+        $form = $this->createForm(ChangePasswordType::class, $user, ['data_class' => $user::class]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
