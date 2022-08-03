@@ -27,3 +27,9 @@ services:
     Imatic\Bundle\UserBundle\Manager\GroupManager:
         arguments:
             $groupClass: '%imatic_user.entity.group.class%'
+
+    Imatic\Bundle\UserBundle\Data\Filter\User\UserFilter:
+
+    Imatic\Bundle\UserBundle\Form\Type\User\UserType:
+        arguments:
+            $userClass: '%imatic_user.entity.user.class%'

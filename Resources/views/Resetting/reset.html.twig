@@ -1,5 +1,5 @@
-{% import "ImaticViewBundle:Component:message.html.twig" as message %}
-{% import "ImaticViewBundle:Component:panel.html.twig" as widget %}
+{% import "@ImaticView/Component/message.html.twig" as message %}
+{% import "@ImaticView/Component/panel.html.twig" as widget %}
 {% extends "@ImaticUser/layout.html.twig" %}
 
 {% block headline %}
@@ -9,10 +9,10 @@
 {% block fos_user_content %}
     <div class="resetting reset">
         {{ form_start(form, {action: path('fos_user_resetting_reset', {'token': token}), method: 'post'})|replace({'form-horizontal': ''})|raw }}
-        {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
+        {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
             {% block reseting %}
 
-                {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
+                {% embed '@ImaticView/Component/panel.html.twig' %}
                     {% set panel = {type: 'app'} %}
                     {% block panel_header %}
                         <h1>{{ 'resetting.request.submit'|trans({}, 'ImaticUserBundle') }}</h1>

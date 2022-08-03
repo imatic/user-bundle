@@ -95,7 +95,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?DateTime $lastLogin;
+    protected ?DateTime $lastLogin = null;
 
     /**
      * Random string sent to the user email address in order to verify it.
@@ -348,10 +348,8 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     /**
      * Returns last login time.
-     *
-     * @return DateTime
      */
-    public function getLastLogin():DateTime
+    public function getLastLogin(): ?DateTime
     {
         return $this->lastLogin;
     }

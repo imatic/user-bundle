@@ -1,4 +1,4 @@
-{% import "ImaticViewBundle:Component:panel.html.twig" as widget %}
+{% import "@ImaticView/Component/panel.html.twig" as widget %}
 {% extends "@ImaticUser/layout.html.twig" %}
 
 {% block headline %}
@@ -7,11 +7,11 @@
 
 {% block fos_user_content %}
     <div class="resetting check-email">
-        {% embed 'ImaticViewBundle:Layout:grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
+        {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
             {% block reseting %}
 
-                {% embed 'ImaticViewBundle:Component:panel.html.twig' %}
-                    {% import "ImaticViewBundle:Component:message.html.twig" as message %}
+                {% embed '@ImaticView/Component/panel.html.twig' %}
+                    {% import "@ImaticView/Component/message.html.twig" as message %}
                     {% set panel = {type: 'app'} %}
 
                     {% block panel_header %}
