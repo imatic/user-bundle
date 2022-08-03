@@ -39,7 +39,7 @@ class ProfileController extends AbstractController
             $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(ProfileType::class, $user);
+        $form = $this->createForm(ProfileType::class, $user, ['data_class' => $user::class]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
