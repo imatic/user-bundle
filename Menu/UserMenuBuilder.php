@@ -16,13 +16,13 @@ class UserMenuBuilder
     {
         $menu = $factory->createItem((string) $helper->getUser());
         $helper->setDropdown($menu);
-        $menu->addChild($helper->trans('User Profile', [], 'ImaticUserBundle'), ['route' => 'fos_user_profile_show']);
-        $menu->addChild($helper->trans('Change password', [], 'ImaticUserBundle'), ['route' => 'fos_user_change_password'])
+        $menu->addChild($helper->trans('User Profile', [], 'ImaticUserBundle'), ['route' => 'user_profile_show']);
+        $menu->addChild($helper->trans('Change password', [], 'ImaticUserBundle'), ['route' => 'user_change_password'])
             ->setAttribute('divider', true);
         if ($helper->isUserGranted('ROLE_PREVIOUS_ADMIN')) {
             $menu->addChild($helper->trans('Switch user exit', [], 'ImaticUserBundleUser'), ['route' => 'homepage', 'routeParameters' => ['_switch_user' => '_exit']]);
         }
-        $menu->addChild($helper->trans('layout.logout', [], 'FOSUserBundle'), ['route' => 'fos_user_security_logout']);
+        $menu->addChild($helper->trans('layout.logout', [], 'FOSUserBundle'), ['route' => 'user_security_logout']);
 
         return $menu;
     }
@@ -35,7 +35,7 @@ class UserMenuBuilder
      */
     public function getMenuAnon(Factory $factory, Helper $helper)
     {
-        $menu = $factory->createItem($helper->trans('layout.login', [], 'FOSUserBundle'), ['route' => 'fos_user_security_login']);
+        $menu = $factory->createItem($helper->trans('layout.login', [], 'FOSUserBundle'), ['route' => 'user_security_login']);
 
         return $menu;
     }

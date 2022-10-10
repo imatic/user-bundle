@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
- * @Route("", name="fos_user_security_")
+ * @Route("", name="user_security_")
  */
 class SecurityController extends AbstractController
 {

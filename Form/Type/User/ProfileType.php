@@ -53,7 +53,7 @@ class ProfileType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'fos_user_profile';
+        return 'user_profile';
     }
 
     protected function buildUserForm(FormBuilderInterface $builder, array $options): void

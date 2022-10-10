@@ -34,7 +34,7 @@ class Mailer
     public function sendResettingEmailMessage(UserInterface $user): void
     {
         $template = '@ImaticUser/Resetting/email.txt.twig';
-        $url = $this->router->generate('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
         $context = [
             'user' => $user,
             'confirmationUrl' => $url,

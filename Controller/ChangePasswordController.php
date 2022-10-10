@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/profile", name="fos_user_")
+ * @Route("/profile", name="user_")
  */
 class ChangePasswordController extends AbstractController
 {
@@ -29,7 +29,7 @@ class ChangePasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
 
-            return new RedirectResponse($this->generateUrl('fos_user_profile_show'));
+            return new RedirectResponse($this->generateUrl('user_profile_show'));
         }
 
         return $this->render('@ImaticUser/ChangePassword/change_password.html.twig', [

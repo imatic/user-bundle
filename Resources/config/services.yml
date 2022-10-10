@@ -7,6 +7,9 @@ services:
         resource: '../../Controller/'
         tags: [ 'controller.service_arguments' ]
 
+
+    Imatic\Bundle\UserBundle\Data\Handler\User\UserCreateHandler:
+    Imatic\Bundle\UserBundle\Data\Handler\User\UserEditHandler:
     Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider:
     Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator:
     Imatic\Bundle\UserBundle\Mailer\HtmlEmailBuilder:

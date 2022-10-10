@@ -4,7 +4,7 @@
     {{ 'User Profile'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block fos_user_content %}
+{% block user_content %}
     <div class="profile-show">
         {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, profile: {size:9} } }] } %}
             {% block sidebar %}

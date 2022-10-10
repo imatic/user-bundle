@@ -6,9 +6,9 @@
     {{ 'resetting.request.submit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block fos_user_content %}
+{% block user_content %}
     <div class="resetting reset">
-        {{ form_start(form, {action: path('fos_user_resetting_reset', {'token': token}), method: 'post'})|replace({'form-horizontal': ''})|raw }}
+        {{ form_start(form, {action: path('user_resetting_reset', {'token': token}), method: 'post'})|replace({'form-horizontal': ''})|raw }}
         {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
             {% block reseting %}
 
@@ -48,4 +48,4 @@
         {{ form_widget(form._token) }}
         </form>
     </div>
-{% endblock fos_user_content %}
+{% endblock user_content %}

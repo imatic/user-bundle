@@ -5,7 +5,7 @@
     {{ 'resetting.request.submit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block fos_user_content %}
+{% block user_content %}
     <div class="resetting check-email">
         {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols:{reseting: {size: 4, offset: 4} } }] } %}
             {% block reseting %}
@@ -26,4 +26,4 @@
             {% endblock %}
         {% endembed %}
     </div>
-{% endblock fos_user_content %}
+{% endblock user_content %}

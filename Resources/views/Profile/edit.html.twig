@@ -4,7 +4,7 @@
     {{ 'User Profile Edit'|trans({}, 'ImaticUserBundle') }}
 {% endblock %}
 
-{% block fos_user_content %}
+{% block user_content %}
     <div class="profile-edit">
         {% embed '@ImaticView/Layout/grid.html.twig' with {rows: [{ cols: {sidebar: {size: 3}, form: {size:9} } }] } %}
             {% block sidebar %}

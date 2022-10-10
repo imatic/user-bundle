@@ -22,6 +22,19 @@ class UserManager
         $this->userClass = $userClass;
     }
 
+    /**
+     * Returns an empty user instance
+     *
+     * @return UserInterface
+     */
+    public function createUser()
+    {
+        $class = $this->getClass();
+        $user = new $class;
+
+        return $user;
+    }
+
     private function getRepository(): ObjectRepository
     {
         return $this->em->getRepository($this->userClass);

@@ -62,6 +62,6 @@ class ChangePasswordType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'fos_user_change_password';
+        return 'user_change_password';
     }
 }

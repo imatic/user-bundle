@@ -3,56 +3,22 @@ namespace Imatic\Bundle\UserBundle\Model;
 
 /**
  * Group interface.
- *
- * @author Viliam Husár <viliam.husar@imatic.cz>
  */
 interface GroupInterface
 {
-    /**
-     * @param string $role
-     *
-     * @return static
-     */
-    public function addRole($role);
+    public function addRole(string $role): static;
 
-    /**
-     * @return mixed
-     */
-    public function getId();
+    public function getId(): mixed;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function hasRole($role);
+    public function hasRole(string $role): bool;
 
-    /**
-     * @return array
-     */
-    public function getRoles();
+    public function getRoles(): array;
 
-    /**
-     * @param string $role
-     *
-     * @return static
-     */
-    public function removeRole($role);
+    public function removeRole(string $role): static;
 
-    /**
-     * @param string $name
-     *
-     * @return static
-     */
-    public function setName($name);
+    public function setName(string $name): static;
 
-    /**
-     * @return static
-     */
-    public function setRoles(array $roles);
+    public function setRoles(array $roles): static;
 }
