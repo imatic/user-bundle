@@ -8,27 +8,13 @@ use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 
 class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
 {
-    /**
-     * @var string
-     */
-    private $class;
-
-    /**
-     * @var int
-     */
-    private $id;
-
-    public function __construct($id, $class)
+    public function __construct(
+        private int $id, 
+        private string $class
+    )
     {
-        $this->class = $class;
-        $this->id = $id;
     }
 
-    /**
-     * @param EntityManager $em
-     *
-     * @return QueryBuilder
-     */
     public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))

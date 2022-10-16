@@ -6,46 +6,30 @@ use Imatic\Bundle\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Group.
- *
- * @author Viliam Husár <viliam.husar@imatic.cz>
- *
  * @ORM\MappedSuperclass()
  */
 class Group implements GroupInterface
 {
     /**
-     * @var int
-     *
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(groups={"Registration"})
      * @Assert\Length(min=2, max=255, groups={"Registration"})
      */
-    protected $name;
+    protected string $name;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      */
-    protected $roles;
+    protected array $roles;
 
-    /**
-     * Constructor.
-     *
-     * @param string $name
-     * @param array  $roles
-     */
-    public function __construct($name = null, $roles = [])
+    public function __construct(string $name = null, array $roles = [])
     {
         $this
             ->setName($name)
