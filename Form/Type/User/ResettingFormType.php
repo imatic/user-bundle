@@ -9,13 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResettingFormType extends AbstractType
 {
-    private string $userClass;
-
-    public function __construct(string $userClass)
-    {
-        $this->userClass = $userClass;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('plainPassword', RepeatedType::class, [
@@ -35,7 +28,6 @@ class ResettingFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => $this->userClass,
             'csrf_token_id' => 'resetting',
             'validation_groups' => ['ResetPassword', 'Default'],
         ]);

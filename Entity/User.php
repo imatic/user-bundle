@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use DateTime;
@@ -15,57 +16,61 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Viliam Husár <viliam.husar@imatic.cz>
  *
- * @ORM\MappedSuperclass()
  * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", groups={"Registration", "Profile"})
  * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", groups={"Registration", "Profile"})
  */
+#[ORM\MappedSuperclass()]
 class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[
+        ORM\Id(),
+        ORM\Column(
+            type: 'integer',
+        ),
+        ORM\GeneratedValue(
+            strategy: 'AUTO',
+        ),
+    ]
     protected int $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=255, groups={"Registration", "Profile"})
      */
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+    )]
     protected string $username;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+        unique: true,
+    )]
     protected string $usernameCanonical;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"Registration", "Profile"})
      * @Assert\Length(min=2, max=254, groups={"Registration", "Profile"})
      * @Assert\Email(groups={"Registration", "Profile"})
      */
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+    )]
     protected string $email;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+        unique: true,
+    )]
     protected string $emailCanonical;
 
-    /**
-     * Encrypted password.
-     *
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(
+        type: 'string',
+    )]
     protected string $password;
 
     /**
@@ -77,76 +82,79 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     protected ?string $plainPassword = null;
 
 
-    /**
-     * The salt to use for hashing.
-     *
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(
+        type: 'string',
+        nullable: true,
+    )]
     protected ?string $salt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
     protected ?DateTime $lastLogin = null;
 
     /**
      * Random string sent to the user email address in order to verify it.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(
+        type: 'string',
+        nullable: true,
+    )]
     protected ?string $confirmationToken;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
     protected ?DateTime $passwordRequestedAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(
+        type: 'boolean',
+    )]
     protected bool $enabled;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(
+        type: 'boolean',
+    )]
     protected bool $locked;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(
+        type: 'boolean',
+    )]
     protected bool $expired;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
     protected ?DateTime $expiresAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(
+        type: 'boolean',
+    )]
     protected bool $credentialsExpired;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
     protected ?DateTime $credentialsExpireAt;
 
-    /**
-     * @ORM\Column(type="array")
-     */
+    #[ORM\Column(
+        type: 'array',
+    )]
     protected array $roles;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Model\GroupInterface", cascade={"persist"})
-     */
+    #[ORM\ManyToMany(
+        targetEntity: GroupInterface::class,
+        cascade: ['persist'],
+    )]
     protected Collection $groups;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
-        $this->salt = \base_convert(\sha1(\uniqid((string) \mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid((string)\mt_rand(), true)), 16, 36);
         $this->enabled = false;
         $this->locked = false;
         $this->expired = false;
@@ -155,22 +163,19 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         $this->groups = new ArrayCollection();
     }
 
-    /**
-     * Returns string representation.
-     */
     public function __toString(): string
     {
-        return (string) $this->getUsername();
+        return (string)$this->getUsername();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-        return $this->id;
+        return $this->id ?? null;
     }
 
     public function setUsername(string $username): UserInterface
     {
-        $this->username = (string) $username;
+        $this->username = (string)$username;
 
         return $this;
     }
@@ -182,7 +187,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setUsernameCanonical(string $usernameCanonical): UserInterface
     {
-        $this->usernameCanonical = (string) $usernameCanonical;
+        $this->usernameCanonical = (string)$usernameCanonical;
 
         return $this;
     }
@@ -194,7 +199,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setEmail(string $email): UserInterface
     {
-        $this->email = (string) $email;
+        $this->email = (string)$email;
 
         return $this;
     }
@@ -206,7 +211,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setEmailCanonical(string $emailCanonical): UserInterface
     {
-        $this->emailCanonical = (string) $emailCanonical;
+        $this->emailCanonical = (string)$emailCanonical;
 
         return $this;
     }
@@ -218,7 +223,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setPassword(string $password): UserInterface
     {
-        $this->password = (string) $password;
+        $this->password = (string)$password;
 
         return $this;
     }
@@ -234,7 +239,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setPlainPassword(string $password): UserInterface
     {
-        $this->plainPassword = (string) $password;
+        $this->plainPassword = (string)$password;
 
         return $this;
     }
@@ -294,7 +299,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setEnabled(bool $boolean): UserInterface
     {
-        $this->enabled = (bool) $boolean;
+        $this->enabled = (bool)$boolean;
 
         return $this;
     }
@@ -306,7 +311,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setLocked(bool $bool): UserInterface
     {
-        $this->locked = (bool) $bool;
+        $this->locked = (bool)$bool;
 
         return $this;
     }
@@ -318,7 +323,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setExpired(bool $bool): User
     {
-        $this->expired = (bool) $bool;
+        $this->expired = (bool)$bool;
 
         return $this;
     }
@@ -344,7 +349,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setCredentialsExpired(bool $bool): UserInterface
     {
-        $this->credentialsExpired = (bool) $bool;
+        $this->credentialsExpired = (bool)$bool;
 
         return $this;
     }
@@ -362,7 +367,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function addRole(string $role): UserInterface
     {
-        $role = (string) $role;
+        $role = (string)$role;
         $role = \strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
             return $this;
@@ -377,7 +382,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function removeRole(string $role): UserInterface
     {
-        $role = (string) $role;
+        $role = (string)$role;
 
         if (false !== $key = \array_search(\strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -412,7 +417,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      */
     public function hasRole(string $role): bool
     {
-        $role = (string) $role;
+        $role = (string)$role;
 
         return \in_array(\strtoupper($role), $this->getRoles(), true);
     }
@@ -462,7 +467,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function setSuperAdmin(bool $bool): UserInterface
     {
-        $bool = (bool) $bool;
+        $bool = (bool)$bool;
 
         if (true === $bool) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
@@ -473,12 +478,12 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
-    public function isSuperAdmin():bool
+    public function isSuperAdmin(): bool
     {
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
 
-    public function isAccountNonExpired():bool
+    public function isAccountNonExpired(): bool
     {
         if (true === $this->expired) {
             return false;
@@ -491,12 +496,12 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return true;
     }
 
-    public function isAccountNonLocked():bool
+    public function isAccountNonLocked(): bool
     {
         return !$this->locked;
     }
 
-    public function isCredentialsNonExpired():bool
+    public function isCredentialsNonExpired(): bool
     {
         if (true === $this->credentialsExpired) {
             return false;
@@ -509,21 +514,21 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return true;
     }
 
-    public function isCredentialsExpired():bool
+    public function isCredentialsExpired(): bool
     {
         return !$this->isCredentialsNonExpired();
     }
 
-    public function isPasswordRequestNonExpired(int $ttl):bool
+    public function isPasswordRequestNonExpired(int $ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof DateTime &&
-        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
+            $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
     }
 
     /**
      * Returns true if same user, false otherwise.
      */
-    public function isUser(UserInterface $user = null):bool
+    public function isUser(UserInterface $user = null): bool
     {
         return null !== $user && $this->getId() === $user->getId();
     }
@@ -541,19 +546,19 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
      *
      * The serialized data have to contain the fields used by the equals method and the username.
      */
-    public function serialize():string
+    public function serialize(): string
     {
         return \serialize([
-                $this->password,
-                $this->salt,
-                $this->usernameCanonical,
-                $this->username,
-                $this->expired,
-                $this->locked,
-                $this->credentialsExpired,
-                $this->enabled,
-                $this->id,
-            ]);
+            $this->password,
+            $this->salt,
+            $this->usernameCanonical,
+            $this->username,
+            $this->expired,
+            $this->locked,
+            $this->credentialsExpired,
+            $this->enabled,
+            $this->id,
+        ]);
     }
 
     public function unserialize(string $serialized): void

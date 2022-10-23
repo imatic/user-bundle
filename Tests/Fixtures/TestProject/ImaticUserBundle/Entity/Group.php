@@ -4,12 +4,12 @@ namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\E
 use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\Group as BaseGroup;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="`Group`")
- *
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
+#[
+    ORM\Entity(),
+    ORM\Table(
+        name: 'Group'
+    ),
+]
 class Group extends BaseGroup
 {
 }

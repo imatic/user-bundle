@@ -5,11 +5,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\User as BaseUser;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="`User`")
- *
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
+#[
+    ORM\Entity(),
+    ORM\Table(
+        name: 'User',
+    ),
+]
 class User extends BaseUser
 {
     public function setSalt($salt): void
