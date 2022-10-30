@@ -3,15 +3,7 @@ namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 interface TranslationStrategyInterface
 {
-    /**
-     * @param object $role
-     *
-     * @return mixed
-     */
-    public function translate($role);
+    public function translate(object $role): mixed;
 
-    /**
-     * @return string
-     */
-    public function getSupportedClass();
+    public function getSupportedClass(): string;
 }

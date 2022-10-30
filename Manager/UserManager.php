@@ -24,10 +24,8 @@ class UserManager
 
     /**
      * Returns an empty user instance
-     *
-     * @return UserInterface
      */
-    public function createUser()
+    public function createUser(): UserInterface
     {
         $class = $this->getClass();
         $user = new $class;

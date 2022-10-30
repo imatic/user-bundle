@@ -5,26 +5,24 @@ use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 
 class HierarchyRoleProvider implements RoleProviderInterface
 {
-    /** @var string[] */
-    private $roleHierarchy;
-
     /** @var HierarchyRole[] */
-    private $roles;
+    private array $roles;
 
     /**
-     * @param string[]
+     * @param array $roleHierarchy string[]
      */
-    public function __construct(array $roleHierarchy)
+    public function __construct(
+        private array $roleHierarchy
+    )
     {
-        $this->roleHierarchy = $roleHierarchy;
     }
 
     /**
      * @return HierarchyRole[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        if ($this->roles === null) {
+        if (empty($this->roles)) {
             if (!$this->roleHierarchy) {
                 return [];
             }

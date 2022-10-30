@@ -4,12 +4,9 @@ namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\S
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
 use Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\Security\Role\Role;
 
-/**
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
 class RoleProvider implements RoleProviderInterface
 {
-    public function getRoles()
+    public function getRoles(): array
     {
         $names = $this->getRoleNames();
 
@@ -21,7 +18,7 @@ class RoleProvider implements RoleProviderInterface
         return $roles;
     }
 
-    protected function getRoleNames()
+    protected function getRoleNames(): array
     {
         return [
             'APP_USER_BUNDLE_CREATE',

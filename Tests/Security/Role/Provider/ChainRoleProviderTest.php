@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ChainRoleProviderTest extends TestCase
 {
-    /** @var ChainRoleProvider */
-    private $roleProvider;
+    private ChainRoleProvider $roleProvider;
 
     /**
      * {@inheritdoc}
@@ -44,12 +43,10 @@ class ChainRoleProviderTest extends TestCase
 
     /**
      * @param Role[] $roles
-     *
-     * @return RoleProviderInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createRoleProviderMock(array $roles)
+    private function createRoleProviderMock(array $roles): PHPUnit\Framework\MockObject\MockObject
     {
-        $roleProviderMock = $this->createMock('Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface');
+        $roleProviderMock = $this->createMock(RoleProviderInterface::class);
         $roleProviderMock
             ->expects($this->any())
             ->method('getRoles')

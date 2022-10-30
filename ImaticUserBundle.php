@@ -7,9 +7,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ImaticUserBundle extends Bundle
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new SecurityPass());

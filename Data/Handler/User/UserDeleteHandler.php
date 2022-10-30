@@ -16,12 +16,7 @@ class UserDeleteHandler implements HandlerInterface
         $this->userManager = $userManager;
     }
 
-    /**
-     * @param CommandInterface $command
-     *
-     * @return CommandResultInterface|bool|void
-     */
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): void
     {
         $user = $command->getParameter('user');
         if (!($user instanceof UserInterface)) {

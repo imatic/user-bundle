@@ -5,38 +5,24 @@ use Symfony\Component\Security\Core\Role\Role as BaseRole;
 
 abstract class Role extends BaseRole
 {
-    /**
-     * @return string
-     */
-    abstract public function getType();
+    abstract public function getType(): string;
+    abstract public function getRole(): string;
 
-    /**
-     * @return string
-     */
-    public function getAction()
+    public function getAction(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->getRole();
     }
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return 'roles';
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->getRole();

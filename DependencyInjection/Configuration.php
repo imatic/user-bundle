@@ -12,10 +12,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('imatic_user');
         $rootNode = $builder->getRootNode();
@@ -47,10 +44,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addEntitiesSection($node): void
+    private function addEntitiesSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -79,10 +73,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addAdminSection($node): void
+    private function addAdminSection(ArrayNodeDefinition $node): void
     {
         $node
             ->addDefaultsIfNotSet()
@@ -106,9 +97,6 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
     private function addSecuritySection(ArrayNodeDefinition $node): void
     {
         $node

@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ModelRoleProviderTest extends TestCase
 {
-    /** @var ModelRoleProvider */
-    private $roleProvider;
+    private ModelRoleProvider $roleProvider;
 
     /**
      * {@inheritdoc}
@@ -106,17 +105,14 @@ class ModelRoleProviderTest extends TestCase
         $this->assertEquals('group', $role->getProperty());
     }
 
-    /**
-     * @return ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createClassMetadataFactoryMock()
+    private function createClassMetadataFactoryMock():  PHPUnit\Framework\MockObject\MockObject
     {
         $metadataFactoryMock = $this->createMock(ClassMetadataFactory::class);
-        $aMetadata = new ClassMetadata('Vendor\Foo\Entity\ClassA');
+        $aMetadata = new ClassMetadata(ClassA::class);
         $aMetadata->mapField(['fieldName' => 'propertyA']);
         $aMetadata->mapField(['fieldName' => 'propertyB']);
         $aMetadata->mapManyToOne(['fieldName' => 'association', 'targetEntity' => '']);
-        $bMetadata = new ClassMetadata('Vendor\Foo\Entity\Bar\ClassB');
+        $bMetadata = new ClassMetadata(ClassB::class);
         $bMetadata->mapField(['fieldName' => 'property']);
         $metadataFactoryMock
             ->expects($this->any())

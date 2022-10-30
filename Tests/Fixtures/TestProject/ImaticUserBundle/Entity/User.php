@@ -4,9 +4,6 @@ namespace Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\ImaticUserBundle\E
 use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Entity\User as BaseUser;
 
-/**
- * @ORM\Table(name="`User`")
- */
 #[
     ORM\Entity(),
     ORM\Table(
@@ -15,7 +12,7 @@ use Imatic\Bundle\UserBundle\Entity\User as BaseUser;
 ]
 class User extends BaseUser
 {
-    public function setSalt($salt): void
+    public function setSalt($salt): \Imatic\Bundle\UserBundle\Model\UserInterface
     {
         $this->salt = $salt;
     }

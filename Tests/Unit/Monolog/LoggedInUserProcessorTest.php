@@ -48,15 +48,10 @@ class LoggedInUserProcessorTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $user
-     *
-     * @return TokenStorageInterface
-     */
-    private function createTokenWithUser($user)
+    private function createTokenWithUser(mixed $user): TokenStorageInterface
     {
         $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken(new UsernamePasswordToken($user, 'credentials', 'provider-key'));
+        $tokenStorage->setToken(new UsernamePasswordToken($user, 'credentials', ['provider-key']));
 
         return $tokenStorage;
     }

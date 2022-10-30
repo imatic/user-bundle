@@ -8,8 +8,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class HierarchyStrategyTest extends TestCase
 {
-    /** @var HierarchyStrategy */
-    private $strategy;
+    private HierarchyStrategy $strategy;
 
     /**
      * {@inheritdoc}
@@ -29,10 +28,7 @@ class HierarchyStrategyTest extends TestCase
         $this->assertEquals('ROLE (ROLE_A, ROLE_B)', $this->strategy->translate($hierarchy));
     }
 
-    /**
-     * @return TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createTranslatorMock()
+    private function createTranslatorMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         $translatorMock = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $translatorMock

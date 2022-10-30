@@ -40,17 +40,7 @@ class LoadDefaultUsers extends Fixture
         $manager->flush();
     }
 
-    /**
-     * @param string $username
-     * @param string $password
-     * @param string $email
-     * @param array  $groups
-     * @param array  $roles
-     * @param bool   $enabled
-     *
-     * @return User
-     */
-    protected function createUser($username, $password, $email, array $groups = [], array $roles = [], $enabled = true)
+    protected function createUser(string $username, string $password, string $email, array $groups = [], array $roles = [], bool $enabled = true): User
     {
         $user = new User();
         $user->setUsername($username);
@@ -71,13 +61,7 @@ class LoadDefaultUsers extends Fixture
         return $user;
     }
 
-    /**
-     * @param string $name
-     * @param array  $roles
-     *
-     * @return Group
-     */
-    protected function createGroup($name, array $roles = [])
+    protected function createGroup(string $name, array $roles = []): Group
     {
         $group = new Group();
         $group->setName($name);

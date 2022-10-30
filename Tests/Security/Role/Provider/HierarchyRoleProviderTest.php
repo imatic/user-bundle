@@ -7,8 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class HierarchyRoleProviderTest extends TestCase
 {
-    /** @var HierarchyRoleProvider */
-    private $roleProvider;
+    private HierarchyRoleProvider $roleProvider;
 
     /**
      * {@inheritdoc}

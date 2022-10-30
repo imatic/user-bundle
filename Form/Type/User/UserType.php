@@ -11,14 +11,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $userClass;
-
-    public function __construct($userClass)
+    public function __construct(
+        private string $userClass
+    )
     {
-        $this->userClass = $userClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -38,9 +34,6 @@ class UserType extends AbstractType
             ->add('save', SubmitType::class, ['attr' => ['class' => 'btn-primary']]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

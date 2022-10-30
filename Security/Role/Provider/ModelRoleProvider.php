@@ -13,39 +13,28 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 {
-    /** @var ClassMetadataFactory */
-    private $metadataFactory;
+    private ObjectRoleFactory $roleFactory;
 
-    /** @var ObjectRoleFactory */
-    private $roleFactory;
-
-    /** @var array */
-    private $config;
+    private array $config;
 
     /** @var string[] */
-    private $actions = ['show', 'edit'];
+    private array $actions = ['show', 'edit'];
 
     /** @var ObjectRole[]|null */
-    private $roles;
+    private ?array $roles;
 
-    /** @var array|null */
-    private $filters;
+    private ?array $filters;
 
-    /** @var array|null */
-    private $propertyIncludes;
+    private ?array $propertyIncludes;
 
-    /** @var array|null */
-    private $propertyExcludes;
+    private ?array $propertyExcludes;
 
-    /** @var array|null */
-    private $propertyGroups;
+    private ?array $propertyGroups;
 
-    /**
-     * @param ClassMetadataFactory $metadataFactory
-     */
-    public function __construct(ClassMetadataFactory $metadataFactory)
+    public function __construct(
+        private ClassMetadataFactory $metadataFactory
+    )
     {
-        $this->metadataFactory = $metadataFactory;
         $this->roleFactory = new ObjectRoleFactory();
         $this->setConfig();
     }
@@ -53,13 +42,13 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     /**
      * @return ObjectRole[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         if ($this->roles === null) {
             $this->roles = [];
 
             foreach ($this->getAllMetadata() as $metadata) {
-                if (!$this->isClassIncluded($metadata->name)) {
+                if (isset($metadata->name) && !$this->isClassIncluded($metadata->name)) {
                     continue;
                 }
 
@@ -79,14 +68,11 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->roles ? \array_values(\call_user_func_array('array_merge', \array_values($this->roles))) : [];
     }
 
-    /**
-     * @param object|string $object
-     * @param string        $property
-     * @param string        $action
-     *
-     * @return ObjectRole|null
-     */
-    public function getRole($object, $property, $action)
+    public function getRole(
+        object|string $object,
+        string $property,
+        string $action
+    ): ?ObjectRole
     {
         $this->getRoles();
         $class = $this->getClass($object);
@@ -101,13 +87,9 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
-     * @param array $config
-     *
-     * @return $this
-     *
      * @throws InvalidConfigurationException
      */
-    public function setConfig(array $config = [])
+    public function setConfig(array $config = []): self
     {
         $this->config = (new Processor())->process($this->getConfigurationTree(), [$config]);
         $this->roles = null;
@@ -121,10 +103,8 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     /**
      * @param string[] $actions
-     *
-     * @return $this
      */
-    public function setActions(array $actions)
+    public function setActions(array $actions): self
     {
         $this->actions = $actions;
         $this->roles = null;
@@ -135,17 +115,12 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     /**
      * @return ClassMetadata[]
      */
-    private function getAllMetadata()
+    private function getAllMetadata(): array
     {
         return $this->metadataFactory->getAllMetadata();
     }
 
-    /**
-     * @param string $class
-     *
-     * @return bool
-     */
-    private function isClassIncluded($class)
+    private function isClassIncluded(string $class): bool
     {
         foreach ($this->getFilters() as $prefix => $filter) {
             if (!\strncasecmp($class . '\\', $prefix, \strlen($prefix))) {
@@ -157,16 +132,14 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
     }
 
     /**
-     * @param ClassMetadata $metadata
-     *
      * @return string[]
      */
-    private function getModelProperties(ClassMetadata $metadata)
+    private function getModelProperties(ClassMetadata $metadata): array
     {
         $propertyIncludes = $this->getPropertyIncludes();
         $propertyExcludes = $this->getPropertyExcludes();
         $propertyGroups = $this->getPropertyGroups();
-        $properties = isset($propertyIncludes[$metadata->name])
+        $properties = (isset($metadata->name) && isset($propertyIncludes[$metadata->name]))
             ? $propertyIncludes[$metadata->name]
             : \array_merge($metadata->getFieldNames(), $metadata->getAssociationNames());
 
@@ -184,24 +157,12 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $properties;
     }
 
-    /**
-     * @param string $class
-     * @param string $property
-     * @param string $action
-     *
-     * @return string
-     */
-    private function getRoleKey($class, $property, $action)
+    private function getRoleKey(string $class, string $property, string $action): string
     {
         return \sprintf('%s-%s-%s', $class, $property, $action);
     }
 
-    /**
-     * @param object|string $object
-     *
-     * @return string
-     */
-    private function getClass($object)
+    private function getClass(object|string $object): string
     {
         $class = \is_object($object) ? \get_class($object) : $object;
 
@@ -212,10 +173,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $class;
     }
 
-    /**
-     * @return array
-     */
-    private function getFilters()
+    private function getFilters(): array
     {
         if ($this->filters === null) {
             $this->filters = [];
@@ -238,10 +196,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->filters;
     }
 
-    /**
-     * @return array
-     */
-    private function getPropertyIncludes()
+    private function getPropertyIncludes(): array
     {
         if ($this->propertyIncludes === null) {
             $this->propertyIncludes = [];
@@ -254,10 +209,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->propertyIncludes;
     }
 
-    /**
-     * @return array
-     */
-    private function getPropertyExcludes()
+    private function getPropertyExcludes(): array
     {
         if ($this->propertyExcludes === null) {
             $this->propertyExcludes = [];
@@ -270,10 +222,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->propertyExcludes;
     }
 
-    /**
-     * @return array
-     */
-    private function getPropertyGroups()
+    private function getPropertyGroups(): array
     {
         if ($this->propertyGroups === null) {
             $this->propertyGroups = [];
@@ -291,13 +240,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->propertyGroups;
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     *
-     * @return int
-     */
-    private function compareFilters($a, $b)
+    private function compareFilters(string $a, string $b): int
     {
         if ($a[1] === $b[1]) {
             return 0;
@@ -306,10 +249,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $a[1] > $b[1] ? -1 : 1;
     }
 
-    /**
-     * @return NodeInterface
-     */
-    private function getConfigurationTree()
+    private function getConfigurationTree(): NodeInterface
     {
         $builder = new TreeBuilder('config');
         $root = $builder->getRootNode();

@@ -12,35 +12,16 @@ use PHPExcel_Worksheet;
 use SplFileInfo;
 use Symfony\Component\Security\Core\Role\Role;
 
-/**
- * Role document writer.
- *
- * @author Pavel Batecko <pavel.batecko@imatic.cz>
- */
 class RoleDocumentWriter
 {
-    /** @var RoleProviderInterface */
-    private $roleProvider;
-    /** @var RoleTranslator */
-    private $roleTranslator;
-    /** @var array|bool */
-    private $defaultRoles;
-
     /**
-     * Constructor.
-     *
-     * @param RoleProviderInterface $roleProvider   role provider
-     * @param RoleTranslator        $roleTranslator role translator
      * @param array|bool            $defaultRoles   array of default roles, true for all or false for none
      */
     public function __construct(
-        RoleProviderInterface $roleProvider,
-        RoleTranslator $roleTranslator,
-        $defaultRoles = false
+        private RoleProviderInterface $roleProvider,
+        private RoleTranslator $roleTranslator,
+        private array|bool $defaultRoles = false
     ) {
-        $this->roleProvider = $roleProvider;
-        $this->roleTranslator = $roleTranslator;
-
         // set default roles
         if (\is_array($defaultRoles)) {
             $defaultRoles = \array_flip($defaultRoles);
@@ -55,12 +36,9 @@ class RoleDocumentWriter
 
     /**
      * Create and save the document.
-     *
-     * @param string $savePath
-     *
      * @return string file path
      */
-    public function write($savePath)
+    public function write(string $savePath): string
     {
         $document = $this->create();
 
@@ -77,12 +55,7 @@ class RoleDocumentWriter
         return $filePath;
     }
 
-    /**
-     * Create the document.
-     *
-     * @return PHPExcel
-     */
-    private function create()
+    private function create(): PHPExcel
     {
         $document = new PHPExcel();
         $sheet = $document->getActiveSheet();
@@ -113,13 +86,7 @@ class RoleDocumentWriter
         return $document;
     }
 
-    /**
-     * Prepare sheet.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param string             $type
-     */
-    private function prepareSheet(PHPExcel_Worksheet $sheet, $type): void
+    private function prepareSheet(PHPExcel_Worksheet $sheet, string $type): void
     {
         $sheet->setTitle($type);
         $sheet->getColumnDimension(D::getColumn(D::COLUMN_INSTRUCTION))->setVisible(false);
@@ -127,15 +94,7 @@ class RoleDocumentWriter
         $sheet->getColumnDimension(D::getColumn(D::COLUMN_ROLE_LABEL))->setAutoSize(true);
     }
 
-    /**
-     * Write domain.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param int                $row
-     * @param string             $domain
-     * @param int                $maxRoles
-     */
-    private function writeDomain(PHPExcel_Worksheet $sheet, $row, $domain, $maxRoles): void
+    private function writeDomain(PHPExcel_Worksheet $sheet, int $row, string $domain, int $maxRoles): void
     {
         $this->writeInstruction($sheet, $row, D::INSTRUCTION_IGNORE);
 
@@ -168,13 +127,9 @@ class RoleDocumentWriter
     }
 
     /**
-     * Write roles.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param int                $row
      * @param Role[]    $roles
      */
-    private function writeRoles(PHPExcel_Worksheet $sheet, $row, array $roles): void
+    private function writeRoles(PHPExcel_Worksheet $sheet, int $row, array $roles): void
     {
         if (empty($roles)) {
             $this->writeInstruction($sheet, $row, D::INSTRUCTION_IGNORE);
@@ -213,15 +168,7 @@ class RoleDocumentWriter
             ->setValue($this->roleTranslator->translateRole(\current($roles)));
     }
 
-    /**
-     * Write instruction and data.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param int                $row
-     * @param int                $instruction
-     * @param mixed              $data
-     */
-    private function writeInstruction(PHPExcel_Worksheet $sheet, $row, $instruction, $data = null): void
+    private function writeInstruction(PHPExcel_Worksheet $sheet, int $row, int $instruction, mixed $data = null): void
     {
         D::getCell($sheet, $row, D::COLUMN_INSTRUCTION)
             ->setValue($instruction);
@@ -235,12 +182,7 @@ class RoleDocumentWriter
         }
     }
 
-    /**
-     * Get role map.
-     *
-     * @return array
-     */
-    private function getRoleMap()
+    private function getRoleMap(): array
     {
         $roleMap = [];
         foreach ($this->roleProvider->getRoles() as $role) {
@@ -252,12 +194,8 @@ class RoleDocumentWriter
 
     /**
      * Get maximum number of roles for given domain.
-     *
-     * @param array $domains
-     *
-     * @return int
      */
-    private function getMaxRoles(array $domains)
+    private function getMaxRoles(array $domains): int
     {
         $maxRoles = null;
         foreach ($domains as $labels) {

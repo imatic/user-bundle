@@ -9,18 +9,12 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class SecurityPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container): void
     {
         $this->processRoleProviders($container);
         $this->processTranslationStrategies($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function processRoleProviders(ContainerBuilder $container): void
     {
         $config = $container->getExtensionConfig('imatic_user');
@@ -49,9 +43,6 @@ class SecurityPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function processTranslationStrategies(ContainerBuilder $container): void
     {
         $definition = $container->getDefinition(\Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator::class);

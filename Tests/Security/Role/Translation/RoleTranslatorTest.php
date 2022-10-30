@@ -11,8 +11,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class RoleTranslatorTest extends TestCase
 {
-    /** @var RoleTranslator */
-    private $roleTranslator;
+    private RoleTranslator $roleTranslator;
 
     /**
      * {@inheritdoc}
@@ -46,12 +45,9 @@ class RoleTranslatorTest extends TestCase
         $this->assertEquals('action', $this->roleTranslator->translateRoleDomain('action'));
     }
 
-    /**
-     * @return TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createTranslatorMock()
+    private function createTranslatorMock(): \PHPUnit\Framework\MockObject\MockObject
     {
-        $translatorMock = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translatorMock = $this->createMock(TranslatorInterface::class);
         $translatorMock
             ->expects($this->any())
             ->method('trans')

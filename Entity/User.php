@@ -33,14 +33,26 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     ]
     protected int $id;
 
-    /**
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=255, groups={"Registration", "Profile"})
-     */
-    #[ORM\Column(
-        type: 'string',
-        length: 255,
-    )]
+    #[
+        ORM\Column(
+            type: 'string',
+            length: 255,
+        ),
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            max: 255,
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        )
+    ]
     protected string $username;
 
     #[ORM\Column(
@@ -50,15 +62,32 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     )]
     protected string $usernameCanonical;
 
-    /**
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=254, groups={"Registration", "Profile"})
-     * @Assert\Email(groups={"Registration", "Profile"})
-     */
-    #[ORM\Column(
-        type: 'string',
-        length: 255,
-    )]
+    #[
+        ORM\Column(
+            type: 'string',
+            length: 255,
+        ),
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            max: 254,
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Email(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        )
+    ]
     protected string $email;
 
     #[ORM\Column(
@@ -75,10 +104,25 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     /**
      * Plain password, Used for model validation, must not be persisted.
-     *
-     * @Assert\NotBlank(groups={"Registration", "ResetPassword", "ChangePassword"})
-     * @Assert\Length(min=2, groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
      */
+    #[
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'ResetPassword',
+                'ChangePassword',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            groups: [
+                'Registration',
+                'Profile',
+                'ResetPassword',
+                'ChangePassword',
+            ],
+        )
+        ]
     protected ?string $plainPassword = null;
 
 
@@ -441,8 +485,6 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     }
 
     /**
-     * Returns groups.
-     *
      * @return Collection|GroupInterface[]
      */
     public function getGroups(): Collection

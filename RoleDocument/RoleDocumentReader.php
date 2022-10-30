@@ -15,17 +15,9 @@ use PHPExcel_Worksheet;
  */
 class RoleDocumentReader implements IteratorAggregate
 {
-    /** @var PHPExcel|null */
-    private $document;
+    private ?PHPExcel $document = null;
 
-    /**
-     * Open document.
-     *
-     * @param string $path
-     *
-     * @return RoleDocumentReader
-     */
-    public function open($path)
+    public function open(string $path): RoleDocumentReader
     {
         $reader = PHPExcel_IOFactory::createReader('Excel2007');
 
@@ -40,32 +32,17 @@ class RoleDocumentReader implements IteratorAggregate
         $this->document = $reader->load($path);
     }
 
-    /**
-     * Get role iterator.
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->readRoles());
     }
 
-    /**
-     * Read enabled roles.
-     *
-     * @return array
-     */
-    public function readEnabledRoles()
+    public function readEnabledRoles(): array
     {
         return \array_keys(\array_filter($this->readRoles()));
     }
 
-    /**
-     * Read roles.
-     *
-     * @return array
-     */
-    public function readRoles()
+    public function readRoles(): array
     {
         if (null === $this->document) {
             throw new \RuntimeException('No document opened');
@@ -101,15 +78,7 @@ class RoleDocumentReader implements IteratorAggregate
         return $roles;
     }
 
-    /**
-     * Read role row.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param int                $row
-     *
-     * @return array
-     */
-    private function readRoleRow(PHPExcel_Worksheet $sheet, $row)
+    private function readRoleRow(PHPExcel_Worksheet $sheet, int $row): array
     {
         $roles = \explode(';', D::getCell($sheet, $row, D::COLUMN_DATA)->getValue());
         $roleCount = \count($roles);

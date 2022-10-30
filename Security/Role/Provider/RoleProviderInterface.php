@@ -8,5 +8,5 @@ interface RoleProviderInterface
     /**
      * @return Role[]
      */
-    public function getRoles();
+    public function getRoles(): array;
 }

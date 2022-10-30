@@ -3,39 +3,23 @@ namespace Imatic\Bundle\UserBundle\Security\Role;
 
 class HierarchyRole extends Role
 {
-    /** @var string */
-    private $role;
-
-    /** @var string */
-    private $type;
-
-    /** @var Role[] */
-    private $children;
-
     /**
-     * @param string $role
      * @param Role[] $children
-     * @param string $type
      */
-    public function __construct($role, array $children = [], $type = 'global')
+    public function __construct(
+        private string $role, 
+        private array $children = [], 
+        private string $type = 'global'
+    )
     {
-        $this->role = (string) $role;
-        $this->type = (string) $type;
-        $this->children = $children;
     }
 
-    /**
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -43,7 +27,7 @@ class HierarchyRole extends Role
     /**
      * @return Role[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }

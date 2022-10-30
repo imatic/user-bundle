@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
             $error = null;
         }
 
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
+        $lastUsername = ($session->isStarted() === false) ? '' : $session->get($lastUsernameKey);
 
         $csrfToken = $tokenManager
             ? $tokenManager->getToken('authenticate')->getValue()

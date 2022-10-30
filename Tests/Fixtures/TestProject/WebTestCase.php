@@ -5,11 +5,8 @@ use Imatic\Bundle\TestingBundle\Test\WebTestCase as BaseWebTestCase;
 
 class WebTestCase extends BaseWebTestCase
 {
-    /**
-     * @return string
-     */
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
-        return 'Imatic\Bundle\UserBundle\Tests\Fixtures\TestProject\TestKernel';
+        return TestKernel::class;
     }
 }

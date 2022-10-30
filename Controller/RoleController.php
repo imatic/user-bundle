@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use Imatic\Bundle\UserBundle\Manager\GroupManager;
@@ -23,17 +24,19 @@ class RoleController extends AbstractController
 
     const TYPE_GROUP = 'group';
 
-    /**
-     * @param $type
-     * @param int $id
-     *
-     * @Route(
-     *     path="/display/{type}/{id}",
-     *     requirements={"type"="user|group", "id"="\d+"}
-     * )
-     * @Config\Template("@ImaticUser/Role/display.html.twig")
-     */
-    public function displayAction($type, $id, RoleProviderInterface $roleProvider)
+    #[
+        Route(
+            path: '/display/{type}/{id}',
+            requirements: [
+                'type' => 'user|group',
+                'id' => '\d+',
+            ]
+        ),
+        Config\Template(
+            '@ImaticUser/Role/display.html.twig'
+        )
+    ]
+    public function displayAction(mixed $type, int $id, RoleProviderInterface $roleProvider)
     {
         $roleMap = [];
 
@@ -49,20 +52,16 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param string  $type
-     * @param int     $id
-     * @param string  $role
-     *
-     * @return Response
-     *
      * @throws AccessDeniedException
-     * @Route(
-     *     path="/switch/{type}/{id}/{role}",
-     *     requirements={"type"="user|group", "id"="\d+"}
-     * )
      */
-    public function switchAction(Request $request, $type, $id, $role)
+    #[Route(
+        path: '/switch/{type}/{id}/{role}',
+        requirements: [
+            'type' => 'user|group',
+            'id' => '\d+',
+        ]
+    )]
+    public function switchAction(Request $request, string $type, int $id, string $role): Response
     {
         if (
             !$this->isGranted(\sprintf('ROLE_IMATIC_USER_ADMIN_%s_ROLE', \strtoupper($type)))
@@ -84,23 +83,12 @@ class RoleController extends AbstractController
         return new Response();
     }
 
-    /**
-     * @param string $type
-     *
-     * @return UserManager|GroupManager
-     */
-    private function getManager($type)
+    private function getManager(string $type): UserManager|GroupManager
     {
         return $this->get(\sprintf('imatic_user.manager.%s', $type));
     }
 
-    /**
-     * @param string $type
-     * @param int    $id
-     *
-     * @return UserInterface|GroupInterface
-     */
-    private function findObject($type, $id)
+    private function findObject(string $type, int $id): UserInterface|GroupInterface
     {
         $manager = $this->getManager($type);
         $object = $type === static::TYPE_USER
@@ -114,10 +102,7 @@ class RoleController extends AbstractController
         return $object;
     }
 
-    /**
-     * @param UserInterface|GroupInterface $object
-     */
-    private function updateObject($object): void
+    private function updateObject(UserInterface|GroupInterface $object): void
     {
         if ($object instanceof UserInterface) {
             $this->getManager(static::TYPE_USER)->updateUser($object);
@@ -126,7 +111,7 @@ class RoleController extends AbstractController
         }
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return \array_merge(
             [

@@ -7,8 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectRoleFactoryTest extends TestCase
 {
-    /** @var ObjectRoleFactory */
-    private $roleFactory;
+    private ObjectRoleFactory $roleFactory;
 
     /**
      * {@inheritdoc}

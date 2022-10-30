@@ -9,25 +9,17 @@ use Twig\TwigFunction;
 
 class SecurityExtension extends AbstractExtension
 {
-    /** @var RoleProviderInterface */
-    private $roleProvider;
-
-    /** @var RoleTranslator */
-    private $roleTranslator;
-
-    /**
-     * @param RoleProviderInterface $roleProvider
-     */
-    public function __construct(RoleProviderInterface $roleProvider, RoleTranslator $roleTranslator)
+    public function __construct(
+        private RoleProviderInterface $roleProvider,
+        private RoleTranslator $roleTranslator
+    )
     {
-        $this->roleProvider = $roleProvider;
-        $this->roleTranslator = $roleTranslator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [new TwigFunction('get_role', [$this->roleProvider, 'getRole'])];
     }
@@ -35,7 +27,7 @@ class SecurityExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('trans_role', [$this->roleTranslator, 'translateRole']),

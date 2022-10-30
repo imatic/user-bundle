@@ -2,33 +2,22 @@
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\Role;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RoleTranslator
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
     /** @var TranslationStrategyInterface[] */
-    private $strategies = [];
+    private array $strategies = [];
 
-    /** @var bool */
-    private $sorted;
+    private bool $sorted;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator
+    )
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * @param TranslationStrategyInterface $strategy
-     *
-     * @return $this
-     */
-    public function addStrategy(TranslationStrategyInterface $strategy)
+    public function addStrategy(TranslationStrategyInterface $strategy): self
     {
         $this->strategies[$strategy->getSupportedClass()] = $strategy;
         $this->sorted = false;
@@ -36,12 +25,7 @@ class RoleTranslator
         return $this;
     }
 
-    /**
-     * @param Role $role
-     *
-     * @return string
-     */
-    public function translateRole(Role $role)
+    public function translateRole(Role $role): string
     {
         if (!$this->sorted) {
             \uasort($this->strategies, function ($a, $b) {
@@ -59,57 +43,30 @@ class RoleTranslator
         return $this->trans($role->getRole());
     }
 
-    /**
-     * @param string $roleType
-     *
-     * @return string
-     */
-    public function translateRoleType($roleType)
+    public function translateRoleType(string $roleType): string
     {
         return $this->trans($roleType, 'role_types');
     }
 
-    /**
-     * @param string $domain
-     *
-     * @return string
-     */
-    public function translateRoleDomain($domain)
+    public function translateRoleDomain(string $domain): string
     {
         $translation = $this->trans('Plural', $domain);
 
         return $translation === 'Plural' ? $domain : $translation;
     }
 
-    /**
-     * @param $action
-     *
-     * @return string
-     */
-    public function translateRoleAction($action)
+    public function translateRoleAction($action): string
     {
         return $this->trans($action, 'role_actions');
     }
 
-    /**
-     * @param $label
-     * @param string $domain
-     *
-     * @return string
-     */
-    private function trans($label, $domain = 'roles')
+    private function trans($label, string $domain = 'roles'): string
     {
         /* @Ignore */
         return $this->translator->trans($label, [], $domain);
     }
 
-    /**
-     * @param TranslationStrategyInterface $a
-     * @param TranslationStrategyInterface $b
-     *
-     * @return int
-     */
-    private function compareStrategies(TranslationStrategyInterface $a, TranslationStrategyInterface $b)
+    private function compareStrategies(TranslationStrategyInterface $a, TranslationStrategyInterface $b): int
     {
         $aClass = $a->getSupportedClass();
         $bClass = $b->getSupportedClass();

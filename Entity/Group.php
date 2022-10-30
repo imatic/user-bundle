@@ -20,14 +20,20 @@ class Group implements GroupInterface
     ]
     protected int $id;
 
-    /**
-     * @Assert\NotBlank(groups={"Registration"})
-     * @Assert\Length(min=2, max=255, groups={"Registration"})
-     */
-    #[ORM\Column(
-        type: 'string',
-        unique: true,
-    )]
+    #[
+        ORM\Column(
+            type: 'string',
+            unique: true,
+        ),
+        Assert\NotBlank(
+            groups: ['Registration']
+        ),
+        Assert\Length(
+            min: 2,
+            groups: ['Registration'],
+            max: 255,
+        ),
+    ]
     protected string $name;
 
     #[ORM\Column(
