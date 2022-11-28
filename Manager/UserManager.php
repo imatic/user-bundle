@@ -15,7 +15,11 @@ class UserManager
     private EncoderFactoryInterface $encoderFactory;
     private string $userClass;
 
-    public function __construct(EntityManagerInterface $om, EncoderFactoryInterface $encoderFactory, string $userClass)
+    public function __construct(
+        EntityManagerInterface $om,
+        EncoderFactoryInterface $encoderFactory,
+        string $userClass
+    )
     {
         $this->em = $om;
         $this->encoderFactory = $encoderFactory;

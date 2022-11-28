@@ -241,6 +241,11 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->usernameCanonical;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
     public function setEmail(string $email): UserInterface
     {
         $this->email = (string)$email;
