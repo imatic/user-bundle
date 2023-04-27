@@ -6,7 +6,6 @@ use Symfony\Component\Security\Core\Role\Role as BaseRole;
 abstract class Role extends BaseRole
 {
     abstract public function getType(): string;
-    abstract public function getRole(): string;
 
     public function getAction(): string
     {

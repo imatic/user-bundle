@@ -5,6 +5,7 @@ use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
 use Imatic\Bundle\UserBundle\Security\Role\Role;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ChainRoleProviderTest extends TestCase
@@ -44,7 +45,7 @@ class ChainRoleProviderTest extends TestCase
     /**
      * @param Role[] $roles
      */
-    private function createRoleProviderMock(array $roles): PHPUnit\Framework\MockObject\MockObject
+    private function createRoleProviderMock(array $roles): MockObject
     {
         $roleProviderMock = $this->createMock(RoleProviderInterface::class);
         $roleProviderMock

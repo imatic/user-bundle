@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ModelRoleProviderTest extends TestCase
@@ -105,14 +106,14 @@ class ModelRoleProviderTest extends TestCase
         $this->assertEquals('group', $role->getProperty());
     }
 
-    private function createClassMetadataFactoryMock():  PHPUnit\Framework\MockObject\MockObject
+    private function createClassMetadataFactoryMock():  MockObject
     {
         $metadataFactoryMock = $this->createMock(ClassMetadataFactory::class);
-        $aMetadata = new ClassMetadata(ClassA::class);
+        $aMetadata = new ClassMetadata('Vendor\Foo\Entity\ClassA');
         $aMetadata->mapField(['fieldName' => 'propertyA']);
         $aMetadata->mapField(['fieldName' => 'propertyB']);
         $aMetadata->mapManyToOne(['fieldName' => 'association', 'targetEntity' => '']);
-        $bMetadata = new ClassMetadata(ClassB::class);
+        $bMetadata = new ClassMetadata('Vendor\Foo\Entity\Bar\ClassB');
         $bMetadata->mapField(['fieldName' => 'property']);
         $metadataFactoryMock
             ->expects($this->any())

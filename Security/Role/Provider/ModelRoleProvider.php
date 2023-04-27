@@ -240,7 +240,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         return $this->propertyGroups;
     }
 
-    private function compareFilters(string $a, string $b): int
+    private function compareFilters($a, $b): int
     {
         if ($a[1] === $b[1]) {
             return 0;

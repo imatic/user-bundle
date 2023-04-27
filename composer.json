@@ -22,17 +22,15 @@
         "doctrine/doctrine-bundle": "^2.1.2",
         "imatic/view-bundle": "dev-symfony54 as 5.0.13",
         "imatic/controller-bundle": "^5.0.0",
-        "sensio/framework-extra-bundle": "^6.2"
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/security-bundle": "^5.4"
     },
     "require-dev": {
         "imatic/testing": "^6.0.2",
         "phpmd/phpmd": "^2.6",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
-        "symfony/web-profiler-bundle": "^4.4",
         "imatic/form-bundle": "^5.0",
-        "symfony/yaml": "^4.4",
-        "symfony/expression-language": "^4.4",
-        "symfony/asset": "^4.4"
+        "doctrine/annotations": "^1.0"
     },
     "autoload": {
         "psr-4": {

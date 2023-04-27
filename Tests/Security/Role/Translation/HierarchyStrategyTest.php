@@ -3,8 +3,9 @@ namespace Imatic\Bundle\UserBundle\Tests\Security\Role\Translation;
 
 use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 use Imatic\Bundle\UserBundle\Security\Role\Translation\HierarchyStrategy;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HierarchyStrategyTest extends TestCase
 {
@@ -28,9 +29,9 @@ class HierarchyStrategyTest extends TestCase
         $this->assertEquals('ROLE (ROLE_A, ROLE_B)', $this->strategy->translate($hierarchy));
     }
 
-    private function createTranslatorMock(): \PHPUnit\Framework\MockObject\MockObject
+    private function createTranslatorMock(): MockObject
     {
-        $translatorMock = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translatorMock = $this->createMock(TranslatorInterface::class);
         $translatorMock
             ->expects($this->any())
             ->method('trans')
