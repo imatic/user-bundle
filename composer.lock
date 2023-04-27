@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af568ee723e8a01bb56b02d985ee2b73",
+    "content-hash": "2d03d409188a5f4a58d3258318e99959",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1353,16 +1353,16 @@
         },
         {
             "name": "imatic/view-bundle",
-            "version": "dev-symfony54",
+            "version": "v5.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/view-bundle.git",
-                "reference": "2068990e4b3d6a8a110d98208395931bf6761e9b"
+                "reference": "158629fffaab38916389cc6aa1581e289d3acd3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/view-bundle/zipball/2068990e4b3d6a8a110d98208395931bf6761e9b",
-                "reference": "2068990e4b3d6a8a110d98208395931bf6761e9b",
+                "url": "https://api.github.com/repos/imatic/view-bundle/zipball/158629fffaab38916389cc6aa1581e289d3acd3b",
+                "reference": "158629fffaab38916389cc6aa1581e289d3acd3b",
                 "shasum": ""
             },
             "require": {
@@ -1370,20 +1370,20 @@
                 "ext-json": "*",
                 "knplabs/knp-menu-bundle": "^2.3|^3.0",
                 "php": "^7.2 || ^8.0",
-                "symfony/asset": "^4.4|^5.0",
-                "symfony/expression-language": "^4.4|^5.0",
-                "symfony/framework-bundle": "^4.4|^5.0",
-                "symfony/security-bundle": "^4.4|^5.0",
+                "symfony/asset": "^4.4 || ^5.0 || ^6.2",
+                "symfony/expression-language": "^4.4 || ^5.0 || ^6.2",
+                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.2",
+                "symfony/security-bundle": "^4.4 || ^5.0 || ^6.2",
                 "twig/twig": "^2.12|^3.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.7",
+                "friendsofphp/php-cs-fixer": "^3.16",
                 "imatic/form-bundle": "^5.0",
                 "imatic/testing": "^6.0",
-                "symfony/browser-kit": "^4.4|^5.0",
-                "symfony/phpunit-bridge": "^4.4|^5.0",
-                "symfony/web-profiler-bundle": "^4.4|^5.0",
-                "symfony/yaml": "^4.4|^5.0"
+                "symfony/browser-kit": "^4.4 || ^5.0 || ^6.2",
+                "symfony/phpunit-bridge": "^4.4 || ^5.0 || ^6.2",
+                "symfony/web-profiler-bundle": "^4.4 || ^5.0 || ^6.2",
+                "symfony/yaml": "^4.4 || ^5.0 || ^6.2"
             },
             "type": "library",
             "autoload": {
@@ -1412,9 +1412,9 @@
             "homepage": "https://www.imatic.cz",
             "support": {
                 "issues": "https://github.com/imatic/view-bundle/issues",
-                "source": "https://github.com/imatic/view-bundle/tree/symfony54"
+                "source": "https://github.com/imatic/view-bundle/tree/v5.1.1"
             },
-            "time": "2022-12-26T22:07:35+00:00"
+            "time": "2023-04-05T08:47:04+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -8417,18 +8417,9 @@
             "time": "2021-07-28T10:34:58+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "imatic/view-bundle",
-            "version": "dev-symfony54",
-            "alias": "5.0.13",
-            "alias_normalized": "5.0.13.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "imatic/view-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
