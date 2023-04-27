@@ -13,8 +13,7 @@ class ChainRoleProvider implements RoleProviderInterface
      */
     public function __construct(
         private array $roleProviders = []
-    )
-    {
+    ) {
     }
 
     /**

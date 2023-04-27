@@ -13,8 +13,7 @@ class UserType extends AbstractType
 {
     public function __construct(
         private string $userClass
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace Imatic\Bundle\UserBundle\Controller;
 
 use Imatic\Bundle\UserBundle\Manager\GroupManager;
@@ -16,6 +15,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/imatic/user/role")
+ *
  * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
 class RoleController extends AbstractController

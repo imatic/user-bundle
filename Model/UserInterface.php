@@ -17,43 +17,43 @@ interface UserInterface extends BaseUserInterface
 
     public function getId(): ?int;
 
-    public function setUsername(string $username): UserInterface;
+    public function setUsername(string $username): self;
 
     public function getUsernameCanonical(): string;
 
-    public function setUsernameCanonical(string $usernameCanonical): UserInterface;
+    public function setUsernameCanonical(string $usernameCanonical): self;
 
-    public function setSalt(?string $salt): UserInterface;
+    public function setSalt(?string $salt): self;
 
     public function getEmail(): string;
 
-    public function setEmail(string $email): UserInterface;
+    public function setEmail(string $email): self;
 
     public function getEmailCanonical(): string;
 
-    public function setEmailCanonical(string $emailCanonical): UserInterface;
+    public function setEmailCanonical(string $emailCanonical): self;
 
     public function getPlainPassword():?string;
 
-    public function setPlainPassword(string $password): UserInterface;
+    public function setPlainPassword(string $password): self;
 
-    public function setPassword(string $password): UserInterface;
+    public function setPassword(string $password): self;
 
     public function isSuperAdmin(): bool;
 
-    public function setEnabled(bool $boolean): UserInterface;
+    public function setEnabled(bool $boolean): self;
 
-    public function setSuperAdmin(bool $boolean): UserInterface;
+    public function setSuperAdmin(bool $boolean): self;
 
     public function getConfirmationToken():?string;
 
-    public function setConfirmationToken(?string $confirmationToken): UserInterface;
+    public function setConfirmationToken(?string $confirmationToken): self;
 
-    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface;
+    public function setPasswordRequestedAt(\DateTime $date = null): self;
 
     public function isPasswordRequestNonExpired(int $ttl): bool;
 
-    public function setLastLogin(\DateTime $time = null): UserInterface;
+    public function setLastLogin(\DateTime $time = null): self;
 
     /**
      * Never use this to check if this user has access to anything!
@@ -71,11 +71,11 @@ interface UserInterface extends BaseUserInterface
      * This overwrites any previous roles.
      *
      */
-    public function setRoles(array $roles): UserInterface;
+    public function setRoles(array $roles): self;
 
-    public function addRole(string $role): UserInterface;
+    public function addRole(string $role): self;
 
-    public function removeRole(string $role): UserInterface;
+    public function removeRole(string $role): self;
 
     /**
      * Checks whether the user's account has expired.

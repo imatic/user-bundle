@@ -33,8 +33,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
 
     public function __construct(
         private ClassMetadataFactory $metadataFactory
-    )
-    {
+    ) {
         $this->roleFactory = new ObjectRoleFactory();
         $this->setConfig();
     }
@@ -72,8 +71,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         object|string $object,
         string $property,
         string $action
-    ): ?ObjectRole
-    {
+    ): ?ObjectRole {
         $this->getRoles();
         $class = $this->getClass($object);
         $propertyGroups = $this->getPropertyGroups();
@@ -139,7 +137,7 @@ class ModelRoleProvider implements RoleProviderInterface, ConfigAwareInterface
         $propertyIncludes = $this->getPropertyIncludes();
         $propertyExcludes = $this->getPropertyExcludes();
         $propertyGroups = $this->getPropertyGroups();
-        $properties = (isset($metadata->name) && isset($propertyIncludes[$metadata->name]))
+        $properties = (isset($metadata->name, $propertyIncludes[$metadata->name]))
             ? $propertyIncludes[$metadata->name]
             : \array_merge($metadata->getFieldNames(), $metadata->getAssociationNames());
 

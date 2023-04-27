@@ -13,8 +13,7 @@ class HierarchyRoleProvider implements RoleProviderInterface
      */
     public function __construct(
         private array $roleHierarchy
-    )
-    {
+    ) {
     }
 
     /**

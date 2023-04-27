@@ -1,14 +1,13 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Security\Role\Translation;
 
-use \Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class TranslationStrategy implements TranslationStrategyInterface
 {
     public function __construct(
         private TranslatorInterface $translator
-    )
-    {
+    ) {
     }
 
     /**

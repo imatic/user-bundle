@@ -21,8 +21,7 @@ class Mailer
         HtmlEmailBuilder                          $htmlEmailBuilder,
         string                                    $resettingFromEmail,
         string                                    $resettingFromSenderName
-    )
-    {
+    ) {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->twig = $twig;
@@ -40,7 +39,7 @@ class Mailer
             'confirmationUrl' => $url,
         ];
 
-        $this->sendMessage($template, $context, $this->resettingFromEmail, (string)$user->getEmail(), $this->resettingFromSenderName);
+        $this->sendMessage($template, $context, $this->resettingFromEmail, (string) $user->getEmail(), $this->resettingFromSenderName);
     }
 
     private function sendMessage(string $templateName, array $context, string $fromEmail, string $toEmail, string $senderName): void
@@ -57,7 +56,6 @@ class Mailer
             ->subject($subject)
             ->from($address)
             ->to($toEmail);
-
 
         if (!empty($htmlBody)) {
             $htmlBody = $this->htmlEmailBuilder->build($htmlBody);

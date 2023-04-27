@@ -2,7 +2,6 @@
 namespace Imatic\Bundle\UserBundle\Data\Handler\User;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
-use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\UserBundle\Manager\UserManager;
 

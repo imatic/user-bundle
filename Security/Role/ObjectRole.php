@@ -9,8 +9,8 @@ class ObjectRole extends Role
         private string $type,
         private string $name,
         private string $property,
-        private string $action)
-    {
+        private string $action
+    ) {
     }
 
     /**

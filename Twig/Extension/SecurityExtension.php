@@ -12,8 +12,7 @@ class SecurityExtension extends AbstractExtension
     public function __construct(
         private RoleProviderInterface $roleProvider,
         private RoleTranslator $roleTranslator
-    )
-    {
+    ) {
     }
 
     /**

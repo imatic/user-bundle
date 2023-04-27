@@ -11,8 +11,7 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
 {
     public function __construct(
         private string $class
-    )
-    {
+    ) {
     }
 
     public function build(EntityManager $em): QueryBuilder

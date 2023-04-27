@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace Imatic\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -78,7 +77,7 @@ class Group implements GroupInterface
 
     public function addRole(string $role): static
     {
-        $role = (string)$role;
+        $role = (string) $role;
         $role = \strtoupper($role);
 
         if (!$this->hasRole($role)) {
@@ -90,7 +89,7 @@ class Group implements GroupInterface
 
     public function removeRole(string $role): static
     {
-        $role = (string)$role;
+        $role = (string) $role;
 
         if (false !== $key = \array_search(\strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -107,13 +106,13 @@ class Group implements GroupInterface
 
     public function hasRole(string $role): bool
     {
-        $role = (string)$role;
+        $role = (string) $role;
 
         return \in_array(\strtoupper($role), $this->roles, true);
     }
 
     public function __toString(): string
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 }

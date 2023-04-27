@@ -5,6 +5,7 @@ class CommandUtil
 {
     /**
      * Ensure that PHPExcel is available.
+     *
      * @throws \RuntimeException
      */
     public static function checkPhpExcel(OutputInterface $output): void

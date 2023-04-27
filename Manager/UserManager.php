@@ -19,8 +19,7 @@ class UserManager
         EntityManagerInterface $om,
         EncoderFactoryInterface $encoderFactory,
         string $userClass
-    )
-    {
+    ) {
         $this->em = $om;
         $this->encoderFactory = $encoderFactory;
         $this->userClass = $userClass;
@@ -32,7 +31,7 @@ class UserManager
     public function createUser(): UserInterface
     {
         $class = $this->getClass();
-        $user = new $class;
+        $user = new $class();
 
         return $user;
     }

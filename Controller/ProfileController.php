@@ -44,7 +44,7 @@ class ProfileController extends AbstractController
             $this->createAccessDeniedException();
         }
 
-        assert($user instanceof UserInterface);
+        \assert($user instanceof UserInterface);
         $form = $this->createForm(ProfileType::class, $user, ['data_class' => $user::class]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

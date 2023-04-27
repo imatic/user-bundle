@@ -36,6 +36,7 @@ class RoleDocumentWriter
 
     /**
      * Create and save the document.
+     *
      * @return string file path
      */
     public function write(string $savePath): string

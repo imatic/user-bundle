@@ -52,4 +52,3 @@ class SecurityPass implements CompilerPassInterface
         }
     }
 }
-  

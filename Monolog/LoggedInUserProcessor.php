@@ -8,8 +8,7 @@ class LoggedInUserProcessor
 {
     public function __construct(
         private TokenStorageInterface $tokenStorage
-    )
-    {
+    ) {
     }
 
     public function processRecord(array $record)

@@ -7,8 +7,7 @@ class ParentRole extends Role
 {
     public function __construct(
         private string $role
-    )
-    {
+    ) {
     }
 
     public function getRole(): string

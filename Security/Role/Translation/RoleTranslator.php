@@ -13,8 +13,7 @@ class RoleTranslator
 
     public function __construct(
         private TranslatorInterface $translator
-    )
-    {
+    ) {
     }
 
     public function addStrategy(TranslationStrategyInterface $strategy): self

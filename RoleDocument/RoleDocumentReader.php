@@ -17,7 +17,7 @@ class RoleDocumentReader implements IteratorAggregate
 {
     private ?PHPExcel $document = null;
 
-    public function open(string $path): RoleDocumentReader
+    public function open(string $path): self
     {
         $reader = PHPExcel_IOFactory::createReader('Excel2007');
 

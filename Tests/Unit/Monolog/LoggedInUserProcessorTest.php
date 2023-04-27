@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Unit\Monolog;
 
-use Imatic\Bundle\UserBundle\Entity\Group;
 use Imatic\Bundle\UserBundle\Entity\User;
 use Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor;
 use PHPUnit\Framework\TestCase;

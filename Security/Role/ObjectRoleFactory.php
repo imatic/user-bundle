@@ -10,8 +10,7 @@ class ObjectRoleFactory
         object|string $object,
         string $property,
         string $action
-    ): ObjectRole
-    {
+    ): ObjectRole {
         $arguments = $this->parseClassName($object);
 
         return new ObjectRole(

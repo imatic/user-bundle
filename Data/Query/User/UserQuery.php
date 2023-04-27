@@ -9,10 +9,9 @@ use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
 {
     public function __construct(
-        private int $id, 
+        private int $id,
         private string $class
-    )
-    {
+    ) {
     }
 
     public function build(EntityManager $em): QueryBuilder
