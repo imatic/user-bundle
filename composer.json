@@ -28,7 +28,6 @@
     },
     "require-dev": {
         "imatic/testing": "^6.0.2",
-        "phpmd/phpmd": "^2.6",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "imatic/form-bundle": "^5.0",
         "doctrine/annotations": "^2.0"

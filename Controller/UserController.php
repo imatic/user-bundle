@@ -62,8 +62,6 @@ class UserController implements ContainerAwareInterface
 
     /**
      * @Route("/create", methods={"GET", "POST"}, name="imatic_user_user_create")
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function createAction()
     {
