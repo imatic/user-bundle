@@ -34,79 +34,35 @@ abstract class RoleDocument
     {
     }
 
-    /**
-     * Role state to string.
-     *
-     * @param bool $state
-     *
-     * @return string
-     */
-    public static function stateToString($state)
+    public static function stateToString(bool $state): string
     {
         return $state ? 'x' : '-';
     }
 
-    /**
-     * Role string to state.
-     *
-     * @param string $string
-     *
-     * @return bool
-     */
-    public static function stringToState($string)
+    public static function stringToState(string $string): bool
     {
         return 'x' === \strtolower(\trim($string));
     }
 
     /**
-     * Get column name.
-     *
      * @param int $column (0 based)
-     *
-     * @return string
      */
-    public static function getColumn($column)
+    public static function getColumn(int $column): string
     {
         return PHPExcel_Cell::stringFromColumnIndex($column);
     }
 
-    /**
-     * Get cell at given row and column offset.
-     *
-     * @param PHPExcel_Worksheet $sheet
-     * @param int                $row
-     * @param int                $column
-     *
-     * @return PHPExcel_Cell
-     */
-    public static function getCell(PHPExcel_Worksheet $sheet, $row, $column = 0)
+    public static function getCell(PHPExcel_Worksheet $sheet, int $row, int $column = 0): PHPExcel_Cell
     {
         return $sheet->getCell(self::getCellCoord($row, $column));
     }
 
-    /**
-     * Get cell coordinate at given row and column offset.
-     *
-     * @param int $row
-     * @param int $column
-     *
-     * @return string
-     */
-    public static function getCellCoord($row, $column = 0)
+    public static function getCellCoord(int $row, int $column = 0): string
     {
         return \sprintf('%s%s', self::getColumn($column), $row);
     }
 
-    /**
-     * Get column range coordinates.
-     *
-     * @param int $row
-     * @param int $startColumn
-     * @param int $endColumn
-     *
-     * @return string
-     */
-    public static function getColumnRange($row, $startColumn, $endColumn)
+    public static function getColumnRange(int $row, int $startColumn, int $endColumn): string
     {
         return \sprintf(
             '%s:%s',
@@ -115,16 +71,7 @@ abstract class RoleDocument
         );
     }
 
-    /**
-     * Get row range coordinates.
-     *
-     * @param int $column
-     * @param int $startRow
-     * @param int $endRow
-     *
-     * @return string
-     */
-    public static function getRowRange($column, $startRow, $endRow)
+    public static function getRowRange(int $column, int $startRow, int $endRow): string
     {
         return \sprintf(
             '%s:%s',

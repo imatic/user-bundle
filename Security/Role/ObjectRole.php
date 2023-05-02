@@ -3,46 +3,20 @@ namespace Imatic\Bundle\UserBundle\Security\Role;
 
 class ObjectRole extends Role
 {
-    /** @var string */
-    private $vendor;
-
-    /** @var string */
-    private $bundle;
-
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $property;
-
-    /** @var string */
-    private $action;
-
-    /**
-     * @param string $vendor
-     * @param string $bundle
-     * @param string $type
-     * @param string $name
-     * @param string $property
-     * @param string $action
-     */
-    public function __construct($vendor, $bundle, $type, $name, $property, $action)
-    {
-        $this->vendor = (string) $vendor;
-        $this->bundle = (string) $bundle;
-        $this->type = (string) $type;
-        $this->name = (string) $name;
-        $this->property = (string) $property;
-        $this->action = (string) $action;
+    public function __construct(
+        private string $vendor,
+        private string $bundle,
+        private string $type,
+        private string $name,
+        private string $property,
+        private string $action
+    ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRole()
+    public function getRole(): string
     {
         return \strtoupper(\sprintf(
             'ROLE_%s_%s_%s_%s.%s_%s',
@@ -55,18 +29,12 @@ class ObjectRole extends Role
         ));
     }
 
-    /**
-     * @return string
-     */
-    public function getVendor()
+    public function getVendor(): string
     {
         return $this->vendor;
     }
 
-    /**
-     * @return string
-     */
-    public function getBundle()
+    public function getBundle(): string
     {
         return $this->bundle;
     }
@@ -74,23 +42,17 @@ class ObjectRole extends Role
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getProperty()
+    public function getProperty(): string
     {
         return $this->property;
     }
@@ -98,7 +60,7 @@ class ObjectRole extends Role
     /**
      * {@inheritdoc}
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -106,7 +68,7 @@ class ObjectRole extends Role
     /**
      * {@inheritdoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->property;
     }
@@ -114,7 +76,7 @@ class ObjectRole extends Role
     /**
      * {@inheritdoc}
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         return \sprintf('%s%sBundle%s', $this->vendor, $this->bundle, $this->name);
     }

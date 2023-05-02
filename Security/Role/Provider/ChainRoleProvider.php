@@ -5,26 +5,23 @@ use Imatic\Bundle\UserBundle\Security\Role\Role;
 
 class ChainRoleProvider implements RoleProviderInterface
 {
-    /** @var RoleProviderInterface[] */
-    private $roleProviders;
-
     /** @var Role[] */
-    private $roles;
+    private array $roles;
 
     /**
      * @param RoleProviderInterface[] $roleProviders
      */
-    public function __construct(array $roleProviders = [])
-    {
-        $this->roleProviders = $roleProviders;
+    public function __construct(
+        private array $roleProviders = []
+    ) {
     }
 
     /**
      * @return Role[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        if ($this->roles === null) {
+        if (empty($this->roles)) {
             $this->roles = [];
 
             foreach ($this->roleProviders as $roleProvider) {
@@ -35,9 +32,6 @@ class ChainRoleProvider implements RoleProviderInterface
         return $this->roles;
     }
 
-    /**
-     * @param RoleProviderInterface $roleProvider
-     */
     public function addRoleProvider(RoleProviderInterface $roleProvider): void
     {
         $this->roleProviders[] = $roleProvider;

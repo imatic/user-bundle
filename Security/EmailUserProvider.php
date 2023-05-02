@@ -22,7 +22,7 @@ class EmailUserProvider implements UserProviderInterface
         $this->userManager = $userManager;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(\sprintf('Expected an instance of Imatic\Bundle\UserBundle\Entity\User, but got "%s".', \get_class($user)));
@@ -39,7 +39,7 @@ class EmailUserProvider implements UserProviderInterface
         return $reloadedUser;
     }
 
-    public function loadUserByUsername($username): UserInterface
+    public function loadUserByUsername(string $username): UserInterface
     {
         $user = $this->userManager->findUserByUsernameOrEmail($username);
 
@@ -48,6 +48,11 @@ class EmailUserProvider implements UserProviderInterface
         }
 
         return $user;
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->loadUserByUsername($identifier);
     }
 
     public function supportsClass($class): bool

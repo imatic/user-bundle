@@ -15,11 +15,25 @@ class UserManager
     private EncoderFactoryInterface $encoderFactory;
     private string $userClass;
 
-    public function __construct(EntityManagerInterface $om, EncoderFactoryInterface $encoderFactory, string $userClass)
-    {
+    public function __construct(
+        EntityManagerInterface $om,
+        EncoderFactoryInterface $encoderFactory,
+        string $userClass
+    ) {
         $this->em = $om;
         $this->encoderFactory = $encoderFactory;
         $this->userClass = $userClass;
+    }
+
+    /**
+     * Returns an empty user instance
+     */
+    public function createUser(): UserInterface
+    {
+        $class = $this->getClass();
+        $user = new $class();
+
+        return $user;
     }
 
     private function getRepository(): ObjectRepository

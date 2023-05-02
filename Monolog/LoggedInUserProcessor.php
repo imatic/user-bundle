@@ -6,12 +6,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class LoggedInUserProcessor
 {
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
-
-    public function __construct(TokenStorageInterface $tokenStorage)
-    {
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(
+        private TokenStorageInterface $tokenStorage
+    ) {
     }
 
     public function processRecord(array $record)

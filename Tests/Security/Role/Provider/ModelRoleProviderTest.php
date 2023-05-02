@@ -5,12 +5,12 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Imatic\Bundle\UserBundle\Security\Role\ObjectRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ModelRoleProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ModelRoleProviderTest extends TestCase
 {
-    /** @var ModelRoleProvider */
-    private $roleProvider;
+    private ModelRoleProvider $roleProvider;
 
     /**
      * {@inheritdoc}
@@ -106,10 +106,7 @@ class ModelRoleProviderTest extends TestCase
         $this->assertEquals('group', $role->getProperty());
     }
 
-    /**
-     * @return ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createClassMetadataFactoryMock()
+    private function createClassMetadataFactoryMock():  MockObject
     {
         $metadataFactoryMock = $this->createMock(ClassMetadataFactory::class);
         $aMetadata = new ClassMetadata('Vendor\Foo\Entity\ClassA');

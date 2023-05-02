@@ -9,21 +9,11 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInter
 
 class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterface, FilterableQueryObjectInterface
 {
-    /**
-     * @var string
-     */
-    private $class;
-
-    public function __construct($class)
-    {
-        $this->class = $class;
+    public function __construct(
+        private string $class
+    ) {
     }
 
-    /**
-     * @param EntityManager $em
-     *
-     * @return QueryBuilder
-     */
     public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
@@ -31,10 +21,7 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
             ->from($this->class, 'u');
     }
 
-    /**
-     * @return array
-     */
-    public function getSorterMap()
+    public function getSorterMap(): array
     {
         return [
             'username' => 'u.username',
@@ -44,15 +31,12 @@ class UserListQuery implements QueryObjectInterface, SortableQueryObjectInterfac
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultSort()
+    public function getDefaultSort(): array
     {
         return ['username' => 'ASC'];
     }
 
-    public function getFilterMap()
+    public function getFilterMap(): array
     {
         return [
             'username' => 'u.username',

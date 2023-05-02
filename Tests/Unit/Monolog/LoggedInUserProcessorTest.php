@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\UserBundle\Tests\Unit\Monolog;
 
-use Imatic\Bundle\UserBundle\Entity\Group;
 use Imatic\Bundle\UserBundle\Entity\User;
 use Imatic\Bundle\UserBundle\Monolog\LoggedInUserProcessor;
 use PHPUnit\Framework\TestCase;
@@ -30,33 +29,18 @@ class LoggedInUserProcessorTest extends TestCase
                 [],
                 [],
             ],
-            'string user' => [
-                $this->createTokenWithUser('string-user'),
-                [],
-                ['context' => ['user' => ['string' => 'string-user']]],
-            ],
             'user implementing UserInterface' => [
                 $this->createTokenWithUser((new User())->setUsername('username-is-this')),
                 [],
                 ['context' => ['user' => ['username' => 'username-is-this']]],
             ],
-            'user having __toString method' => [
-                $this->createTokenWithUser(new Group('group-name')),
-                [],
-                ['context' => ['user' => ['string' => 'group-name']]],
-            ],
         ];
     }
 
-    /**
-     * @param mixed $user
-     *
-     * @return TokenStorageInterface
-     */
-    private function createTokenWithUser($user)
+    private function createTokenWithUser(mixed $user): TokenStorageInterface
     {
         $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken(new UsernamePasswordToken($user, 'credentials', 'provider-key'));
+        $tokenStorage->setToken(new UsernamePasswordToken($user, 'credentials', []));
 
         return $tokenStorage;
     }

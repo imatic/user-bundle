@@ -5,95 +5,66 @@ use Doctrine\ORM\Mapping as ORM;
 use Imatic\Bundle\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Group.
- *
- * @author Viliam Husár <viliam.husar@imatic.cz>
- *
- * @ORM\MappedSuperclass()
- */
+#[ORM\MappedSuperclass()]
 class Group implements GroupInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[
+        ORM\Column(
+            type: 'integer',
+        ),
+        ORM\Id(),
+        ORM\GeneratedValue(
+            strategy: 'AUTO',
+        ),
+    ]
+    protected int $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank(groups={"Registration"})
-     * @Assert\Length(min=2, max=255, groups={"Registration"})
-     */
-    protected $name;
+    #[
+        ORM\Column(
+            type: 'string',
+            unique: true,
+        ),
+        Assert\NotBlank(
+            groups: ['Registration']
+        ),
+        Assert\Length(
+            min: 2,
+            groups: ['Registration'],
+            max: 255,
+        ),
+    ]
+    protected string $name;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(type="array")
-     */
-    protected $roles;
+    #[ORM\Column(
+        type: 'array',
+    )]
+    protected array $roles;
 
-    /**
-     * Constructor.
-     *
-     * @param string $name
-     * @param array  $roles
-     */
-    public function __construct($name = null, $roles = [])
+    public function __construct(string $name = null, array $roles = [])
     {
         $this
             ->setName($name)
             ->setRoles($roles);
     }
 
-    /**
-     * Returns ID.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Sets name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Returns name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Sets roles.
-     *
-     * @param array $roles
-     *
-     * @return $this
-     */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): static
     {
         $this->roles = [];
 
@@ -104,14 +75,7 @@ class Group implements GroupInterface
         return $this;
     }
 
-    /**
-     * Adds role.
-     *
-     * @param string $role
-     *
-     * @return $this
-     */
-    public function addRole($role)
+    public function addRole(string $role): static
     {
         $role = (string) $role;
         $role = \strtoupper($role);
@@ -123,14 +87,7 @@ class Group implements GroupInterface
         return $this;
     }
 
-    /**
-     * Removes role.
-     *
-     * @param string $role
-     *
-     * @return $this
-     */
-    public function removeRole($role)
+    public function removeRole(string $role): static
     {
         $role = (string) $role;
 
@@ -142,31 +99,19 @@ class Group implements GroupInterface
         return $this;
     }
 
-    /**
-     * Returns roles.
-     *
-     * @return array
-     */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
 
-    /**
-     * Returns true if user has role.
-     *
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         $role = (string) $role;
 
         return \in_array(\strtoupper($role), $this->roles, true);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->name;
     }

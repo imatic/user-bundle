@@ -5,29 +5,17 @@ use Imatic\Bundle\UserBundle\Security\Role\Role;
 
 class ParentRole extends Role
 {
-    /** @var string */
-    private $role;
-
-    /**
-     * @param string $role
-     */
-    public function __construct($role)
-    {
-        $this->role = (string) $role;
+    public function __construct(
+        private string $role
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'type';
     }

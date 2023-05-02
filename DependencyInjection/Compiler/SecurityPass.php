@@ -9,24 +9,18 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class SecurityPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container): void
     {
         $this->processRoleProviders($container);
         $this->processTranslationStrategies($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function processRoleProviders(ContainerBuilder $container): void
     {
         $config = $container->getExtensionConfig('imatic_user');
         $processor = new Processor();
         $configuration = $processor->processConfiguration(new Configuration(), $config);
-        $definition = $container->getDefinition('imatic_user.security.role.provider.chain_role_provider');
+        $definition = $container->getDefinition(\Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider::class);
         $roleProviders = $configuration['security']['role'];
 
         foreach ($container->findTaggedServiceIds('imatic_user.role_provider') as $id => $tagAttributes) {
@@ -49,12 +43,9 @@ class SecurityPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function processTranslationStrategies(ContainerBuilder $container): void
     {
-        $definition = $container->getDefinition('imatic_user.security.role.translation.role_translator');
+        $definition = $container->getDefinition(\Imatic\Bundle\UserBundle\Security\Role\Translation\RoleTranslator::class);
 
         foreach (\array_keys($container->findTaggedServiceIds('imatic_user.role_translation_strategy')) as $id) {
             $definition->addMethodCall('addStrategy', [new Reference($id)]);

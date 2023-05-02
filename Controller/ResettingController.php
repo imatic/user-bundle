@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/resetting", name="fos_user_resetting_")
+ * @Route("/resetting", name="user_resetting_")
  */
 class ResettingController extends AbstractController
 {
@@ -41,7 +41,7 @@ class ResettingController extends AbstractController
 
         if (null !== $user && !$user->isPasswordRequestNonExpired($this->retryTtl)) {
             if (!$user->isAccountNonLocked()) {
-                return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
+                return new RedirectResponse($this->generateUrl('user_resetting_request'));
             }
 
             if (null === $user->getConfirmationToken()) {
@@ -53,7 +53,7 @@ class ResettingController extends AbstractController
             $userManager->updateUser($user);
         }
 
-        return new RedirectResponse($this->generateUrl('fos_user_resetting_check_email', ['username' => $username]));
+        return new RedirectResponse($this->generateUrl('user_resetting_check_email', ['username' => $username]));
     }
 
     /**
@@ -64,7 +64,7 @@ class ResettingController extends AbstractController
         $username = $request->query->get('username');
 
         if (empty($username)) {
-            return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
+            return new RedirectResponse($this->generateUrl('user_resetting_request'));
         }
 
         return $this->render('@ImaticUser/Resetting/check_email.html.twig', [
@@ -79,11 +79,11 @@ class ResettingController extends AbstractController
     {
         $user = $userManager->findUserByConfirmationToken($token);
         if (null === $user) {
-            return new RedirectResponse($this->generateUrl('fos_user_security_login'));
+            return new RedirectResponse($this->generateUrl('user_security_login'));
         }
 
         if (!$user->isPasswordRequestNonExpired($this->tokenTtl)) {
-            return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
+            return new RedirectResponse($this->generateUrl('user_resetting_request'));
         }
 
         $form = $this->createForm(ResettingFormType::class, $user);
@@ -94,7 +94,7 @@ class ResettingController extends AbstractController
             $user->setEnabled(true);
             $userManager->updateUser($user);
 
-            return new RedirectResponse($this->generateUrl('fos_user_profile_show'));
+            return new RedirectResponse($this->generateUrl('user_profile_show'));
         }
 
         return $this->render('@ImaticUser/Resetting/reset.html.twig', [

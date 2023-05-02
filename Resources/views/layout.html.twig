@@ -1,4 +1,4 @@
-{% from 'ImaticViewBundle:Component:message.html.twig' import session_message %}
+{% from '@ImaticView/Component/message.html.twig' import session_message %}
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -15,7 +15,7 @@
     <div class="imatic-user-bundle">
         {{ session_message() }}
 
-        {% block fos_user_content %}
-        {% endblock fos_user_content %}
+        {% block user_content %}
+        {% endblock user_content %}
     </div>
 {% endblock %}

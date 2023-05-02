@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
- * @Route("", name="fos_user_security_")
+ * @Route("", name="user_security_")
  */
 class SecurityController extends AbstractController
 {
@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
             $error = null;
         }
 
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
+        $lastUsername = ($session->isStarted() === false) ? '' : $session->get($lastUsernameKey);
 
         $csrfToken = $tokenManager
             ? $tokenManager->getToken('authenticate')->getValue()

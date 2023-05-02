@@ -24,7 +24,8 @@ class ImaticUserExtension extends Extension
 
         $container->setParameter('imatic_user.admin.form.user', $config['admin']['form']['user']);
 
-        $container->setParameter('imatic.user.email.resseting_from', [$config['email']['address'] => $config['email']['sender_name']]);
+        $container->setParameter('imatic.user.email.resseting_from_address', $config['email']['address']);
+        $container->setParameter('imatic.user.email.resseting_from_sender_name', $config['email']['sender_name']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

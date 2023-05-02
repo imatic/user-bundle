@@ -9,14 +9,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/profile", name="fos_user_profile_")
- */
+#[Route(
+    path: '/profile',
+    name: 'user_profile_',
+)]
 class ProfileController extends AbstractController
 {
-    /**
-     * @Route("/", methods={"GET"}, name="show")
-     */
+    #[Route(
+        path: '/',
+        methods: ['GET'],
+        name: 'show',
+    )]
     public function showAction()
     {
         $user = $this->getUser();
@@ -29,22 +32,25 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/edit", methods={"GET", "POST"}, name="edit")
-     */
-    public function editAction(Request $request, UserManager $userManager)
+    #[Route(
+        path: '/edit',
+        methods: ['GET', 'POST'],
+        name: 'edit',
+    )]
+    public function editAction(Request $request, UserManager $userManager): \Symfony\Component\HttpFoundation\Response|RedirectResponse
     {
         $user = $this->getUser();
         if (!$user instanceof UserInterface) {
             $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(ProfileType::class, $user);
+        \assert($user instanceof UserInterface);
+        $form = $this->createForm(ProfileType::class, $user, ['data_class' => $user::class]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
 
-            return new RedirectResponse($this->generateUrl('fos_user_profile_show'));
+            return new RedirectResponse($this->generateUrl('user_profile_show'));
         }
 
         return $this->render('@ImaticUser/Profile/edit.html.twig', [

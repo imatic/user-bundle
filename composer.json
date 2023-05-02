@@ -4,6 +4,7 @@
     "description": "Imatic User Bundle",
     "keywords": [],
     "homepage": "http://imatic.cz",
+    "version": "1.0.0",
     "license": "MIT",
     "authors": [
         {
@@ -16,25 +17,20 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "symfony/framework-bundle": "^4.4.16",
+        "php": "^8.1",
         "doctrine/orm": "^2.7.4",
         "doctrine/doctrine-bundle": "^2.1.2",
-        "symfony/swiftmailer-bundle": "^3.5.1",
-        "imatic/view-bundle": "^5.0.4",
+        "imatic/view-bundle": "^5.1.1",
         "imatic/controller-bundle": "^5.0.0",
-        "sensio/framework-extra-bundle": "^5.6.1"
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/security-bundle": "^5.4",
+        "friendsofphp/php-cs-fixer": "^3.16"
     },
     "require-dev": {
         "imatic/testing": "^6.0.2",
-        "friendsofphp/php-cs-fixer": "^2.8",
-        "phpmd/phpmd": "^2.6",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
-        "symfony/web-profiler-bundle": "^4.4",
-        "imatic/form-bundle": "^4.0.1",
-        "symfony/yaml": "^4.4",
-        "symfony/expression-language": "^4.4",
-        "symfony/asset": "^4.4"
+        "imatic/form-bundle": "^5.0",
+        "doctrine/annotations": "^2.0"
     },
     "autoload": {
         "psr-4": {

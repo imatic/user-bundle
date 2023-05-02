@@ -9,171 +9,51 @@ use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 /**
  * User interface.
- *
- * @author Viliam Husár <viliam.husar@imatic.cz>
  */
 interface UserInterface extends BaseUserInterface
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    /**
-     * Returns the user unique id.
-     *
-     * @return mixed
-     */
-    public function getId();
+    public function getId(): ?int;
 
-    /**
-     * Sets the username.
-     *
-     * @param string $username
-     *
-     * @return static
-     */
-    public function setUsername($username);
+    public function setUsername(string $username): self;
 
-    /**
-     * Gets the canonical username in search and sort queries.
-     *
-     * @return string
-     */
-    public function getUsernameCanonical();
+    public function getUsernameCanonical(): string;
 
-    /**
-     * Sets the canonical username.
-     *
-     * @param string $usernameCanonical
-     *
-     * @return static
-     */
-    public function setUsernameCanonical($usernameCanonical);
+    public function setUsernameCanonical(string $usernameCanonical): self;
 
-    /**
-     * @param string|null $salt
-     *
-     * @return static
-     */
-    public function setSalt($salt);
+    public function setSalt(?string $salt): self;
 
-    /**
-     * Gets email.
-     *
-     * @return string
-     */
-    public function getEmail();
+    public function getEmail(): string;
 
-    /**
-     * Sets the email.
-     *
-     * @param string $email
-     *
-     * @return static
-     */
-    public function setEmail($email);
+    public function setEmail(string $email): self;
 
-    /**
-     * Gets the canonical email in search and sort queries.
-     *
-     * @return string
-     */
-    public function getEmailCanonical();
+    public function getEmailCanonical(): string;
 
-    /**
-     * Sets the canonical email.
-     *
-     * @param string $emailCanonical
-     *
-     * @return static
-     */
-    public function setEmailCanonical($emailCanonical);
+    public function setEmailCanonical(string $emailCanonical): self;
 
-    /**
-     * Gets the plain password.
-     *
-     * @return string
-     */
-    public function getPlainPassword();
+    public function getPlainPassword():?string;
 
-    /**
-     * Sets the plain password.
-     *
-     * @param string $password
-     *
-     * @return static
-     */
-    public function setPlainPassword($password);
+    public function setPlainPassword(string $password): self;
 
-    /**
-     * Sets the hashed password.
-     *
-     * @param string $password
-     *
-     * @return static
-     */
-    public function setPassword($password);
+    public function setPassword(string $password): self;
 
-    /**
-     * Tells if the the given user has the super admin role.
-     *
-     * @return bool
-     */
-    public function isSuperAdmin();
+    public function isSuperAdmin(): bool;
 
-    /**
-     * @param bool $boolean
-     *
-     * @return static
-     */
-    public function setEnabled($boolean);
+    public function setEnabled(bool $boolean): self;
 
-    /**
-     * Sets the super admin status.
-     *
-     * @param bool $boolean
-     *
-     * @return static
-     */
-    public function setSuperAdmin($boolean);
+    public function setSuperAdmin(bool $boolean): self;
 
-    /**
-     * Gets the confirmation token.
-     *
-     * @return string|null
-     */
-    public function getConfirmationToken();
+    public function getConfirmationToken():?string;
 
-    /**
-     * Sets the confirmation token.
-     *
-     * @param string|null $confirmationToken
-     *
-     * @return static
-     */
-    public function setConfirmationToken($confirmationToken);
+    public function setConfirmationToken(?string $confirmationToken): self;
 
-    /**
-     * Sets the timestamp that the user requested a password reset.
-     *
-     * @return static
-     */
-    public function setPasswordRequestedAt(\DateTime $date = null);
+    public function setPasswordRequestedAt(\DateTime $date = null): self;
 
-    /**
-     * Checks whether the password reset request has expired.
-     *
-     * @param int $ttl Requests older than this many seconds will be considered expired
-     *
-     * @return bool
-     */
-    public function isPasswordRequestNonExpired($ttl);
+    public function isPasswordRequestNonExpired(int $ttl): bool;
 
-    /**
-     * Sets the last login time.
-     *
-     * @return static
-     */
-    public function setLastLogin(\DateTime $time = null);
+    public function setLastLogin(\DateTime $time = null): self;
 
     /**
      * Never use this to check if this user has access to anything!
@@ -182,39 +62,20 @@ interface UserInterface extends BaseUserInterface
      * instead, e.g.
      *
      *         $authorizationChecker->isGranted('ROLE_USER');
-     *
-     * @param string $role
-     *
-     * @return bool
      */
-    public function hasRole($role);
+    public function hasRole(string $role):bool;
 
     /**
      * Sets the roles of the user.
      *
      * This overwrites any previous roles.
      *
-     * @return static
      */
-    public function setRoles(array $roles);
+    public function setRoles(array $roles): self;
 
-    /**
-     * Adds a role to the user.
-     *
-     * @param string $role
-     *
-     * @return static
-     */
-    public function addRole($role);
+    public function addRole(string $role): self;
 
-    /**
-     * Removes a role to the user.
-     *
-     * @param string $role
-     *
-     * @return static
-     */
-    public function removeRole($role);
+    public function removeRole(string $role): self;
 
     /**
      * Checks whether the user's account has expired.
@@ -226,7 +87,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see AccountExpiredException
      */
-    public function isAccountNonExpired();
+    public function isAccountNonExpired(): bool;
 
     /**
      * Checks whether the user is locked.
@@ -238,7 +99,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see LockedException
      */
-    public function isAccountNonLocked();
+    public function isAccountNonLocked(): bool;
 
     /**
      * Checks whether the user's credentials (password) has expired.
@@ -250,7 +111,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @see CredentialsExpiredException
      */
-    public function isCredentialsNonExpired();
+    public function isCredentialsNonExpired(): bool;
 
     /**
      * Checks whether the user is enabled.
@@ -262,5 +123,5 @@ interface UserInterface extends BaseUserInterface
      *
      * @see DisabledException
      */
-    public function isEnabled();
+    public function isEnabled(): bool;
 }

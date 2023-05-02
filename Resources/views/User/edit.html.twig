@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '@ImaticView/Layout/base.html.twig' %}
 
 {% block headline 'User edit'|trans({'%user%': item|default('new')}, 'ImaticUserBundleUser') %}
 
@@ -10,6 +10,6 @@
 
 {% block action %}
 
-    {% include 'ImaticViewBundle:Component:form.html.twig' %}
+    {% include '@ImaticView/Component/form.html.twig' %}
 
 {% endblock %}

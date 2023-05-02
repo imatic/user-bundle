@@ -5,21 +5,13 @@ use Imatic\Bundle\UserBundle\Security\Role\Translation\TranslationStrategyInterf
 
 class ParentStrategy implements TranslationStrategyInterface
 {
-    /**
-     * @param object $role
-     *
-     * @return string
-     */
-    public function translate($role)
+    public function translate(object $role): string
     {
         return 'parent';
     }
 
-    /**
-     * @return string
-     */
-    public function getSupportedClass()
+    public function getSupportedClass(): string
     {
-        return 'Imatic\Bundle\UserBundle\Tests\Fixtures\Role\ParentRole';
+        return \Imatic\Bundle\UserBundle\Tests\Fixtures\Role\ParentRole::class;
     }
 }

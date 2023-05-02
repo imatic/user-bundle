@@ -15,164 +15,185 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Viliam Husár <viliam.husar@imatic.cz>
  *
- * @ORM\MappedSuperclass()
  * @DoctrineAssert\UniqueEntity(fields="usernameCanonical", errorPath="username", groups={"Registration", "Profile"})
  * @DoctrineAssert\UniqueEntity(fields="emailCanonical", errorPath="email", groups={"Registration", "Profile"})
  */
-class User implements UserInterface
+#[ORM\MappedSuperclass()]
+class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[
+        ORM\Id(),
+        ORM\Column(
+            type: 'integer',
+        ),
+        ORM\GeneratedValue(
+            strategy: 'AUTO',
+        ),
+    ]
+    protected int $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=255, groups={"Registration", "Profile"})
-     */
-    protected $username;
+    #[
+        ORM\Column(
+            type: 'string',
+            length: 255,
+        ),
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            max: 255,
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        )
+    ]
+    protected string $username;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    protected $usernameCanonical;
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+        unique: true,
+    )]
+    protected string $usernameCanonical;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=2, max=254, groups={"Registration", "Profile"})
-     * @Assert\Email(groups={"Registration", "Profile"})
-     */
-    protected $email;
+    #[
+        ORM\Column(
+            type: 'string',
+            length: 255,
+        ),
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            max: 254,
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        ),
+        Assert\Email(
+            groups: [
+                'Registration',
+                'Profile',
+            ],
+        )
+    ]
+    protected string $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    protected $emailCanonical;
+    #[ORM\Column(
+        type: 'string',
+        length: 255,
+        unique: true,
+    )]
+    protected string $emailCanonical;
 
-    /**
-     * Encrypted password.
-     *
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $password;
+    #[ORM\Column(
+        type: 'string',
+    )]
+    protected string $password;
 
     /**
      * Plain password, Used for model validation, must not be persisted.
-     *
-     * @var string
-     *
-     * @Assert\NotBlank(groups={"Registration", "ResetPassword", "ChangePassword"})
-     * @Assert\Length(min=2, groups={"Registration", "Profile", "ResetPassword", "ChangePassword"})
      */
-    protected $plainPassword;
+    #[
+        Assert\NotBlank(
+            groups: [
+                'Registration',
+                'ResetPassword',
+                'ChangePassword',
+            ],
+        ),
+        Assert\Length(
+            min: 2,
+            groups: [
+                'Registration',
+                'Profile',
+                'ResetPassword',
+                'ChangePassword',
+            ],
+        )
+    ]
+    protected ?string $plainPassword = null;
 
-    /**
-     * The salt to use for hashing.
-     *
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $salt;
+    #[ORM\Column(
+        type: 'string',
+        nullable: true,
+    )]
+    protected ?string $salt;
 
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lastLogin;
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    protected ?DateTime $lastLogin = null;
 
     /**
      * Random string sent to the user email address in order to verify it.
-     *
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $confirmationToken;
+    #[ORM\Column(
+        type: 'string',
+        nullable: true,
+    )]
+    protected ?string $confirmationToken;
 
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $passwordRequestedAt;
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    protected ?DateTime $passwordRequestedAt;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled;
+    #[ORM\Column(
+        type: 'boolean',
+    )]
+    protected bool $enabled;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $locked;
+    #[ORM\Column(
+        type: 'boolean',
+    )]
+    protected bool $locked;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $expired;
+    #[ORM\Column(
+        type: 'boolean',
+    )]
+    protected bool $expired;
 
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $expiresAt;
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    protected ?DateTime $expiresAt;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $credentialsExpired;
+    #[ORM\Column(
+        type: 'boolean',
+    )]
+    protected bool $credentialsExpired;
 
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $credentialsExpireAt;
+    #[ORM\Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    protected ?DateTime $credentialsExpireAt;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(type="array")
-     */
-    protected $roles;
+    #[ORM\Column(
+        type: 'array',
+    )]
+    protected array $roles;
 
-    /**
-     * @var Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Imatic\Bundle\UserBundle\Model\GroupInterface", cascade={"persist"})
-     */
-    protected $groups;
+    #[ORM\ManyToMany(
+        targetEntity: GroupInterface::class,
+        cascade: ['persist'],
+    )]
+    protected Collection $groups;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->salt = \base_convert(\sha1(\uniqid((string) \mt_rand(), true)), 16, 36);
@@ -184,130 +205,70 @@ class User implements UserInterface
         $this->groups = new ArrayCollection();
     }
 
-    /**
-     * Returns string representation.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->getUsername();
     }
 
-    /**
-     * Returns id.
-     *
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?int
     {
-        return $this->id;
+        return $this->id ?? null;
     }
 
-    /**
-     * Sets username.
-     *
-     * @param string $username
-     *
-     * @return $this
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): UserInterface
     {
         $this->username = (string) $username;
 
         return $this;
     }
 
-    /**
-     * Returns username.
-     *
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * Sets canonical username.
-     *
-     * @param string $usernameCanonical
-     *
-     * @return $this
-     */
-    public function setUsernameCanonical($usernameCanonical)
+    public function setUsernameCanonical(string $usernameCanonical): UserInterface
     {
         $this->usernameCanonical = (string) $usernameCanonical;
 
         return $this;
     }
 
-    /**
-     * Returns canonical username.
-     *
-     * @return string
-     */
-    public function getUsernameCanonical()
+    public function getUsernameCanonical(): string
     {
         return $this->usernameCanonical;
     }
 
-    /**
-     * Sets email.
-     *
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
+    public function setEmail(string $email): UserInterface
     {
         $this->email = (string) $email;
 
         return $this;
     }
 
-    /**
-     * Returns email.
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Sets canonical email.
-     *
-     * @param string $emailCanonical
-     *
-     * @return $this
-     */
-    public function setEmailCanonical($emailCanonical)
+    public function setEmailCanonical(string $emailCanonical): UserInterface
     {
         $this->emailCanonical = (string) $emailCanonical;
 
         return $this;
     }
 
-    /**
-     * Returns canonical email.
-     *
-     * @return string
-     */
-    public function getEmailCanonical()
+    public function getEmailCanonical(): string
     {
         return $this->emailCanonical;
     }
 
-    /**
-     * Sets encrypted password.
-     *
-     * @param string $password
-     *
-     * @return $this
-     */
-    public function setPassword($password)
+    public function setPassword(string $password): UserInterface
     {
         $this->password = (string) $password;
 
@@ -316,254 +277,130 @@ class User implements UserInterface
 
     /**
      * Returns encrypted password.
-     *
-     * @return string
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * Sets plain password.
-     *
-     * @param string $password
-     *
-     * @return $this
-     */
-    public function setPlainPassword($password)
+    public function setPlainPassword(string $password): UserInterface
     {
         $this->plainPassword = (string) $password;
 
         return $this;
     }
 
-    /**
-     * Returns plain password.
-     *
-     * @return string
-     */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param string|null $salt
-     *
-     * @return $this
-     */
-    public function setSalt($salt)
+    public function setSalt(?string $salt): UserInterface
     {
         $this->salt = $salt;
 
         return $this;
     }
 
-    /**
-     * Returns salt.
-     *
-     * @return string
-     */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
 
-    /**
-     * Sets last login.
-     *
-     * @param DateTime $time
-     *
-     * @return $this
-     */
-    public function setLastLogin(DateTime $time = null)
+    public function setLastLogin(DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
 
         return $this;
     }
 
-    /**
-     * Returns last login time.
-     *
-     * @return DateTime
-     */
-    public function getLastLogin()
+    public function getLastLogin(): ?DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * Sets confirmation token.
-     *
-     * @param string $confirmationToken
-     *
-     * @return $this
-     */
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken(?string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 
         return $this;
     }
 
-    /**
-     * Returns confirmation token.
-     *
-     * @return string
-     */
-    public function getConfirmationToken()
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
 
-    /**
-     * Sets password request at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setPasswordRequestedAt(DateTime $date = null)
+    public function setPasswordRequestedAt(DateTime $date = null): UserInterface
     {
         $this->passwordRequestedAt = $date;
 
         return $this;
     }
 
-    /**
-     * Returns password requested at.
-     *
-     * @return null|\DateTime
-     */
-    public function getPasswordRequestedAt()
+    public function getPasswordRequestedAt(): ?DateTime
     {
         return $this->passwordRequestedAt;
     }
 
-    /**
-     * Sets enabled.
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setEnabled($bool)
+    public function setEnabled(bool $boolean): UserInterface
     {
-        $this->enabled = (bool) $bool;
+        $this->enabled = (bool) $boolean;
 
         return $this;
     }
 
-    /**
-     * Returns true if user is enabled, false otherwise.
-     *
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Sets locked.
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setLocked($bool)
+    public function setLocked(bool $bool): UserInterface
     {
         $this->locked = (bool) $bool;
 
         return $this;
     }
 
-    /**
-     * Returns true if user is locked, false otherwise.
-     *
-     * @return bool
-     */
-    public function isLocked()
+    public function isLocked(): bool
     {
         return !$this->isAccountNonLocked();
     }
 
-    /**
-     * Sets expired.
-     *
-     * @param bool $bool
-     *
-     * @return User
-     */
-    public function setExpired($bool)
+    public function setExpired(bool $bool): self
     {
         $this->expired = (bool) $bool;
 
         return $this;
     }
 
-    /**
-     * Returns true if user is expired, false otherwise.
-     *
-     * @return bool
-     */
-    public function isExpired()
+    public function isExpired(): bool
     {
         return !$this->isAccountNonExpired();
     }
 
-    /**
-     * Sets expired at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setExpiresAt(DateTime $date = null)
+    public function setExpiresAt(DateTime $date = null): UserInterface
     {
         $this->expiresAt = $date;
 
         return $this;
     }
 
-    /**
-     * Sets credential expired at.
-     *
-     * @param DateTime $date
-     *
-     * @return $this
-     */
-    public function setCredentialsExpireAt(DateTime $date = null)
+    public function setCredentialsExpireAt(DateTime $date = null): UserInterface
     {
         $this->credentialsExpireAt = $date;
 
         return $this;
     }
 
-    /**
-     * Sets credentials expired.
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setCredentialsExpired($bool)
+    public function setCredentialsExpired(bool $bool): UserInterface
     {
         $this->credentialsExpired = (bool) $bool;
 
         return $this;
     }
 
-    /**
-     * Sets roles.
-     *
-     * @param array $roles
-     *
-     * @return $this
-     */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): UserInterface
     {
         $this->roles = [];
 
@@ -574,14 +411,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Adds role.
-     *
-     * @param string $role
-     *
-     * @return $this
-     */
-    public function addRole($role)
+    public function addRole(string $role): UserInterface
     {
         $role = (string) $role;
         $role = \strtoupper($role);
@@ -596,14 +426,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Removes role.
-     *
-     * @param string $role
-     *
-     * @return $this
-     */
-    public function removeRole($role)
+    public function removeRole(string $role): UserInterface
     {
         $role = (string) $role;
 
@@ -615,12 +438,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Returns roles.
-     *
-     * @return array
-     */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -642,26 +460,15 @@ class User implements UserInterface
      * instead, e.g.
      *
      *         $securityContext->isGranted('ROLE_USER');
-     *
-     * @param string $role
-     *
-     * @return bool
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         $role = (string) $role;
 
         return \in_array(\strtoupper($role), $this->getRoles(), true);
     }
 
-    /**
-     * Adds group.
-     *
-     * @param GroupInterface $group
-     *
-     * @return $this
-     */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): UserInterface
     {
         if (!$this->getGroups()->contains($group)) {
             $this->getGroups()->add($group);
@@ -670,14 +477,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Removes group.
-     *
-     * @param GroupInterface $group
-     *
-     * @return $this
-     */
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup(GroupInterface $group): UserInterface
     {
         if ($this->getGroups()->contains($group)) {
             $this->getGroups()->removeElement($group);
@@ -687,21 +487,14 @@ class User implements UserInterface
     }
 
     /**
-     * Returns groups.
-     *
      * @return Collection|GroupInterface[]
      */
-    public function getGroups()
+    public function getGroups(): Collection
     {
         return $this->groups;
     }
 
-    /**
-     * Returns group names.
-     *
-     * @return array
-     */
-    public function getGroupNames()
+    public function getGroupNames(): array
     {
         $names = [];
         foreach ($this->getGroups() as $group) {
@@ -711,26 +504,12 @@ class User implements UserInterface
         return $names;
     }
 
-    /**
-     * Returns true if user has given group, false otherwise.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasGroup($name)
+    public function hasGroup(string $name): bool
     {
         return \in_array($name, $this->getGroupNames(), true);
     }
 
-    /**
-     * Sets super admin.
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setSuperAdmin($bool)
+    public function setSuperAdmin(bool $bool): UserInterface
     {
         $bool = (bool) $bool;
 
@@ -743,22 +522,12 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Returns true if user is super admin, false otherwise.
-     *
-     * @return bool
-     */
-    public function isSuperAdmin()
+    public function isSuperAdmin(): bool
     {
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
 
-    /**
-     * Returns true if user account is not expired, false otherwsie.
-     *
-     * @return bool
-     */
-    public function isAccountNonExpired()
+    public function isAccountNonExpired(): bool
     {
         if (true === $this->expired) {
             return false;
@@ -771,22 +540,12 @@ class User implements UserInterface
         return true;
     }
 
-    /**
-     * Returns true if account is not locked, false otherwise.
-     *
-     * @return bool
-     */
-    public function isAccountNonLocked()
+    public function isAccountNonLocked(): bool
     {
         return !$this->locked;
     }
 
-    /**
-     * Returns true if user credentials are not expired, false otherwise.
-     *
-     * @return bool
-     */
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired(): bool
     {
         if (true === $this->credentialsExpired) {
             return false;
@@ -799,35 +558,21 @@ class User implements UserInterface
         return true;
     }
 
-    /**
-     * Returns true if user credentials expired, false otherwise.
-     *
-     * @return bool
-     */
-    public function isCredentialsExpired()
+    public function isCredentialsExpired(): bool
     {
         return !$this->isCredentialsNonExpired();
     }
 
-    /**
-     * Returns true if password request is not expired.
-     *
-     * @param int $ttl
-     *
-     * @return bool
-     */
-    public function isPasswordRequestNonExpired($ttl)
+    public function isPasswordRequestNonExpired(int $ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof DateTime &&
-        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
+            $this->getPasswordRequestedAt()->getTimestamp() + $ttl > \time();
     }
 
     /**
      * Returns true if same user, false otherwise.
-     *
-     * @return bool
      */
-    public function isUser(UserInterface $user = null)
+    public function isUser(UserInterface $user = null): bool
     {
         return null !== $user && $this->getId() === $user->getId();
     }
@@ -844,30 +589,23 @@ class User implements UserInterface
      * Serializes the user.
      *
      * The serialized data have to contain the fields used by the equals method and the username.
-     *
-     * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return \serialize([
-                $this->password,
-                $this->salt,
-                $this->usernameCanonical,
-                $this->username,
-                $this->expired,
-                $this->locked,
-                $this->credentialsExpired,
-                $this->enabled,
-                $this->id,
-            ]);
+            $this->password,
+            $this->salt,
+            $this->usernameCanonical,
+            $this->username,
+            $this->expired,
+            $this->locked,
+            $this->credentialsExpired,
+            $this->enabled,
+            $this->id,
+        ]);
     }
 
-    /**
-     * Unserializes the user.
-     *
-     * @param string $serialized
-     */
-    public function unserialize($serialized): void
+    public function unserialize(string $serialized): void
     {
         $data = \unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when unserializing
@@ -884,6 +622,6 @@ class User implements UserInterface
             $this->credentialsExpired,
             $this->enabled,
             $this->id
-            ) = $data;
+        ) = $data;
     }
 }

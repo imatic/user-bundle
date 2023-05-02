@@ -10,23 +10,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Role document import command.
- *
- * @author Pavel Batecko <pavel.batecko@imatic.cz>
- */
 class RoleDocumentImportCommand extends Command
 {
-    private UserManager $userManager;
-    private GroupManager $groupManager;
-
     public function __construct(
-        UserManager $userManager,
-        GroupManager $groupManager
+        private UserManager $userManager,
+        private GroupManager $groupManager
     ) {
         parent::__construct();
-        $this->userManager = $userManager;
-        $this->groupManager = $groupManager;
     }
 
     /**
@@ -90,14 +80,9 @@ class RoleDocumentImportCommand extends Command
     }
 
     /**
-     * Apply roles to user.
-     *
-     * @param string $userName
-     * @param array  $roles
-     *
      * @throws \RuntimeException
      */
-    private function applyRolesToUser($userName, array $roles): void
+    private function applyRolesToUser(string $userName, array $roles): void
     {
         $user = $this->userManager->findUserBy(['username' => $userName]);
         if (!$user) {
@@ -109,14 +94,9 @@ class RoleDocumentImportCommand extends Command
     }
 
     /**
-     * Apply roles to group.
-     *
-     * @param string $groupName
-     * @param array  $roles
-     *
      * @throws \RuntimeException
      */
-    private function applyRolesToGroup($groupName, array $roles): void
+    private function applyRolesToGroup(string $groupName, array $roles): void
     {
         $group = $this->groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {

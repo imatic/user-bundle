@@ -2,7 +2,6 @@
 namespace Imatic\Bundle\UserBundle\Data\Handler\User;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
-use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\UserBundle\Manager\UserManager;
 
@@ -15,12 +14,7 @@ class UserCreateHandler implements HandlerInterface
         $this->userManager = $userManager;
     }
 
-    /**
-     * @param CommandInterface $command
-     *
-     * @return CommandResultInterface|bool|void
-     */
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): void
     {
         $user = $command->getParameter('data');
 

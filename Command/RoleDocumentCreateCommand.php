@@ -77,17 +77,9 @@ class RoleDocumentCreateCommand extends Command
     }
 
     /**
-     * Get default roles.
-     *
-     * @param string|null $userName
-     * @param string|null $groupName
-     * @param bool|null   $defaultState
-     *
      * @throws \LogicException
-     *
-     * @return array|bool
      */
-    private function getDefaultRoles($userName, $groupName, $defaultState)
+    private function getDefaultRoles(?string $userName, ?string $groupName, ?bool $defaultState): array|bool
     {
         if ($userName xor $groupName) {
             if (null !== $defaultState) {
@@ -105,15 +97,9 @@ class RoleDocumentCreateCommand extends Command
     }
 
     /**
-     * Get user roles.
-     *
-     * @param string $userName
-     *
      * @throws \RuntimeException
-     *
-     * @return array
      */
-    private function getUserRoles($userName)
+    private function getUserRoles(string $userName): array
     {
         $user = $this->userManager->findUserBy(['username' => $userName]);
         if (!$user) {
@@ -124,15 +110,9 @@ class RoleDocumentCreateCommand extends Command
     }
 
     /**
-     * Get group roles.
-     *
-     * @param string $groupName
-     *
      * @throws \RuntimeException
-     *
-     * @return array
      */
-    private function getGroupRoles($groupName)
+    private function getGroupRoles(string $groupName): array
     {
         $group = $this->groupManager->findGroupBy(['name' => $groupName]);
         if (!$group) {

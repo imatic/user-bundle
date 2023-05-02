@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/user")
+ *
  * @Config\Security("has_role('ROLE_IMATIC_USER_USER_ADMIN')")
  */
 class UserController implements ContainerAwareInterface
@@ -34,6 +35,7 @@ class UserController implements ContainerAwareInterface
 
     /**
      * @Route("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="imatic_user_user_show")
+     *
      * @Config\Template()
      */
     public function showAction($id)
@@ -60,7 +62,6 @@ class UserController implements ContainerAwareInterface
 
     /**
      * @Route("/create", methods={"GET", "POST"}, name="imatic_user_user_create")
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function createAction()
     {

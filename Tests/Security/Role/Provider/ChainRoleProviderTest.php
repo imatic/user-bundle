@@ -5,12 +5,12 @@ use Imatic\Bundle\UserBundle\Security\Role\HierarchyRole;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\ChainRoleProvider;
 use Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface;
 use Imatic\Bundle\UserBundle\Security\Role\Role;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ChainRoleProviderTest extends TestCase
 {
-    /** @var ChainRoleProvider */
-    private $roleProvider;
+    private ChainRoleProvider $roleProvider;
 
     /**
      * {@inheritdoc}
@@ -44,12 +44,10 @@ class ChainRoleProviderTest extends TestCase
 
     /**
      * @param Role[] $roles
-     *
-     * @return RoleProviderInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createRoleProviderMock(array $roles)
+    private function createRoleProviderMock(array $roles): MockObject
     {
-        $roleProviderMock = $this->createMock('Imatic\Bundle\UserBundle\Security\Role\Provider\RoleProviderInterface');
+        $roleProviderMock = $this->createMock(RoleProviderInterface::class);
         $roleProviderMock
             ->expects($this->any())
             ->method('getRoles')
