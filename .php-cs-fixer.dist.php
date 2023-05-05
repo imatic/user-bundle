@@ -36,7 +36,7 @@ return (new PhpCsFixer\Config())
         'no_php4_constructor' => true,
         'no_singleline_whitespace_before_semicolons' => true,
         'no_spaces_around_offset' => true,
-        'no_trailing_comma_in_singleline' => true,
+        'no_trailing_comma_in_singleline_array' => true,
         'no_unneeded_control_parentheses' => true,
         'no_unneeded_curly_braces' => true,
         'no_unused_imports' => true,

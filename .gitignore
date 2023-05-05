@@ -6,6 +6,7 @@
 .DS_Store
 Thumbs.db
 /.php-cs-fixer.cache
+/.php_cs.cache
 /.phpunit.result.cache
 Tests/Fixtures/TestProject/bower.json
 Tests/Fixtures/TestProject/.bowerrc

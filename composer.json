@@ -18,19 +18,19 @@
     ],
     "require": {
         "php": "^8.1",
-        "doctrine/orm": "^2.7.4",
-        "doctrine/doctrine-bundle": "^2.1.2",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/orm": "^2.7",
+        "symfony/framework-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^6.2",
         "imatic/view-bundle": "^5.1.1",
         "imatic/controller-bundle": "^5.0.0",
-        "sensio/framework-extra-bundle": "^6.2",
-        "symfony/security-bundle": "^5.4",
-        "friendsofphp/php-cs-fixer": "^3.16"
+        "symfony/security-bundle": "^5.4"
     },
     "require-dev": {
         "imatic/testing": "^6.0.2",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "imatic/form-bundle": "^5.0",
-        "doctrine/annotations": "^2.0"
+        "friendsofphp/php-cs-fixer": "^2"
     },
     "autoload": {
         "psr-4": {
