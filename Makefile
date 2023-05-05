@@ -5,7 +5,7 @@ test: phpunit phpcs
 
 .PHONY: phpcs
 phpcs:
-	./vendor/bin/php-cs-fixer fix --dry-run
+	PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix --dry-run
 
 .PHONY: phpunit
 phpunit:

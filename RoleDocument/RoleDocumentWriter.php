@@ -20,7 +20,7 @@ class RoleDocumentWriter
     public function __construct(
         private RoleProviderInterface $roleProvider,
         private RoleTranslator $roleTranslator,
-        private array|bool $defaultRoles = false
+        private array | bool $defaultRoles = false
     ) {
         // set default roles
         if (\is_array($defaultRoles)) {
