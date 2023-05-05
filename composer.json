@@ -22,7 +22,7 @@
         "doctrine/orm": "^2.7",
         "symfony/framework-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^6.2",
-        "imatic/view-bundle": "^5.1.1",
+        "imatic/view-bundle": "^5.1.0",
         "imatic/controller-bundle": "^5.0.0",
         "symfony/security-bundle": "^5.4"
     },
