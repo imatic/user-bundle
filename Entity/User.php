@@ -52,7 +52,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
             ],
         )
     ]
-    protected string $username;
+    protected ?string $username = '';
 
     #[ORM\Column(
         type: 'string',
@@ -215,7 +215,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->id ?? null;
     }
 
-    public function setUsername(string $username): UserInterface
+    public function setUsername(?string $username): UserInterface
     {
         $this->username = (string) $username;
 
