@@ -17,7 +17,7 @@ interface UserInterface extends BaseUserInterface
 
     public function getId(): ?int;
 
-    public function setUsername(string $username): self;
+    public function setUsername(?string $username): self;
 
     public function getUsernameCanonical(): string;
 
@@ -25,9 +25,9 @@ interface UserInterface extends BaseUserInterface
 
     public function setSalt(?string $salt): self;
 
-    public function getEmail(): string;
+    public function getEmail(): ?string;
 
-    public function setEmail(string $email): self;
+    public function setEmail(?string $email): self;
 
     public function getEmailCanonical(): string;
 

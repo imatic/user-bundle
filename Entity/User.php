@@ -52,7 +52,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
             ],
         )
     ]
-    protected ?string $username = '';
+    protected ?string $username;
 
     #[ORM\Column(
         type: 'string',
@@ -87,7 +87,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
             ],
         )
     ]
-    protected string $email;
+    protected ?string $email;
 
     #[ORM\Column(
         type: 'string',
@@ -222,7 +222,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -244,14 +244,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->getUsername();
     }
 
-    public function setEmail(string $email): UserInterface
+    public function setEmail(?string $email): UserInterface
     {
         $this->email = (string) $email;
 
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -268,7 +268,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->emailCanonical;
     }
 
-    public function setPassword(string $password): UserInterface
+    public function setPassword(?string $password): UserInterface
     {
         $this->password = (string) $password;
 
