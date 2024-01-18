@@ -43,7 +43,7 @@ class UserType extends AbstractType
                 if ($user->getId()) {
                     return ['Profile'];
                 }
-                return ['Profile', 'ChangePassword'];
+                return ['Profile', 'ChangePassword', 'Registration'];
             },
             'empty_data' => function () {
                 return new $this->userClass();
