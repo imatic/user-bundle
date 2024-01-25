@@ -87,7 +87,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
             ],
         )
     ]
-    protected string $email;
+    protected ?string $email = null;
 
     #[ORM\Column(
         type: 'string',
